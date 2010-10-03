@@ -1,0 +1,88 @@
+/* TEXT */
+
+body {
+    font-size:16px;
+    line-height:1.2;   /* 30px */
+/*	padding:20px 20px;
+    margin:0 5px;*/
+    font-family: corbel, 'lucida grande', helvetica, sans-serif;
+    color:#212122;
+    background-color:#eee;
+}
+
+/* BREADCRUMBS */
+#breadcrumbs {
+	font-size:20px;
+	padding-bottom:20px;
+}
+
+#controls {
+	padding-bottom:20px;
+}
+
+.path_sep {
+	font-size: 10px;
+}
+
+ul {
+    list-style-type:none;
+    padding: 0px;
+    margin:0;
+    overflow:hidden;
+}
+
+li {
+    float:left;
+    padding-right:10px;
+}
+
+
+/* LAYOUT */
+#container {
+/*    width:800px;
+    margin:0 auto;*/
+}
+#songlist {
+/*	float: left; 
+	width: 300px; 
+	padding-left: 0px;
+	padding-right: 10px; */
+}
+#cover {
+/*	float: left; 
+	padding: 0px; */
+}
+
+/* COVER */
+#cover_image {
+	padding: 10px;
+	background: #fff;
+}
+.bounded {
+	max-width:400;
+}
+.unbounded {
+	max-width:80%;
+	position:absolute;
+	top:10px;
+	left:10px;
+}
+
+/* LINKS */
+a, a:link {
+    color:#111;
+    text-decoration: none;
+}
+a:visited {
+    color:#666;
+    background:#fff;
+}
+a:hover {
+    background:#000;
+    color:#fff;
+    text-decoration:none;
+}
+a.playing {
+	color: #900;
+	font-weight:bold;
+}

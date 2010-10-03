@@ -1,0 +1,5 @@
+task :export_artwork, :path do |t,args|
+	args.with_defaults(:path => "#{ENV['HOME']}/code/ttunes/public/images")
+  	require './lib/ti_tunes.rb'
+  	TiTunes.export_artwork(args.path)
+end

@@ -1,0 +1,5 @@
+public/music/
+public/images/
+config.yml
+Gemfile.lock
+.bundle
