@@ -1,14 +1,20 @@
-class Toast::Tunes
+class TTunes
 
   require 'appscript'
+  require 'fileutils'
+  
+  attr_reader :itunes
   
   FORMATS = {
     "PNG " => 'png',
     :JPEG_picture => 'jpg'
   }
   
-  def self.export_artwork(destination='/users/toast/code/ttunes/public/images')
-    i = Toast::Tunes.new
+  def self.export_artwork(destination)
+    i = TTunes.new
+    puts "creating #{destination}..."
+    FileUtils.mkdir_p File.join(destination, 'large')
+    puts "fetching library tracks..."
     i.library_tracks do |track|
       i.export_artwork(track, destination)
     end
@@ -27,6 +33,11 @@ class Toast::Tunes
   end
   
   def export_artwork(track, destination)
+    track_kind = track.kind.get
+    unless ['AAC audio file', 'MPEG audio file', 'Purchased AAC audio file'].include?(track_kind)
+      puts "SKIPPING: #{track_kind}"
+      return false
+    end
     artworks = track.artworks.get
     if artworks.length > 0
       artwork = artworks[0]
@@ -41,7 +52,7 @@ class Toast::Tunes
         path = File.join(destination, 'large', filename + ".#{ext}")
         if File.exists?(path)
           puts "EXISTS: #{path}"
-          return
+          return false
         else
           puts path
           raw_data = artwork.raw_data.get.data
@@ -50,7 +61,7 @@ class Toast::Tunes
           end
         end
       else
-        die "ERROR: format not recognized: #{format}"
+        die "ERROR: image format not recognized: #{format}"
       end
       
     end
