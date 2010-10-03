@@ -33,37 +33,44 @@ class TTunes
   end
   
   def export_artwork(track, destination)
-    track_kind = track.kind.get
-    unless ['AAC audio file', 'MPEG audio file', 'Purchased AAC audio file'].include?(track_kind)
-      puts "SKIPPING: #{track_kind}"
-      return false
-    end
-    artworks = track.artworks.get
-    if artworks.length > 0
-      artwork = artworks[0]
-      format = artwork.format.get
-      format = format.code unless format.is_a?(Symbol)
-      if ext = FORMATS[format]
-        artist = track.artist.get
-        album = track.album.get
-        compilation = track.compilation.get
-        artist = 'Compilations' if compilation
-        filename = [artist, album].map{|s| s.downcase.gsub(/[^0-9a-z]/, '')}.join("_")
-        path = File.join(destination, 'large', filename + ".#{ext}")
-        if File.exists?(path)
-          puts "EXISTS: #{path}"
-          return false
-        else
-          puts path
-          raw_data = artwork.raw_data.get.data
-          File.open(path, "w") do |f|
-            f << raw_data
-          end
-        end
-      else
-        die "ERROR: image format not recognized: #{format}"
+    begin
+      track_kind = track.kind.get
+      unless ['AAC audio file', 'MPEG audio file', 'Purchased AAC audio file'].include?(track_kind)
+        puts "SKIPPING: #{track_kind}"
+        return false
       end
-      
+      # if track.location.get == :missing_value
+      #   puts "MISSING: #{track.inspect}"
+      #   return false
+      # end
+      artworks = track.artworks.get
+      if artworks.length > 0
+        artwork = artworks[0]
+        format = artwork.format.get
+        format = format.code unless format.is_a?(Symbol)
+        if ext = FORMATS[format]
+          artist = track.artist.get
+          album = track.album.get
+          compilation = track.compilation.get
+          artist = 'Compilations' if compilation
+          filename = [artist, album].map{|s| s.downcase.gsub(/[^0-9a-z]/, '')}.join("_")
+          path = File.join(destination, 'large', filename + ".#{ext}")
+          if File.exists?(path)
+            puts "EXISTS: #{path}"
+            return false
+          else
+            puts path
+            raw_data = artwork.raw_data.get.data
+            File.open(path, "w") do |f|
+              f << raw_data
+            end
+          end
+        else
+          die "ERROR: image format not recognized: #{format}"
+        end
+      end
+    rescue Appscript::CommandError => e
+      puts "WARNING: #{e.inspect}"
     end
   end
   
