@@ -15,7 +15,7 @@ Then:
     cd toastunes
     bundle install
     cd public; ln -s '/users/yourname/Music/iTunes/iTunes Music' music;
-    rake export_artwork[/path/to/public/images] (optional)
+    rake export_artwork (optional)
 
 # Run
 

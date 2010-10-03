@@ -2,16 +2,16 @@
 
 #container.container_12
 
-	#breadcrumbs.grid_12
-		%ul
-			%li
-				%a{:href=>"/"} Music
-			%li &lt;
-			%li= @artist
+  #breadcrumbs.grid_12
+    %ul
+      %li
+        %a{:href=>"/"} Music
+      %li &lt;
+      %li= @artist
 
-	.clear
+  .clear
 
-	#songlist.grid_12
-		- @albums.each do |album|
-			%a{:href=>album_url(album)}= album
-			%br
+  #songlist.grid_12
+    - @albums.each do |album|
+      %a{:href=>album_url(album)}= album
+      %br
