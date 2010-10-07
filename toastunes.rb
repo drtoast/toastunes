@@ -1,18 +1,5 @@
-require 'rubygems'
-require 'sinatra'
-require 'haml'
-require 'yaml'
-require 'cgi'
-
-set :public,        File.dirname(__FILE__) + '/public' # shouldn't this already be the default?
-set :views,         File.dirname(__FILE__) + '/views' # shouldn't this already be the default?
-  
-configure do
-  enable :run # hack to fix sinatra 1.0 + ruby 1.9.2 bug
-  opts = YAML.load_file(File.join(File.dirname(__FILE__), "config.yml"))
-  set :haml,          {:format => :html5 } # default Haml format is :xhtml
-  set :music,         File.join(File.dirname(__FILE__), 'public', 'music')
-  set :port,          opts['port']
+before do
+  content_type :html, 'charset' => 'utf-8'
 end
 
 get '/' do
@@ -56,15 +43,15 @@ helpers do
   end
   
   def find_artists
-    Dir.entries(settings.music).grep(/^[^.]/)
+    Dir.entries(settings.music).grep(/^[^.]/).sort{|a,b| a.downcase <=> b.downcase}
   end
 
   def find_albums
-    Dir.entries(File.join(settings.music,@artist)).grep(/^[^.]/)
+    Dir.entries(File.join(settings.music,@artist)).grep(/^[^.]/).sort{|a,b| a.downcase <=> b.downcase}
   end
 
   def find_songs
-    Dir.entries(File.join(settings.music,@artist,@album)).grep(/^[^.]/)
+    Dir.entries(File.join(settings.music,@artist,@album)).grep(/^[^.]/).sort{|a,b| a.downcase <=> b.downcase}
   end
 
   def find_cover

@@ -2,4 +2,5 @@ public/music/
 public/images/
 config.yml
 Gemfile.lock
+Capfile
 .bundle

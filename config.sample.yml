@@ -1,0 +1,8 @@
+views:
+    '/home/username/yourdomain/views'
+    
+music:
+    '/home/username/yourdomain/public/music'
+    
+environment:
+    :production
