@@ -1,6 +1,8 @@
-public/music/
-public/images/
+*~
+public/music
+public/images
 config.yml
 Gemfile.lock
 Capfile
 .bundle
+.htaccess

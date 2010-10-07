@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'haml'
 require 'cgi'
+require 'yaml'
 require 'vendor/sinatra/lib/sinatra'
 
 opts = YAML.load_file(File.join(File.dirname(__FILE__), "config.yml"))
