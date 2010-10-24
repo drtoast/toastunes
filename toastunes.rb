@@ -13,6 +13,9 @@ configure do
   set :haml,          {:format => :html5 } # default Haml format is :xhtml
   set :music,         File.join(File.dirname(__FILE__), 'public', 'music')
   set :port,          opts['port']
+
+before do
+  content_type :html, 'charset' => 'utf-8'
 end
 
 get '/' do
@@ -56,15 +59,15 @@ helpers do
   end
   
   def find_artists
-    Dir.entries(settings.music).grep(/^[^.]/)
+    Dir.entries(settings.music).grep(/^[^.]/).sort{|a,b| a.downcase <=> b.downcase}
   end
 
   def find_albums
-    Dir.entries(File.join(settings.music,@artist)).grep(/^[^.]/)
+    Dir.entries(File.join(settings.music,@artist)).grep(/^[^.]/).sort{|a,b| a.downcase <=> b.downcase}
   end
 
   def find_songs
-    Dir.entries(File.join(settings.music,@artist,@album)).grep(/^[^.]/)
+    Dir.entries(File.join(settings.music,@artist,@album)).grep(/^[^.]/).sort{|a,b| a.downcase <=> b.downcase}
   end
 
   def find_cover
