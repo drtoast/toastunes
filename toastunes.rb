@@ -6,7 +6,7 @@ require 'cgi'
 
 set :public,        File.dirname(__FILE__) + '/public' # shouldn't this already be the default?
 set :views,         File.dirname(__FILE__) + '/views' # shouldn't this already be the default?
-  
+
 configure do
   enable :run # hack to fix sinatra 1.0 + ruby 1.9.2 bug
   opts = YAML.load_file(File.join(File.dirname(__FILE__), "config.yml"))

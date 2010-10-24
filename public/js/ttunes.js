@@ -27,7 +27,7 @@ $(document).ready(function() {
 		playNext();
 	});
 
-	$(".song").click( changeTrack );
+	$(".song").click(changeTrack);
 
 	$("#prev").click( function() {
 		playPrev();
