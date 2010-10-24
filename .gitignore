@@ -1,6 +1,6 @@
 *~
 public/music
-public/images
+public/images/large
 config.yml
 Gemfile.lock
 Capfile

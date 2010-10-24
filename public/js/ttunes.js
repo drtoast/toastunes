@@ -1,97 +1,172 @@
+// SETUP
+
 $(document).ready(function() {
-	
-	// adapted from http://www.happyworm.com/jquery/jplayer/latest/demo-04.htm
-	var jpPlayInfo = $("#play-info");
-	var jpStatus = $("#status"); // For displaying information about jPlayer's status
-	var position = $("#position"); // the current playback position
-	var now_playing;
-
-	$("#jquery_jplayer").jPlayer({
-		ready: function () {
-			$("#song_1").trigger("click");
-		},
-		customCssIds: true
-	})
-	.jPlayer("cssId", "play", "play")
-	.jPlayer("cssId", "pause", "pause")
-	.jPlayer("cssId", "stop", "stop")
-	.jPlayer("cssId", "volumeMin", "vmin")
-	.jPlayer("cssId", "volumeMax", "vmax")
-	.jPlayer("cssId", "volumeBar", "vbar")
-	.jPlayer("onProgressChange", function(lp,ppr,ppa,pt,tt) {
- 		jpPlayInfo.text("at " + parseInt(ppa)+"% of " + $.jPlayer.convertTime(tt) + ", which is " + $.jPlayer.convertTime(pt));
-		playedPercent(this.element, position);
-		// demoStatusInfo(this.element, jpStatus);
-	})
-	.jPlayer("onSoundComplete", function() {
-		playNext();
-	});
-
-	$(".song").click( changeTrack );
-
-	$("#prev").click( function() {
-		playPrev();
-		$(this).blur();
-		return false;
-	});
-
-	$("#next").click( function() {
-		playNext();
-		$(this).blur();
-		return false;
-	});
+    controls.init();
+    player.init();
+});
 
 
-	function changeTrack(e) {
-		var previous_track = $("#song_" + now_playing);
-		if (previous_track) {
-			previous_track.removeClass('playing');
-		};
-		
-		$("#jquery_jplayer").jPlayer("setFile", $(this).attr("href")).jPlayer("play");
-		$(this).addClass('playing');
-		$(this).blur();
-		now_playing = parseInt(this.id.match(/\d+/));
-		console.log("now playing: " + now_playing);
-		return false;
-	}
-	
-	function playNext() {
-		var sel = "#song_" + (now_playing + 1)
-		var next_track = $(sel);
-		if (next_track) {
-			next_track.click();
-		};
-	}
-	
-	function playPrev() {
-		var sel = "#song_" + (now_playing - 1)
-		var next_track = $(sel);
-		if (next_track) {
-			next_track.click();
-		};
-	}
 
-	$.jPlayer.timeFormat.padMin = false;
-	$.jPlayer.timeFormat.padSec = false;
-	$.jPlayer.timeFormat.sepMin = "min ";
-	$.jPlayer.timeFormat.sepSec = "sec";
+// PLAYER
 
-	function playedPercent(myPlayer) {
-		var pct = Math.floor(myPlayer.jPlayer("getData", "diag.playedPercentAbsolute")) + "%"
-		position.text(pct)
-	}
+var player = {
+    'now_playing': null
+}
 
-	function demoStatusInfo(myPlayer, myInfo) {
-	    var jPlayerStatus = "<p>jPlayer is ";
-	    jPlayerStatus += (myPlayer.jPlayer("getData", "diag.isPlaying") ? "playing" : "stopped");
-	    jPlayerStatus += " at time: " + Math.floor(myPlayer.jPlayer("getData", "diag.playedTime")) + "ms.";
-	    jPlayerStatus += " (tt: " + Math.floor(myPlayer.jPlayer("getData", "diag.totalTime")) + "ms";
-	    jPlayerStatus += ", lp: " + Math.floor(myPlayer.jPlayer("getData", "diag.loadPercent")) + "%";
-	    jPlayerStatus += ", ppr: " + Math.floor(myPlayer.jPlayer("getData", "diag.playedPercentRelative")) + "%";
-	    jPlayerStatus += ", ppa: " + Math.floor(myPlayer.jPlayer("getData", "diag.playedPercentAbsolute")) + "%)</p>"
-	    myInfo.html(jPlayerStatus);
-	}
+player.init = function() {
+    $("#songlist .song").click(playTrack);
+    player.audio = $('#player')[0];
+    $(player.audio).bind('ended',player.next);
+    $(player.audio).bind('timeupdate',player.position);
+    player.now_playing = 0;
+    player.next();
+}
+
+player.load = function(url) {
+    player.audio.src = url;
+}
+
+player.play = function() {
+    player.audio.play();
+}
+
+player.pause = function() {
+    player.audio.pause();
+}
+
+player.stop = function() {
+    player.audio.pause();
+    player.audio.currentTime = 0;
+}
+
+player.prev = function() {
+    var prev_track = $("#song_" + (player.now_playing - 1));
+    if (prev_track) {
+        prev_track.click();
+    };
+}
+
+player.next = function() {
+    var next_track = $("#song_" + (player.now_playing + 1));
+    if (next_track) {
+        next_track.click();
+    };
+    player.position();
+}
+
+player.duration = function() {
+    player.audio.duration;
+}
+
+player.position = function() {
+    var remaining_time = "0:00";
+    if (player.audio.duration) {
+        var remaining = parseInt(player.audio.duration - player.audio.currentTime, 10);
+        var pos = Math.floor((player.audio.currentTime / player.audio.duration) * 100);
+        var mins = Math.floor(remaining/60,10);
+        var secs = remaining - mins*60;
+        if (("" + secs).length == 1) {
+          secs = "0" + secs;
+        }
+      remaining_time = mins + ":" + secs
+      $(controls.position).find("span").text(remaining_time);
+    }
+}
+
+function playTrack(e) {
+    var previous_track = $("#song_" + player.now_playing);
+    if (previous_track) {
+        previous_track.removeClass('playing');
+    };
+    player.load($(this).attr("href"));
+    $(controls.play).find("span").text("pause");
+    player.play();
+    $(this).addClass('playing');
+    $(this).blur();
+    player.now_playing = parseInt(this.id.match(/\d+/));
+    console.log("now playing: " + player.now_playing);
+    return false;
+}
 
 
-})
+
+// CONTROLS
+
+var controls = {
+    'button_width':         50,
+    'button_height':        24.5,
+    'button_padding':       6,
+    'button_background':    '#ddd',
+    'button_stroke':        '#333',
+    'controls_background':  "#bbb",
+}
+
+controls.init = function() {
+    controls.prev = $('#prev');
+    controls.play = $('#play');
+    controls.next = $('#next');
+    controls.position = $('#position');
+
+    $(controls.prev).click(controls.clickPrev);
+    $(controls.play).click(controls.clickPlay);
+    $(controls.next).click(controls.clickNext);
+}
+
+controls.clickPlay = function(event) {
+    if (player.audio.paused) {
+        console.log("playing");
+        player.play();
+        
+    } else {
+        console.log("pausing");
+        player.pause();
+        $(controls.play).find("span").text("play");
+    }
+}
+
+controls.clickNext = function(event) {
+    player.next();
+}
+
+controls.clickPrev = function(event) {
+    player.prev();
+}
+
+
+// DRAWING
+
+controls.drawControls = function() {
+    controls.drawButton(controls.prev.getContext('2d'), '<');
+    controls.drawButton(controls.next.getContext('2d'), '>');
+    controls.drawPlay('play');
+}
+
+controls.drawPlay = function(label) {
+    controls.drawButton(controls.play.getContext('2d'), label);
+}
+
+controls.drawButton = function(ctx,label) {
+    ctx.fillStyle = controls.button_background;
+    ctx.strokeStyle = controls.button_stroke;
+    controls.roundedRect(ctx,0,0,controls.button_width,controls.button_height,10);
+    //ctx.fillRect(0,0,controls.button_width,controls.button_height);
+    ctx.fillStyle = "black";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(label, controls.button_width / 2, controls.button_height / 2);
+}
+
+controls.roundedRect = function(ctx,x,y,width,height,radius) {
+  ctx.beginPath();
+  ctx.moveTo(x,y+radius);
+  ctx.lineTo(x,y+height-radius);
+  ctx.quadraticCurveTo(x,y+height,x+radius,y+height);
+  ctx.lineTo(x+width-radius,y+height);
+  ctx.quadraticCurveTo(x+width,y+height,x+width,y+height-radius);
+  ctx.lineTo(x+width,y+radius);
+  ctx.quadraticCurveTo(x+width,y,x+width-radius,y);
+  ctx.lineTo(x+radius,y);
+  ctx.quadraticCurveTo(x,y,x,y+radius);
+  ctx.fill();
+  ctx.stroke();
+}

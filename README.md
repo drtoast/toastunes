@@ -1,6 +1,6 @@
 # About
 
-ToasTunes is a lightweight [Sinatra](http://www.sinatrarb.com/)/[Rack](http://rack.rubyforge.org) app to browse and listen to your "iTunes Music" folder over the internet using an HTML5 browser. The [jPlayer](http://www.happyworm.com/jquery/jplayer/) JavaScript library and native HTML5 audio mean that Flash is not required. An optional script is included to export your iTunes album artwork to jpg/png for viewing in the browser (Mac OS X only).  Toastunes should run under Ruby 1.8.7 or 1.9.2, and should work under Passenger on shared hosting such as Dreamhost.
+ToasTunes is a lightweight [Sinatra](http://www.sinatrarb.com/)/[Rack](http://rack.rubyforge.org) app to browse and listen to your "iTunes Music" folder over the internet using an HTML5 browser. Native HTML5 audio means that Flash is not required. An optional script is included to export your iTunes album artwork to jpg/png for viewing in the browser (Mac OS X only).  ToasTunes should run under Ruby 1.8.7 or 1.9.2, and should work under Passenger on shared hosting such as Dreamhost.
 
 # Setup
 
@@ -27,4 +27,4 @@ http://yourhost.com:9292
 # Bugs
 
 * Artists, albums, and songs containing an ampersand (&) or plus sign (+) don't work
-* Tracks in an album playlist are not preloaded, so there is a slight pause between tracks. An implementation using [two jPlayer instances](http://groups.google.com/group/jplayer/browse_thread/thread/bb65740673c1e599) will probably be necessary.
+* Tracks in an album playlist are not preloaded, so there is a slight pause between tracks. An implementation using two audio audio player instances will probably be necessary.

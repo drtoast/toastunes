@@ -4,5 +4,8 @@ views:
 music:
     '/home/username/yourdomain/public/music'
     
+public:
+    '/home/username/yourdomain/public'
+    
 environment:
     :production

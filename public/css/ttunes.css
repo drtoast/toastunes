@@ -3,8 +3,6 @@
 body {
     font-size:16px;
     line-height:1.2;   /* 30px */
-/*	padding:20px 20px;
-    margin:0 5px;*/
     font-family: corbel, 'lucida grande', helvetica, sans-serif;
     color:#212122;
     background-color:#eee;
@@ -13,10 +11,6 @@ body {
 /* BREADCRUMBS */
 #breadcrumbs {
 	font-size:20px;
-	padding-bottom:20px;
-}
-
-#controls {
 	padding-bottom:20px;
 }
 
@@ -35,7 +29,6 @@ li {
     float:left;
     padding-right:10px;
 }
-
 
 /* LAYOUT */
 #container {
@@ -78,11 +71,57 @@ a:visited {
     background:#fff;
 }
 a:hover {
-    background:#000;
+    background:#666;
     color:#fff;
     text-decoration:none;
 }
 a.playing {
 	color: #900;
 	font-weight:bold;
+}
+
+
+/* BUTTONS */
+
+#controls {
+	padding-bottom:10px;
+}
+
+#controls li {
+    padding-right:5px;
+}
+
+a.button {
+/*    background: transparent url('/images/bg_button_a.gif') no-repeat scroll top right;*/
+    border:1px solid #999;
+    border-radius:18px;
+    background: #fff;
+    background-image:-webkit-gradient(linear, 0% 1%, 0% 95%, from(rgba(240,240,240,1.0)), to(rgba(200,200,200,1.0)));
+    color: #444;
+    display: block;
+    float: left;
+    font: normal 12px arial, sans-serif;
+    height: 24px;
+    margin-right: 6px;
+    padding-right: 18px; /* sliding doors padding */
+    text-decoration: none;
+}
+
+a.button span {
+/*    background: transparent url('/images/bg_button_span.gif') no-repeat;*/
+    display: block;
+    line-height: 14px;
+    padding: 5px 0 5px 18px;
+}
+
+a.button:active {
+/*    background-position: bottom right;*/
+    background-image:-webkit-gradient(linear, 0% 1%, 0% 95%, from(rgba(200,200,200,1.0)), to(rgba(240,240,240,1.0)));
+    color: #999;
+    outline: none; /* hide dotted outline in Firefox */
+}
+
+a.button:active span {
+/*    background-position: bottom left;*/
+    padding: 6px 0 4px 18px; /* push text down 1px */
 }

@@ -13,24 +13,32 @@
       %li= @album
 
   #songlist.grid_4
-  
+
     #controls
       %ul
         %li
-          %a#prev{:href=>'#'} &lt;
-          %a#play{:href=>'#'} Play
-          %a#pause{:href=>'#'} Pause
-          %a#next{:href=>'#'} &gt;
-          %span#position &nbsp;
-      
+          %a.button{:id => "prev", :href=>"#"}
+            %span &lt;&lt;
+        %li
+          %a.button{:id => "play", :href=>"#"}
+            %span play
+        %li
+          %a.button{:id => "next", :href=>"#"}
+            %span &gt;&gt;
+        %li
+          %a.button{:id => "position", :href=>"#"}
+            %span 0:00
+      %canvas{:id=>"playhead", :width => 200, :height => 10}
+
     - @songs.each_with_index do |song, i|
       .songrow
         %a.song{:href=>song_url(song), :id=>"song_#{i+1}"}= song_display(song)
-    #jquery_jplayer
+    #player_container
+      %audio{:id=>"player",:autobuffer=>"autobuffer", :autoplay=>false}
     #status
-  
+
   #cover.grid_8
     - if @cover
       %img{:src => @cover, :class=>'bounded', :id=>'cover_image'}
-      
+
   .clear &nbsp;
