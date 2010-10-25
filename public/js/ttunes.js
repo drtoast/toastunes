@@ -69,7 +69,7 @@ player.position = function() {
           secs = "0" + secs;
         }
       remaining_time = mins + ":" + secs
-      $(controls.position).find("span").text(remaining_time);
+      player.current_track.text(player.current_title + " [" + remaining_time + "]")
     }
 }
 
@@ -78,13 +78,18 @@ function playTrack(e) {
     if (previous_track) {
         previous_track.removeClass('playing');
     };
-    player.load($(this).attr("href"));
+    if (player.current_track) {
+        player.current_track.text(player.current_title);
+    }
+    player.current_track = $(this);
+    player.current_title = player.current_track.text();
+    player.load(player.current_track.attr("href"));
     $(controls.play).find("span").text("pause");
     player.play();
-    $(this).addClass('playing');
-    $(this).blur();
+    player.current_track.addClass('playing');
+    player.current_track.blur();
     player.now_playing = parseInt(this.id.match(/\d+/));
-    console.log("now playing: " + player.now_playing);
+    console.log("now playing: " + player.now_playing + " (" + player.current_title + ")");
     return false;
 }
 
@@ -105,7 +110,6 @@ controls.init = function() {
     controls.prev = $('#prev');
     controls.play = $('#play');
     controls.next = $('#next');
-    controls.position = $('#position');
 
     $(controls.prev).click(controls.clickPrev);
     $(controls.play).click(controls.clickPlay);

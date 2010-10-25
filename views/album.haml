@@ -25,9 +25,6 @@
         %li
           %a.button{:id => "next", :href=>"#"}
             %span &gt;&gt;
-        %li
-          %a.button{:id => "position", :href=>"#"}
-            %span 0:00
       %canvas{:id=>"playhead", :width => 200, :height => 10}
 
     - @songs.each_with_index do |song, i|
