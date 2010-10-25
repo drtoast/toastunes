@@ -33,13 +33,13 @@ player.init = function() {
 }
 
 player.load = function(url) {
-    console.log(player.load_status + "load");
+    console.log(player.load_status + "player.load");
     player.audio.src = url;
 }
 
 player.play = function() {
     // controls.showPlay();
-    console.log(player.load_status + "play");
+    console.log(player.load_status + "canplay");
     controls.playStatus("pause");
     player.audio.play();
 }
@@ -166,24 +166,26 @@ controls.playStatus = function(txt) {
 }
 
 controls.showLoadStart = function() {
+    player.showTrackRemaining('-:--');
     player.load_status = "+";
-    console.log(player.load_status + "showLoadStart");
+    console.log(player.load_status + "loadstart");
 }
 
 controls.showLoadedData = function() {
     player.load_status = "*";
-    console.log(player.load_status + "showLoadedData");
+    console.log(player.load_status + "loadeddata");
 }
 
 controls.showCanPlayThrough = function() {
     player.load_status = "";
-    console.log("showCanPlayThrough");
+    console.log("canplaythrough");
 }
 
 
 // yuck. better way to interpret MediaError?
 // http://www.w3.org/TR/html5/video.html
 controls.showError = function(e) {
+    console.log("error");
     for (var propName in e.srcElement.error) {
         if (e.srcElement.error[propName] == e.srcElement.error.code) {
             $('#errors').text(propName);
