@@ -14,6 +14,19 @@ body {
 	padding-bottom:20px;
 }
 
+#home {
+    padding-top:16px;
+    font-size:12px;
+}
+
+#artist {
+    font-size: 30px;
+}
+
+#album {
+    font-size:18px;
+}
+
 .path_sep {
 	font-size: 10px;
 }
@@ -30,21 +43,6 @@ li {
     padding-right:10px;
 }
 
-/* LAYOUT */
-#container {
-/*    width:800px;
-    margin:0 auto;*/
-}
-#songlist {
-/*	float: left; 
-	width: 300px; 
-	padding-left: 0px;
-	padding-right: 10px; */
-}
-#cover {
-/*	float: left; 
-	padding: 0px; */
-}
 
 /* COVER */
 #cover_image {

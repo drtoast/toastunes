@@ -3,25 +3,21 @@
 #container.container_12
 
   #breadcrumbs.grid_12
-    %ul
-      %li
-        %a{:href=>"/"} Music
-      %li &gt;
-      %li
-        %a{:href=>artist_url(@artist)}= @artist
-      %li &gt;
-      %li= @album
+    #artist
+      %a{:href=>artist_url(@artist)}= @artist
+    #album
+      %span= @album
 
   #songlist.grid_4
 
     #controls
       %ul
         %li
-          %a.button{:id => "prev", :href=>"#"}
-            %span &lt;&lt;
-        %li
           %a.button{:id => "play", :href=>"#"}
             %span play
+        %li
+          %a.button{:id => "prev", :href=>"#"}
+            %span &lt;&lt;
         %li
           %a.button{:id => "next", :href=>"#"}
             %span &gt;&gt;
@@ -32,7 +28,8 @@
         %a.song{:href=>song_url(song), :id=>"song_#{i+1}"}= song_display(song)
     #player_container
       %audio{:id=>"player",:autobuffer=>"autobuffer", :autoplay=>false}
-    #status
+    #home
+      %a{:href=>"/"} < home
 
   #cover.grid_8
     - if @cover
