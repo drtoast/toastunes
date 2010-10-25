@@ -27,9 +27,10 @@
       %audio{:id=>"player",:autobuffer=>"autobuffer", :autoplay=>false}
     #home
       %a{:href=>"/"} < home
+    #errors
   #right.grid_8
     #cover
       - if @cover
         %img{:src => @cover, :class=>'bounded', :id=>'cover_image'}
   .clear &nbsp;
-  #debug
+ 

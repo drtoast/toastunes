@@ -25,6 +25,12 @@ body {
     font-size:18px;
 }
 
+#errors {
+    padding-top:20px;
+    color: #d00;
+    font-weight:bold;
+}
+
 .path_sep {
 	font-size: 10px;
 }

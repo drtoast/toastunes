@@ -19,8 +19,8 @@ player.init = function() {
 	var a = $(player.audio);
     a.bind('ended',         player.next);
     a.bind('timeupdate',    player.position);
-    // TODO: canplay, 
-    // a.bind('error',      controls.showError);
+    a.bind('error',         controls.showError);
+    // TODO: canplay, progress, etc.
     // a.bind('progress',   controls.showLoadProgress); // FIXME: returns 0 in chrome
 
     player.now_playing = 0;
@@ -94,7 +94,8 @@ function playTrack(e) {
     player.current_track.addClass('playing');
     player.current_track.blur();
     player.now_playing = parseInt(this.id.match(/\d+/));
-    console.log("now playing: " + player.now_playing + " (" + player.current_title + ")");
+    var msg = "now playing: " + player.now_playing + " (" + player.current_title + ")";
+    console.log(msg);
     return false;
 }
 
@@ -146,6 +147,10 @@ controls.showLoadProgress = function() {
         var loaded = parseInt(((player.audio.buffered.end(0) / player.audio.duration) * 100), 10);
         $('#loaded').text(loaded + "%");
     }
+}
+
+controls.showError = function(e) {
+    $('#errors').text("ERROR: " + e.error);
 }
 
 
