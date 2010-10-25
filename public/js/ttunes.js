@@ -16,8 +16,13 @@ var player = {
 player.init = function() {
     $("#songlist .song").click(playTrack);
     player.audio = $('#player')[0];
-    $(player.audio).bind('ended',player.next);
-    $(player.audio).bind('timeupdate',player.position);
+	var a = $(player.audio);
+    a.bind('ended',         player.next);
+    a.bind('timeupdate',    player.position);
+    // TODO: canplay, 
+    // a.bind('error',      controls.showError);
+    // a.bind('progress',   controls.showLoadProgress); // FIXME: returns 0 in chrome
+
     player.now_playing = 0;
     player.next();
 }
@@ -136,6 +141,25 @@ controls.clickPrev = function(event) {
     player.prev();
 }
 
+controls.showLoadProgress = function() {
+    if ((player.audio.buffered != undefined) && (player.audio.buffered.length != 0)) {
+        var loaded = parseInt(((player.audio.buffered.end(0) / player.audio.duration) * 100), 10);
+        $('#loaded').text(loaded + "%");
+    }
+}
+
+
+// UTILITIES
+
+function props(obj) {
+    var propList = "";
+    for(var propName in obj) {
+       if(typeof(obj[propName]) != "undefined") {
+          propList += (propName + ":" + obj[propName] + ", ");
+       }
+    }
+    return propList;
+}
 
 // DRAWING
 

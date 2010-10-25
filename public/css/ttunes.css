@@ -8,10 +8,8 @@ body {
     background-color:#eee;
 }
 
-/* BREADCRUMBS */
-#breadcrumbs {
-	font-size:20px;
-	padding-bottom:20px;
+#container {
+	padding-top:10px;
 }
 
 #home {
@@ -49,14 +47,8 @@ li {
 	padding: 10px;
 	background: #fff;
 }
-.bounded {
-	max-width:400;
-}
-.unbounded {
-	max-width:80%;
-	position:absolute;
-	top:10px;
-	left:10px;
+#cover_image.bounded {
+	max-width:400px;
 }
 
 /* LINKS */
@@ -82,15 +74,18 @@ a.playing {
 /* BUTTONS */
 
 #controls {
-	padding-bottom:10px;
+	padding-top:20px;
 }
 
 #controls li {
     padding-right:5px;
 }
 
+#songlist {
+	padding-top:20px;
+}
+
 a.button {
-/*    background: transparent url('/images/bg_button_a.gif') no-repeat scroll top right;*/
     border:1px solid #999;
     border-radius:18px;
     background: #fff;
@@ -105,21 +100,23 @@ a.button {
     text-decoration: none;
 }
 
+a.button#play {
+	width:50px;
+	text-align:center;
+}
+
 a.button span {
-/*    background: transparent url('/images/bg_button_span.gif') no-repeat;*/
     display: block;
     line-height: 14px;
     padding: 5px 0 5px 18px;
 }
 
 a.button:active {
-/*    background-position: bottom right;*/
     background-image:-webkit-gradient(linear, 0% 1%, 0% 95%, from(rgba(200,200,200,1.0)), to(rgba(240,240,240,1.0)));
     color: #999;
     outline: none; /* hide dotted outline in Firefox */
 }
 
 a.button:active span {
-/*    background-position: bottom left;*/
     padding: 6px 0 4px 18px; /* push text down 1px */
 }

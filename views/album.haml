@@ -1,15 +1,11 @@
 %title= @album
 
 #container.container_12
-
-  #breadcrumbs.grid_12
+  #left.grid_4
     #artist
       %a{:href=>artist_url(@artist)}= @artist
     #album
       %span= @album
-
-  #songlist.grid_4
-
     #controls
       %ul
         %li
@@ -21,18 +17,19 @@
         %li
           %a.button{:id => "next", :href=>"#"}
             %span &gt;&gt;
-      %canvas{:id=>"playhead", :width => 200, :height => 10}
-
-    - @songs.each_with_index do |song, i|
-      .songrow
-        %a.song{:href=>song_url(song), :id=>"song_#{i+1}"}= song_display(song)
+        %li
+          #loaded
+    #songlist
+      - @songs.each_with_index do |song, i|
+        .songrow
+          %a.song{:href=>song_url(song), :id=>"song_#{i+1}"}= song_display(song)
     #player_container
       %audio{:id=>"player",:autobuffer=>"autobuffer", :autoplay=>false}
     #home
       %a{:href=>"/"} < home
-
-  #cover.grid_8
-    - if @cover
-      %img{:src => @cover, :class=>'bounded', :id=>'cover_image'}
-
+  #right.grid_8
+    #cover
+      - if @cover
+        %img{:src => @cover, :class=>'bounded', :id=>'cover_image'}
   .clear &nbsp;
+  #debug
