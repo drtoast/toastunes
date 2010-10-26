@@ -10,8 +10,7 @@ var err = null;
 // PLAYER
 
 var player = {
-    'now_playing': null,
-    'load_status' : null
+    'now_playing': null
 }
 
 player.init = function() {
@@ -33,25 +32,25 @@ player.init = function() {
 }
 
 player.load = function(url) {
-    console.log(player.load_status + "player.load");
+    console.log("player.load");
     player.audio.src = url;
 }
 
 player.play = function() {
     // controls.showPlay();
-    console.log(player.load_status + "canplay");
+    console.log("canplay");
     controls.playStatus("pause");
     player.audio.play();
 }
 
 player.pause = function() {
-    console.log("pausing");
+    console.log("player.pause");
     controls.playStatus("play");
     player.audio.pause();
 }
 
 player.stop = function() {
-    console.log("stopping");
+    console.log("player.stop");
     player.audio.pause();
     player.audio.currentTime = 0;
 }
@@ -73,13 +72,13 @@ player.next = function() {
 
 // append the given text to the current playing track title
 player.showTrackRemaining = function(remaining) {
-    player.current_track.text(player.current_title + " [" + remaining + "]" + player.load_status);
+    player.current_track.text(player.current_title + " [" + remaining + "]");
 }
 
 
 // calculate the time remaining and append it to the playing track title
 player.position = function() {
-    if (player.audio.duration) {
+    if (player.audio && player.audio.duration) {
         var remaining = parseInt(player.audio.duration - player.audio.currentTime, 10);
         var pos = Math.floor((player.audio.currentTime / player.audio.duration) * 100);
         var mins = Math.floor(remaining/60,10);
@@ -95,10 +94,6 @@ player.position = function() {
 
 function playTrack(e) {
     $('#errors').text("");
-    // var previous_track = $("#song_" + player.now_playing);
-    // if (previous_track) {
-    //     previous_track.removeClass('playing');
-    // };
     if (player.current_track) {
         player.current_track.removeClass('playing');
         player.current_track.text(player.current_title);
@@ -166,18 +161,15 @@ controls.playStatus = function(txt) {
 }
 
 controls.showLoadStart = function() {
-    player.showTrackRemaining('-:--');
-    player.load_status = "+";
-    console.log(player.load_status + "loadstart");
+    player.showTrackRemaining('0:00');
+    console.log("loadstart");
 }
 
 controls.showLoadedData = function() {
-    player.load_status = "*";
-    console.log(player.load_status + "loadeddata");
+    console.log("loadeddata");
 }
 
 controls.showCanPlayThrough = function() {
-    player.load_status = "";
     console.log("canplaythrough");
 }
 
