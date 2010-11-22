@@ -65,11 +65,8 @@ player.position = function() {
         var pos = Math.floor((player.audio.currentTime / player.audio.duration) * 100);
         var mins = Math.floor(remaining/60,10);
         var secs = remaining - mins*60;
-        if (("" + secs).length == 1) {
-          secs = "0" + secs;
-        }
-      remaining_time = mins + ":" + secs
-      player.current_track.text(player.current_title + " [" + remaining_time + "]")
+        remaining_time = ('-' + mins + ':' + (secs > 9 ? secs : '0' + secs));
+        player.current_track.text(player.current_title + " [" + remaining_time + "]");
     }
 }
 
