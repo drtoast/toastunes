@@ -2,15 +2,11 @@
 
 #container.container_12
 
-  #breadcrumbs.grid_12
-    #artist
-      %span= @artist
-  .clear
-
-  #songlist.grid_12
-    - @albums.each do |album|
-      %a{:href=>album_url(album)}= album
-      %br
+  #left.grid_12
+    #artist= @artist
+    #songlist
+      - @albums.each do |album|
+        %a{:href=>album_url(album)}= album
+        %br
     #home
       %a{:href=>"/"} < home
-    

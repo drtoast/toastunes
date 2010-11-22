@@ -2,12 +2,9 @@
 
 #container.container_12
 
-  #breadcrumbs.grid_12
+  #left.grid_12
     #artist Music
-  
-  .clear
-  
-  #songlist.grid_12
-    - @artists.each do |artist|
-      %a{:href=>artist_url(artist)}= artist
-      %br
+    #songlist
+      - @artists.each do |artist|
+        %a{:href=>artist_url(artist)}= artist
+        %br
