@@ -134,7 +134,7 @@ class AlbumsController < ApplicationController
       @album.cover = nil
       file = params[:file]
       ext = File.extname(file.original_filename)[1..-1]
-      @album.add_cover(file.local_path, ext)
+      @album.add_cover(file.path, ext, false) # TODO: segfault when processing thumbnail in mongrel
       logger.info "*** FILE: #{file.original_filename}, #{file.path}, #{file.inspect}"
       if @album.save
         # TODO: ajax upload doesn't work

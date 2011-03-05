@@ -55,12 +55,14 @@ class Album
   end
   
   # resize and attach the image at the raw path
-  def add_cover(original, format=nil)
+  def add_cover(original, format=nil, thumb=true)
     processor = Toastunes::ImageProcessor.new
     full_path = processor.save_cover(id, original, format)
-    thumbnail_path = processor.write_thumbnail(id, full_path)
     self.cover = File.basename(full_path)
-    self.thumbnail = File.basename(thumbnail_path)
+    if thumb
+      thumbnail_path = processor.write_thumbnail(id, full_path)
+      self.thumbnail = File.basename(thumbnail_path)
+    end
   end
   
   def download_cover(url)
