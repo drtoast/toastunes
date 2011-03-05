@@ -123,6 +123,7 @@ class Toastunes::TagParser
             mime_type, pic = pic[1..-1].split(/\x00/, 2)
             picture_type = pic[0]
             description, data = pic[1..-1].split(/\x00/, 2)
+            puts mime_type
             raise "mime type not recognized: #{image_format}" unless IMAGE_FORMATS[mime_type]
             full_path = write_image(IMAGE_FORMATS[mime_type] || mime_type, album_id, data)
           rescue => e
@@ -154,7 +155,7 @@ class Toastunes::TagParser
     full_path = processor.write_full_data(album_id, format, data)
     
     # save thumbnail
-    processor.write_thumb(full_path)
+    processor.write_thumbnail(album_id, full_path)
     
     # ImageScience.with_image(full) do |img|
     #   img.thumbnail(100) do |thumb|

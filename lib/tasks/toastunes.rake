@@ -25,6 +25,21 @@ namespace :toastunes do
       Toastunes::TunesParser.parse!
     end
     
-  end
+  end # namespace :read
+  
+  namespace :process do
+    
+    desc "process all album covers, artists, and genres"
+    task :albums => :environment do
+      Album.all.each do |a|
+        a.extract_cover
+        a.set_artist
+        a.set_genre
+        a.save
+        puts [a.title, a.artist ? a.artist.name : nil].join("\t")
+      end
+    end # task :albums
+    
+  end # namespace :process
   
 end

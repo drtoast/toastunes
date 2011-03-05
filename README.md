@@ -32,6 +32,7 @@ ToasTunes is a social web app for browsing and listening to a music library, add
 ## edit config files
 
 edit config/toastunes.yml.sample, rename to toastunes.yml
+
 edit config/mongoid.yml.sample, rename to toastunes.yml
 
 To download album art via Amazon AWS, add your developer key id and secret key to config/toastunes.yml.
@@ -41,8 +42,7 @@ To download album art via Amazon AWS, add your developer key id and secret key t
 ToasTunes is meant for private use, so public user registration is disabled.  An admin can add a new user in the rails console:
 
     rails c
-    u = User.new :email => 'you@something.com', :password => '123456'
-    u.save!
+    User.create :email => 'you@something.com', :password => '123456'
 
 ## load an iTunes library
 
@@ -55,6 +55,10 @@ Edit the path to your iTunes library XML in config/toastunes.yml, then:
 
     rake toastunes:read:itunes
     
+Process album art, artists, genres
+
+    rake toastunes:process:albums
+
 ## load a directory
 
 Make sure your library directory structure is the following:
@@ -63,12 +67,16 @@ Make sure your library directory structure is the following:
 
 Create a symlink from your music directory to public/music/yourlibrary:
 
-    cd toastunes/music
-    ln -s /volumes/yourlibrary yourlibrary
+    cd toastunes
+    mkdir public/music
+    mkdir public/images/covers
+    mkdir public/images/thumbnails
+    ln -s /volumes/yourlibrary public/music/yourlibrary
 
-Run this rake task:
+Parse your library
 
     rake toastunes:read:artists[yourlibrary]
+
 
 # Bugs
 
