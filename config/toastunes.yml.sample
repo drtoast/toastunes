@@ -1,0 +1,13 @@
+# load itunes library xml
+itunes_library:
+    "/Users/you/Music/iTunes/iTunes Music Library.xml"
+
+# strip this string from the "location" element in itunes XML library
+itunes_base:
+    "file://localhost/Users/you/Music/iTunes/iTunes%20Music/"
+
+amazon_access_key_id:
+    "XXXXXXXXXXXXXXXXXX"
+    
+amazon_secret_access_key:
+    'XXXXXXXXXXXXXXXXXXX'

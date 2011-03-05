@@ -1,0 +1,10 @@
+.album_thumbnail= link_to image_tag(album.thumbnail ? "thumbnails/#{album.thumbnail}" : "no_cover.jpg", :class => 'thumbnail shadow'), album
+.album_details
+  .artist_album= album.artist ? link_to(album.artist.name, album.artist) : '(no artist)'
+  .artist= link_to(album.title, album)
+  .rating
+    - (album.rating.to_i / 20).times do |i|
+      .stars.bright
+    - (5 - (album.rating.to_i / 20)).times do |i|
+      .stars
+.clear

@@ -1,0 +1,12 @@
+%title Genres
+
+#container.container_12
+
+  #left.grid_12
+    .grid_6.alpha
+      .round_box.topmost
+        %span.current_category= 'Genres'
+      - @genres.each do |genre|
+        .round_box= render :partial => 'genre', :locals => {:genre => genre}
+    .grid_2
+      .round_box.topmost= render :partial => 'shared/right_nav'

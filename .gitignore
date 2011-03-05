@@ -1,8 +1,11 @@
 *~
-public/music
-public/images/large
-config.yml
+/public/music
+/public/images/covers
+/public/images/thumbnails
+/log/*
+/tmp/*
 Gemfile.lock
-Capfile
 .bundle
 .htaccess
+/config/*.yml
+/db/*.sqlite3

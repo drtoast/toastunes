@@ -1,0 +1,13 @@
+.album_thumbnail= link_to image_tag(album.thumbnail ? "thumbnails/#{album.thumbnail}" : "no_cover.jpg", :class => "thumbnail shadow"), album
+.album_details
+  = form_for([@album, @new_comment], :remote => true) do |f|
+    .comment_body
+      = f.text_area(:body, {:cols => 40, :rows => 5})
+    .comment_submit= f.submit('comment', {:id => "comment_submit"})
+    .comment_attribution
+      - if user_signed_in?
+        as
+        = current_user.email
+      - else
+        = link_to "sign in", new_user_session_path
+.clear

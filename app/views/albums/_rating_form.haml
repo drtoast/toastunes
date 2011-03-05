@@ -1,0 +1,5 @@
+= form_tag url_for(:controller => :albums, :id => album.id, :action => "rate"), :remote => true, :class => "rating" do |f|
+  - [20, 40, 60, 80, 100].each do |rating|
+    = label_tag("rating_#{rating}", content_tag(:span, rating), {:class=>"rating", :id=>rating})
+    = radio_button_tag("rating", rating, album.closest_rating == rating, :class => 'rating_button submittable')
+  = submit_tag 'submit', {:id => "rating_submit"}

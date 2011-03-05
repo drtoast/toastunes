@@ -1,0 +1,145 @@
+class Album
+  include Mongoid::Document
+  include Mongoid::Timestamps
+  
+  # fields
+  field :title, :type => String
+  field :artist_name, :type => String # can't use "artist" due to association
+  field :compilation, :type => Boolean
+  field :cover, :type => String
+  field :thumbnail, :type => String
+  field :rating, :type => Integer # 0 to 100
+  field :genre, :type => String
+  field :library, :type => String # where does this album's files live?
+  field :cover_download_at, :type => Time # when did we add an amazon cover?
+
+  # indices
+  index :created_at
+  index :title
+  index :rating
+
+  # associations
+  embeds_many :tracks
+  references_many :comments
+  references_many :ratings
+  referenced_in :artist
+  referenced_in :genre
+  
+  # kind
+  scope :compilation, :where => {:compilation => true}
+  scope :aac, :where => {:kind => "AAC audio file"}
+  scope :mp3, :where => {:kind => "MPEG audio file"}
+  
+  # sweetness
+  scope :sweet, :where => {:rating.gt => 60}
+  scope :okay, :where => {:rating => 60}
+  scope :ugh, :where => {:rating.lte => 40}
+  
+  def process_album
+    extract_cover
+    set_artist
+    set_genre
+    save
+  end
+  
+  # extract a cover from the ID3 tag
+  def extract_cover(replace_cover=true)
+    if cover && !replace_cover
+      return false
+    end
+    return false if tracks.empty?
+    if full_path = tracks.first.extract_cover
+      self.cover = File.basename(full_path)
+      self.thumbnail = "#{id}.png"
+    end
+  end
+  
+  # resize and attach the image at the raw path
+  def add_cover(original, format=nil)
+    processor = Toastunes::ImageProcessor.new
+    full_path = processor.save_cover(id, original, format)
+    thumbnail_path = processor.write_thumbnail(id, full_path)
+    self.cover = File.basename(full_path)
+    self.thumbnail = File.basename(thumbnail_path)
+  end
+  
+  def download_cover(url)
+    format = File.extname(url)[1..-1]
+    destination = File.join(Rails.root, 'public', 'images', 'covers', "#{id}.#{format}")
+    response = download(url, destination)
+    if response.kind_of? Net::HTTPOK
+      self.cover = File.basename(destination)
+      # TODO: this segfaults when running in Mongrel
+      # save_thumbnail
+    end
+  end
+  
+  def download_thumbnail(url)
+    format = File.extname(url)[1..-1]
+    destination = File.join(Rails.root, 'public', 'images', 'thumbnails', "#{id}.#{format}")
+    response = download(url, destination)
+    if response.kind_of? Net::HTTPOK
+      self.thumbnail = File.basename(destination)
+    end
+  end
+
+  def save_thumbnail
+    processor = Toastunes::ImageProcessor.new
+    if cover_path
+      thumb = processor.write_thumbnail(id, cover_path)
+      if thumb
+        self.thumbnail = File.basename(thumb)
+      end
+    end
+  end
+  
+  def cover_path
+    if cover
+      File.join(Rails.root, 'public', 'images', 'covers', cover)
+    else
+      nil
+    end
+  end
+  
+  def download(url, destination)
+    uri = URI.parse(url)
+    response = Net::HTTP.start(uri.host) do |http|
+      response = http.get(uri.path)
+      open(destination, "wb") do |file|
+        file.write(response.body)
+      end
+      response
+    end
+  end
+  
+  def set_artist(name=nil)
+    if name
+      self.artist_name = name
+    else
+      # detect artist name via tracks
+      artists = tracks.collect{|t| t.artist_name}.uniq
+      if artists.length == 1
+        self.artist_name = artists.first.to_s.blank? ? 'No Artist' : artists.first
+      else
+        # puts "COMPILATION: #{artists.join(",")}"
+        self.artist_name = 'Compilations'
+      end
+    end
+    self.artist = Artist.where(:name => artist_name).first || Artist.create!(:name => artist_name)
+  end
+  
+  def set_genre
+    genres = tracks.collect{|t| t.genre}.uniq
+    if genres.length == 1
+      self.genre = Genre.where(:name => genres.first).first || Genre.create!(:name => genres.first)
+    else
+      self.genre = nil
+    end
+  end
+  
+  def closest_rating
+    # need a rating quantized to 0,20,40,60,80 for form checkboxes
+    (rating.to_i / 20) * 20
+  end
+  
+end

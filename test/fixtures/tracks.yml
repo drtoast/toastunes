@@ -1,0 +1,25 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  title: MyString
+  artist: MyString
+  duration: 1
+  rating: 1
+  kind: MyString
+  size: 1
+  bit_rate: 1
+  location: MyString
+  year: 1
+  track: 1
+
+two:
+  title: MyString
+  artist: MyString
+  duration: 1
+  rating: 1
+  kind: MyString
+  size: 1
+  bit_rate: 1
+  location: MyString
+  year: 1
+  track: 1

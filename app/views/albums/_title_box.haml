@@ -1,0 +1,8 @@
+%span.current_category= link_to album.artist.name, album.artist
+#album
+  %span= album.title
+#rating= render :partial => 'rating_form', :locals => {:album => album}
+%br
+#genre
+  = form_tag url_for(:controller => :albums, :id => album.id, :action => "genre"), :remote => true, :class => 'genre_form' do |f|
+    = select_tag("genre", options_from_collection_for_select(genres, "id", "name", album.genre ? album.genre.id : nil), :class => "genre submittable")

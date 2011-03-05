@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  title: MyString
+  artist: MyString
+  compilation: false
+  cover: MyString
+  rating: 1
+  genre: MyString
+
+two:
+  title: MyString
+  artist: MyString
+  compilation: false
+  cover: MyString
+  rating: 1
+  genre: MyString

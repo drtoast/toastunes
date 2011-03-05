@@ -1,0 +1,2 @@
+- user.ratings.desc(:created_at).limit(20).each do |rating|
+  = render :partial => "shared/rating", :object => rating

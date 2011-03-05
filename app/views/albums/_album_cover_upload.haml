@@ -1,0 +1,3 @@
+= form_tag upload_cover_album_path(album), :remote => false,  :multipart => true do
+  = file_field_tag "file", :accept => 'image/png,image/gif,image/jpeg'
+  = submit_tag "Upload Cover"

@@ -1,30 +1,77 @@
 # About
 
-ToasTunes is a lightweight [Sinatra](http://www.sinatrarb.com/)/[Rack](http://rack.rubyforge.org) app to browse and listen to your "iTunes Music" folder over the internet using an HTML5 browser. Native HTML5 audio means that Flash is not required. An optional script is included to export your iTunes album artwork to jpg/png for viewing in the browser (Mac OS X only).  ToasTunes should run under Ruby 1.8.7 or 1.9.2, and should work under Passenger on shared hosting such as Dreamhost.
+ToasTunes is a social web app for browsing and listening to a music library, adding comments and ratings, and adding album art and genre classifications. ToasTunes was written by @drtoast.
+
+* Created using [Ruby 1.9](http://www.ruby-lang.org/), [Rails 3](http://rubyonrails.org/), [jQuery](http://jquery.com/), CSS3, HTML5
+* [MongoDB](http://www.mongodb.org/) datastore via [Mongoid](http://mongoid.org)
+* [HTML5 audio](http://diveintohtml5.org/) playback (no Flash required)
+* [Devise](https://github.com/plataformatec/devise) for secure user authentication
+* [HAML](http://haml-lang.com/) view templates
+* [ID3](https://github.com/moumar/ruby-mp3info) tag parsing and album art extraction
+* Album art retrieval using [Amazon AWS](http://aws.amazon.com/) API
+* [Bundler](http://gembundler.com/) for dependency management
 
 # Setup
 
-Rename config.sample.yml to config.yml, and specify the full paths to your "music" and "views" directories.
+## installation, Mac OSX:
 
-Then:
-
-    rvm 1.9.2 (optional)
+    rvm install 1.9.2
+    brew install mongodb
+    brew install ghostscript
+    brew install imagemagick
+    git clone git://github.com/drtoast/toastunes.git
     cd toastunes
-    bundle install
-    cd public; ln -s '/users/yourname/Music/iTunes/iTunes Music' music;
-    rake export_artwork (optional)
+    bundle
+    
+## installation, BSD
 
-# Run
+    todo
 
-If you're running in passenger, touch tmp/restart.txt.  Or to run locally on port 9292:
+## edit config files
 
-    rackup config.ru
+edit config/toastunes.yml.sample, rename to toastunes.yml
+edit config/mongoid.yml.sample, rename to toastunes.yml
 
-# Listen and Enjoy
+To download album art via Amazon AWS, add your developer key id and secret key to config/toastunes.yml.
 
-http://yourhost.com:9292
+## add users
+
+ToasTunes is meant for private use, so public user registration is disabled.  An admin can add a new user in the rails console:
+
+    rails c
+    u = User.new :email => 'you@something.com', :password => '123456'
+    u.save!
+
+## load an iTunes library
+
+Create a symlink from your iTunes Music folder to public/music/itunes:
+
+    cd toastunes/music
+    ln -s ~/Music/iTunes/iTunes\ Music itunes
+
+Edit the path to your iTunes library XML in config/toastunes.yml, then:
+
+    rake toastunes:read:itunes
+    
+## load a directory
+
+Make sure your library directory structure is the following:
+
+    yourlibrary/Artist Name/Album Title/Song Title.mp3
+
+Create a symlink from your music directory to public/music/yourlibrary:
+
+    cd toastunes/music
+    ln -s /volumes/yourlibrary yourlibrary
+
+Run this rake task:
+
+    rake toastunes:read:artists[yourlibrary]
 
 # Bugs
 
-* Artists, albums, and songs containing an ampersand (&) or plus sign (+) don't work
-* Tracks in an album playlist are not preloaded, so there is a slight pause between tracks. An implementation using two audio audio player instances will probably be necessary.
+Currently only runs well in Google Chrome.
+
+Can't read filenames with funky characters on Samba shares, e.g. "Miss Kitten & The Hacker/Two/09 Inutile EternitÃ©.mp3"
+
+Parsing of ID3 picture tags needs some work

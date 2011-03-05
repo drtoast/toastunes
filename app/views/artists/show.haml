@@ -1,0 +1,12 @@
+%title= @artist.name
+
+#container.container_12
+
+  #left.grid_12
+    .grid_6.alpha
+      .round_box
+        %span.current_category= link_to @artist.name, @artist
+      - @artist.albums.each do |album|
+        .round_box= render :partial => 'album', :locals => {:album => album}
+    .grid_2
+      .round_box= render :partial => 'shared/right_nav'

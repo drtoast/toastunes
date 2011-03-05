@@ -1,0 +1,9 @@
+#navigation
+  %ul
+    %li= link_to("Artists", artists_path)
+    %li= link_to("Albums", albums_path)
+    %li= link_to("Genres", genres_path)
+    %li= link_to("Comments", comments_path)
+    %li= link_to("Ratings", ratings_path)
+    %li= link_to("Users", users_path)
+    %li= user_signed_in? ? link_to("Sign Out", destroy_user_session_path) : link_to("Sign In", new_user_session_path)

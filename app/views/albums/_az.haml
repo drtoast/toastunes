@@ -1,0 +1,2 @@
+- for letter in ('a'..'z').to_a + ['-'] do
+  = link_to(letter, albums_path(:letter => letter))

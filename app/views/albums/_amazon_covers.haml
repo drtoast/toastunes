@@ -1,0 +1,5 @@
+- covers.each_with_index do |cover, i|
+  .thumbnail.amazon
+    = form_tag choose_amazon_cover_album_path(album), :remote => true do
+      = hidden_field_tag(:index, i)
+      = image_submit_tag cover[:small]

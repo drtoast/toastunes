@@ -1,0 +1,2 @@
+- user.comments.desc(:created_at).limit(20).each do |comment|
+  = render :partial => "shared/comment", :object => comment

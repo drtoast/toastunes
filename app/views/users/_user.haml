@@ -1,0 +1,7 @@
+.album_thumbnail= link_to image_tag(user.gravatar, :class => 'thumbnail shadow'), user
+.album_details
+  .artist= link_to(user.email, user)
+  .comment_attribution
+    = "#{user.comments.count} comments, "
+    = "#{user.ratings.count} ratings"
+.clear

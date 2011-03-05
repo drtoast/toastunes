@@ -1,0 +1,2 @@
+$("textarea[name=body]").val("");
+$('#comments').prepend("<%= escape_javascript(render(:partial => "shared/comment", :locals => {:comment => @comment}) ) %>");

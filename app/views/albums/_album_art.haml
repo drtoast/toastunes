@@ -1,0 +1,12 @@
+- if album.cover
+  = render :partial => "album_cover", :locals => {:path => "covers/#{album.cover}"}
+- if covers.length > 0
+  = render :partial => "amazon_covers", :locals => {:album => album, :covers => covers}
+- unless album.cover
+  = form_tag amazon_cover_album_path(album), :remote => true do
+    = submit_tag "Find Cover"
+  - if error
+    .error= error
+  - if album.cover_download_at
+    .error= "Last checked on #{album.cover_download_at.strftime("%m/%d/%Y")}"
+.clear

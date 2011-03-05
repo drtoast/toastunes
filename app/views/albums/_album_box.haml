@@ -1,0 +1,20 @@
+#controls
+  %ul.button
+    %li.button
+      %a.button{:id => "prev", :href=>"#"}
+        %span &lt;&lt;
+    %li.button
+      %a.button{:id => "play", :href=>"#"}
+        %span play
+    %li.button
+      %a.button{:id => "next", :href=>"#"}
+        %span &gt;&gt;
+    %li.button
+      #loaded
+#songlist
+  - album.tracks.each_with_index do |song, i|
+    .songrow
+      %a.song{:href=>song.web_path, :id=>"song_#{i+1}"}= song.title
+#player_container
+  %audio{:id=>"player",:autobuffer=>"autobuffer", :autoplay=>false}
+.clear

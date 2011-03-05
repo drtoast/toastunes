@@ -1,17 +1,4 @@
-require 'rubygems'
-require 'haml'
-require 'cgi'
-require 'yaml'
+# This file is used by Rack-based servers to start the application.
 
-require './vendor/sinatra/lib/sinatra'
-
-opts = YAML.load_file(File.join(File.dirname(__FILE__), "config.yml"))
-set :views,       opts['views']
-set :public,      opts['public']
-set :music,       opts['music']
-set :environment, opts['environment']
-set :haml,        {:format => :html5 } # default Haml format is :xhtml
-disable :run if opts['environment'] == :development
-
-require './toastunes.rb'
-run Sinatra::Application
+require ::File.expand_path('../config/environment',  __FILE__)
+run Toastunes::Application

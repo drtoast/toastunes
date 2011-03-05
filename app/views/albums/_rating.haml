@@ -1,0 +1,8 @@
+.round_box{:id => "rating_#{rating.id}"}
+  .user_rating
+    - (rating.rating / 20).times do |i|
+      .stars.bright
+    - (5 - (rating.rating / 20)).times do |i|
+      .stars
+  %br
+  .comment_attribution.rating= rating.user.email + " on " + rating.created_at.strftime("%m/%d/%Y")
