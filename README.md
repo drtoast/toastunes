@@ -1,5 +1,7 @@
 # About
 
+<img width="800" src="http://drtoast.com/sc/toastunes_screenshot.png">
+
 ToasTunes is a social web app for browsing and listening to a music library, adding comments and ratings, and adding album art and genre classifications. ToasTunes was written by @drtoast.
 
 * Created using [Ruby 1.9](http://www.ruby-lang.org/), [Rails 3](http://rubyonrails.org/), [jQuery](http://jquery.com/), CSS3, HTML5
