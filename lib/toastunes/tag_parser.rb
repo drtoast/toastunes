@@ -123,7 +123,6 @@ class Toastunes::TagParser
             mime_type, pic = pic[1..-1].split(/\x00/, 2)
             picture_type = pic[0]
             description, data = pic[1..-1].split(/\x00/, 2)
-            puts mime_type
             raise "mime type not recognized: #{image_format}" unless IMAGE_FORMATS[mime_type]
             full_path = write_image(IMAGE_FORMATS[mime_type] || mime_type, album_id, data)
           rescue => e

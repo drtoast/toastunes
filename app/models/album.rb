@@ -24,6 +24,7 @@ class Album
   references_many :ratings
   referenced_in :artist
   referenced_in :genre
+  referenced_in :user
   
   # kind
   scope :compilation, :where => {:compilation => true}
@@ -41,6 +42,8 @@ class Album
     set_genre
     save
   end
+  
+  before_destroy :delete_files
   
   # extract a cover from the ID3 tag
   def extract_cover(replace_cover=true)
@@ -144,4 +147,12 @@ class Album
     (rating.to_i / 20) * 20
   end
   
+private
+
+  def delete_files
+    tracks.each do |track|
+      File.delete(track.local_path) if File.exists?(track.local_path)
+    end
+  end
+
 end

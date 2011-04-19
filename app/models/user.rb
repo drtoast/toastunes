@@ -10,10 +10,17 @@ class User
   attr_accessible :email, :password, :password_confirmation
 
   field :name, :type => String
-  field :admin, :type => Boolean
+  
   
   references_many :comments
   references_many :ratings
+  references_many :albums
+  
+  # TODO: this should be field :admin, :type => Boolean
+  # but not sure how to make that work with Devise
+  def admin?
+    Toastunes::Application.config.admins.include?(id.to_s)
+  end
   
   def gravatar
     hash = Digest::MD5.hexdigest(email.downcase)

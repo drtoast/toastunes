@@ -131,10 +131,11 @@ class AlbumsController < ApplicationController
     @album = Album.find(params[:id])
     respond_to do |format|
       
+      # TODO: cover doesn't upload when form submitted asynchronously - would need to use an iframe to do that
       @album.cover = nil
       file = params[:file]
       ext = File.extname(file.original_filename)[1..-1]
-      @album.add_cover(file.path, ext, false) # TODO: segfault when processing thumbnail in mongrel
+      @album.add_cover(file.path, ext, false) # TODO: fix segfault when processing thumbnail in mongrel
       logger.info "*** FILE: #{file.original_filename}, #{file.path}, #{file.inspect}"
       if @album.save
         # TODO: ajax upload doesn't work
@@ -194,16 +195,10 @@ class AlbumsController < ApplicationController
     @album = Album.find(params[:id])
     deleted_files = 0
     deleted_album = @album.title
-    @album.tracks.each do |track|
-      if File.exists?(track.path)
-        File.delete(track.path)
-        deleted_files += 1
-      end
-    end
     @album.destroy
 
     respond_to do |format|
-      format.html { redirect_to(albums_url, :notice => "Deleted #{deleted_album} and #{deleted_files} files") }
+      format.html { redirect_to(albums_url, :notice => "Deleted #{deleted_album}") }
       format.xml  { head :ok }
     end
   end

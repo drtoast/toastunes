@@ -11,3 +11,7 @@ amazon_access_key_id:
     
 amazon_secret_access_key:
     'XXXXXXXXXXXXXXXXXXX'
+
+admins:
+    - 4d72e829ca990a162b000001
+    - 4d72e829ca990a162b000001

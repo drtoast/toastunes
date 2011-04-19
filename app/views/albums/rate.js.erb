@@ -1,2 +1,2 @@
 $('#ratings').html("<%= escape_javascript(render(:partial => "ratings", :locals => {:album => @album}) ) %>");
-$("#xerrors").html("<%= @album.rating.to_i <= 40 ? escape_javascript(link_to('delete?', @album, :confirm => 'Are you sure?', :method => :delete)) : '' %>");
+$("#errors").html("<%= current_user.admin? && @album.rating.to_i <= 40 ? escape_javascript(link_to('delete?', @album, :confirm => 'Are you sure?', :method => :delete)) : '' %>");
