@@ -10,4 +10,3 @@ gem 'rmagick'       # for image processing
 gem 'devise'        # for user authentication
 gem 'httparty'      # for talking to AWS
 gem 'ruby-hmac'     # for generating AWS API signatures
-gem 'mongrel'
