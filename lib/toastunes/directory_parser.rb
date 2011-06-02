@@ -17,7 +17,9 @@ class Toastunes::DirectoryParser
   def parse!
     dir = File.join(Rails.root, 'public', 'music', @options[:library])
     Dir.entries(dir).reject{|a| a.match /^\./}.each do |subdir|
-      parse_artist(File.join(dir, subdir))
+      d = File.join(dir, subdir)
+      next unless File.directory? d
+      parse_artist d
     end
   end
   
@@ -45,25 +47,36 @@ class Toastunes::DirectoryParser
       location  = File.join(artist_name, album_title, file)
       track     = album.tracks.detect{|t| t.location == location}
       next if track and !@options[:replace_tracks]
-      parser    = Toastunes::TagParser.new(File.join(album_dir, file))
       filename  = parse_filename(file)
-    
-      values = {
-        :title =>       parser.title || filename[:track_title],
-        :location =>    location,
-        :created_at =>  Time.now,
-        :track =>       parser.track_number || filename[:track_number],
-        :genre =>       parser.genre,
-        :artist_name => parser.artist || artist_name,
-        :kind =>        filename[:kind],
-        :year =>        parser.year,
-     #   :size =>        file_size,
-     #   :duration =>    duration,
-     #   :bit_rate =>    bit_rate,
-     #   :sample_rate => sample_rate,
-     #   :itunes_pid =>  pid
-      }
       
+      begin
+        parser    = Toastunes::TagParser.new(File.join(album_dir, file))
+         values = {
+           :title =>       parser.title || filename[:track_title],
+           :location =>    location,
+           :created_at =>  Time.now,
+           :track =>       parser.track_number || filename[:track_number],
+           :genre =>       parser.genre,
+           :artist_name => parser.artist || artist_name,
+           :kind =>        filename[:kind],
+           :year =>        parser.year,
+        #   :size =>        file_size,
+        #   :duration =>    duration,
+        #   :bit_rate =>    bit_rate,
+        #   :sample_rate => sample_rate,
+        #   :itunes_pid =>  pid
+         }
+      rescue => e
+        puts "WARNING: #{e.inspect}"
+        values = {
+           :title =>       filename[:track_title],
+           :location =>    location,
+           :created_at =>  Time.now,
+           :track =>       filename[:track_number],
+           :artist_name => artist_name,
+           :kind =>        filename[:kind],
+         }
+      end
       add_track(album, values)
     end
     
