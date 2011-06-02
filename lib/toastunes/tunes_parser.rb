@@ -55,7 +55,7 @@ class Toastunes::TunesParser
       pid = @dict["Persistent ID"]
       values = {
         :title =>       @dict['Name'],
-        :location =>    @dict['Location'],
+        :location =>    URI::unescape(@dict['Location']),
         :rating =>      @dict['Rating'],
         :created_at =>  @dict['Date Added'],
         :played_at =>   @dict['Play Date UTC'] ? Time.xmlschema(@dict['Play Date UTC']) : nil,
