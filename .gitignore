@@ -4,7 +4,6 @@
 /public/images/thumbnails
 /log/*
 /tmp/*
-Gemfile.lock
 .bundle
 .htaccess
 /config/*.yml
