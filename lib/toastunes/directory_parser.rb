@@ -4,9 +4,9 @@ class Toastunes::DirectoryParser
   # p.parse!
   def initialize(options={})
     @options = {
-      :replace_artists => false,
+      :replace_artists => true,
       :replace_tracks => true,
-      :replace_genres => false,
+      :replace_genres => true,
       :replace_covers => true
     }.merge(options)
   end
@@ -85,6 +85,7 @@ class Toastunes::DirectoryParser
     album.set_artist(artist_name)
     album.extract_cover(@options[:replace_covers]) # don't process if we already have a cover
     album.set_genre
+    # album.genre = nil
     album.save
   rescue SignalException => e
     raise e
