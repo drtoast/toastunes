@@ -124,7 +124,12 @@ class Album
       # detect artist name via tracks
       artists = tracks.collect{|t| t.artist_name}.uniq
       if artists.length == 1
-        self.artist_name = artists.first.to_s.blank? ? 'No Artist' : artists.first
+        begin
+          self.artist_name = artists.first.to_s.blank? ? 'No Artist' : artists.first
+        rescue => e
+          self.artist_name = e.class.name
+          puts "WARNING: #{e.inspect}"
+        end
       else
         # puts "COMPILATION: #{artists.join(",")}"
         self.artist_name = 'Compilations'

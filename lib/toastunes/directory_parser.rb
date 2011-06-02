@@ -73,8 +73,9 @@ class Toastunes::DirectoryParser
     album.extract_cover(@options[:replace_covers]) # don't process if we already have a cover
     album.set_genre
     album.save
+  rescue SignalException => e
+    raise e
   rescue Exception => e
-    raise e if e.is_a? IRB::Abort
     puts "WARNING: #{e.inspect}"
     puts e.backtrace
   end

@@ -32,7 +32,7 @@ namespace :toastunes do
     desc "process all album covers, artists, and genres"
     task :albums => :environment do
       Album.all.each do |a|
-        a.extract_cover
+        a.extract_cover(true)
         a.set_artist
         a.set_genre
         a.save
