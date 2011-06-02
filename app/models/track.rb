@@ -22,11 +22,11 @@ class Track
   embedded_in :album, :inverse_of => :tracks
   
   def local_path
-    File.join(Rails.root, 'public', 'music', album.library, URI::unescape(location))
+    File.join(Rails.root, 'public', 'music', album.library, location)
   end
   
   def web_path
-    File.join('/music', album.library, CGI::escape(URI::unescape(location)))
+    File.join('/music', album.library, URI::escape(location))
   end
 
   def extract_cover
