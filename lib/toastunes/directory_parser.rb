@@ -7,7 +7,7 @@ class Toastunes::DirectoryParser
       :replace_artists => false,
       :replace_tracks => true,
       :replace_genres => false,
-      :replace_covers => false
+      :replace_covers => true
     }.merge(options)
   end
   
