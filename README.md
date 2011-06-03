@@ -78,6 +78,15 @@ Parse your library
 
     rake toastunes:read:artists[yourlibrary]
 
+## Utilities
+
+replace old genres with new ones via a lookup file
+
+    rake toastunes:process:replace_genres[/path/to/lookup.tab]
+
+delete genres that have no albums
+
+    rake toastunes:genres:cleanup
 
 # Bugs
 

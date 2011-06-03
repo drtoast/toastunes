@@ -40,6 +40,21 @@ namespace :toastunes do
       end
     end # task :albums
     
+    desc "replace old genres with new ones loaded from an import file"
+    task :replace_genres, [:file] => [:environment] do |t, args|
+      File.open(args.file) do |f|
+        f.each do |line|
+          old_genre, new_genre = line.chomp.split(/\t/)
+          Genre.swap(old_genre, new_genre)
+        end
+      end
+    end
+    
+    desc "delete genres that have no albums"
+    task :cleanup_genres => :environment do |t, args|
+      Genre.cleanup
+    end
+    
   end # namespace :process
   
 end
