@@ -12,7 +12,7 @@
     %li.button
       #loaded
 #songlist
-  - album.tracks.each_with_index do |song, i|
+  - album.tracks.sort_by{|track| track.track.to_i}.each_with_index do |song, i|
     .songrow
       %a.song{:href=>song.web_path, :id=>"song_#{i+1}"}= song.title
 #player_container
