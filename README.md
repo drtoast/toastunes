@@ -24,11 +24,10 @@ ToasTunes is a social web app for browsing and listening to a music library, add
     git clone git://github.com/drtoast/toastunes.git
     cd toastunes
     bundle
-    
+
 ## installation, BSD
 
     todo
-    
 
 ## edit config files
 
@@ -49,13 +48,13 @@ ToasTunes is meant for private use, so public user registration is disabled.  An
 
 Create a symlink from your iTunes Music folder to public/music/itunes:
 
-    cd toastunes/music
-    ln -s ~/Music/iTunes/iTunes\ Music itunes
+    cd toastunes/public/music
+    ln -s ~/Music/iTunes/iTunes\ Media/Music itunes
 
 Edit the path to your iTunes library XML in config/toastunes.yml, then:
 
     rake toastunes:read:itunes
-    
+
 Process album art, artists, genres
 
     rake toastunes:process:albums
@@ -69,9 +68,6 @@ Make sure your library directory structure is the following:
 Create a symlink from your music directory to public/music/yourlibrary:
 
     cd toastunes
-    mkdir public/music
-    mkdir public/images/covers
-    mkdir public/images/thumbnails
     ln -s /volumes/yourlibrary public/music/yourlibrary
 
 Parse your library
@@ -87,6 +83,12 @@ replace old genres with new ones via a lookup file
 delete genres that have no albums
 
     rake toastunes:genres:cleanup
+
+## Deploy
+
+precompile assets prior to a production release (public/assets currently ignored in .gitignore)
+
+    rake assets:precompile
 
 # Bugs
 
