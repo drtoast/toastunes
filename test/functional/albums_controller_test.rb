@@ -2,7 +2,14 @@ require 'test_helper'
 
 class AlbumsControllerTest < ActionController::TestCase
   setup do
-    @album = albums(:one)
+    @album = Album.create({
+      title: 'MyString',
+      artist: 'MyString',
+      compilation: false,
+      cover: 'MyString',
+      rating: 1,
+      genre: 'MyString'
+    })
   end
 
   test "should get index" do
