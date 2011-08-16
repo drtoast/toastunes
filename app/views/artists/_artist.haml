@@ -1,5 +1,5 @@
 - alb = artist.albums.detect{|a| a.thumbnail}
-.album_thumbnail= link_to image_tag(alb ? "thumbnails/#{alb.thumbnail}" : "no_cover.jpg", {:class=>'thumbnail'}), alb
+.album_thumbnail= link_to image_tag(alb ? "thumbnails/#{alb.thumbnail}" : "no_cover.jpg", {:class=>'thumbnail'}), alb || artist
 .album_details
   .title= link_to artist.name, artist
   - artist.albums.sort{|a,b| a.title.to_s.downcase <=> b.title.to_s.downcase}.each do |album|
