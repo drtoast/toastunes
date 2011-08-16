@@ -1,5 +1,5 @@
 .round_box{:id => "rating_#{rating.id}"}
-  .album_thumbnail= link_to image_tag(rating.album.thumbnail ? "thumbnails/#{rating.album.thumbnail}" : "no_cover.jpg", :class => 'thumbnail shadow'), rating.album
+  .album_thumbnail= link_to image_tag(rating.album && rating.album.thumbnail ? "thumbnails/#{rating.album.thumbnail}" : "no_cover.jpg", :class => 'thumbnail shadow'), rating.album
   .album_details
     = render :partial => 'shared/show_rating', :locals => {:rating => rating.rating}
     %br
