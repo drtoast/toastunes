@@ -12,7 +12,7 @@ class Album
   field :genre, :type => String
   field :library, :type => String # where does this album's files live?
   field :cover_download_at, :type => Time # when did we add an amazon cover?
-
+  
   # indices
   index :created_at
   index :title

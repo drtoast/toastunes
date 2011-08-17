@@ -29,6 +29,14 @@ namespace :toastunes do
   
   namespace :process do
     
+    task :randomize => :environment do
+      Album.all.each do |a|
+        a.random_number = rand
+        p [a.random_number, a.title].join("\t")
+        a.save
+      end
+    end
+    
     desc "process all album covers, artists, and genres"
     task :albums => :environment do
       Album.all.each do |a|

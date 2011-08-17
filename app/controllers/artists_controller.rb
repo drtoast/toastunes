@@ -1,7 +1,5 @@
 class ArtistsController < ApplicationController
-  
-  before_filter :authenticate_user!
-  
+
 #  caches_page :index
 #  caches_page :show
   

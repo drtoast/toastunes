@@ -7,7 +7,7 @@
     .comment_attribution
       - if user_signed_in?
         as
-        = current_user.email
+        = display_user_name(current_user)
       - else
         = link_to "sign in", new_user_session_path
 .clear

@@ -1,4 +1,4 @@
-%span.current_category= link_to album.artist.name, album.artist
+%span.current_category{:id => 'artist'}= link_to album.artist.name, album.artist
 #album
   %span= album.title
 #rating= render :partial => 'rating_form', :locals => {:album => album}

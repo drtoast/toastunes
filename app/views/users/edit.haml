@@ -1,0 +1,31 @@
+= content_for :title, @user.email
+.container_12
+  .grid_12
+    .grid_4.alpha
+      .round_box.topmost
+        %span.current_category= 'Edit'
+      .round_box
+        = form_for(@user) do |f|
+          %p
+            name
+            %br= f.text_field :name
+          %p
+            email
+            %br= f.text_field :email
+          %p
+            password
+            %br= f.text_field :password
+          - if current_user.admin?
+            %p
+              = f.check_box :approved
+              = f.label :approved
+            %p
+              = f.check_box :admin
+              = f.label :admin
+          = f.submit
+    .grid_6
+      .round_box.topmost= render :partial => "user", :locals => {:user => @user}
+    .grid_2.omega
+      .round_box.topmost= render :partial => 'shared/right_nav'
+  .clear &nbsp;
+  #errors &nbsp;

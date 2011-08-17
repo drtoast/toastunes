@@ -1,57 +1,41 @@
 class UsersController < ApplicationController
   
-  before_filter :authenticate_user!
-  
   def index
     @users = User.all
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @albums }
-    end
   end
 
-  # GET /albums/1
-  # GET /albums/1.xml
   def show
     @user = User.find(params[:id])
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @album }
-    end
   end
 
-  # GET /albums/1/edit
   def edit
     @user = User.find(params[:id])
   end
 
-
-  # PUT /albums/1
-  # PUT /albums/1.xml
   def update
-    @album = Album.find(params[:id])
-
-    respond_to do |format|
-      if @album.update_attributes(params[:album])
-        format.html { redirect_to(@album, :notice => 'Album was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @album.errors, :status => :unprocessable_entity }
-      end
+    # TODO: switch to CanCan to manage user abilities
+    @user = User.find(params[:id])
+    if current_user.admin? || @user.id == current_user.id
+      # users can change these
+      @user.name        = params[:user][:name]
+      @user.email       = params[:user][:email]
+      @user.password    = params[:user][:password] unless params[:user][:password].blank?
+    end
+    if current_user.admin?
+      # admins can change these
+      @user.admin    = params[:user][:admin]
+      @user.approved = params[:user][:approved]
+    end
+    if @user.save # @user.update_attributes(params[:user]) doesn't work - mongoid bug?
+      redirect_to(@user, :notice => 'User was successfully updated.')
+    else
+      render :action => "edit"
     end
   end
   
-
-  # DELETE /albums/1
-  # DELETE /albums/1.xml
   def destroy
     @user = User.find(params[:id])
     @user.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(users_url, :notice => "Deleted #{deleted_album} and #{deleted_files} files") }
-      format.xml  { head :ok }
-    end
+    redirect_to(users_url, :notice => "Deleted user")
   end
 end

@@ -1,7 +1,8 @@
 .album_thumbnail= link_to image_tag(user.gravatar, :class => 'thumbnail shadow'), user
 .album_details
-  .artist= link_to(user.email, user)
+  .artist= display_user_name(user)
   .comment_attribution
-    = "#{user.comments.count} comments, "
-    = "#{user.ratings.count} ratings"
+    = ["#{user.comments.count} comments", "#{user.ratings.count} ratings"].compact.join(", ")
+    - if current_user.admin? || current_user == user
+      = link_to('[edit]', edit_user_path(user))
 .clear

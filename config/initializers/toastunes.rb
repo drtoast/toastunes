@@ -7,7 +7,6 @@ config.itunes_base =              settings['itunes_base']
 config.local_base =               settings['local_base']
 config.amazon_access_key_id =     settings['amazon_access_key_id']
 config.amazon_secret_access_key = settings['amazon_secret_access_key']
-config.admins =                   settings['admins']
 
 # uncomment this while hacking ruby-mp3info
 # $: << "/Users/toast/code/ruby-mp3info/lib/"

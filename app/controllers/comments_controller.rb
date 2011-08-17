@@ -1,7 +1,5 @@
 class CommentsController < ApplicationController
-  
-  before_filter :authenticate_user!
-  
+
   def index
     @comments = Comment.all.desc(:created_at)
     respond_to do |format|
