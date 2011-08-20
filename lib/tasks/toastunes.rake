@@ -1,5 +1,17 @@
 namespace :toastunes do
   
+  # rake RAILS_ENV=production toastunes:create:admin[name@example.com,somepass]
+  namespace :create do
+    task :admin, [:email, :password] => :environment do |t, args|
+      u = User.find_or_create_by(:email => args.email.downcase)
+      u.password = args.password
+      u.admin    = true
+      u.approved = true
+      u.save
+      p "created admin #{args.email} [#{u.id}]"
+    end
+  end
+  
   namespace :read do
     
     # rake RAILS_ENV=production toastunes:read:artists[w2] --trace
@@ -19,10 +31,10 @@ namespace :toastunes do
       p.parse_artist(dir, args.artist)
     end
     
-    # rake RAILS_ENV=production toastunes:read:itunes --trace
-    desc "edit config/toastunes.yml, then load the iTunes XML library"
-    task :itunes => :environment do |t, args|
-      Toastunes::TunesParser.parse!
+    # rake RAILS_ENV=production toastunes:read:itunes["/Volumes/toastport/iTunes", toastport] --trace
+    desc "load the iTunes XML library"
+    task :itunes, [:path_to_itunes, :library_name] => :environment do |t, args|
+      Toastunes::TunesParser.parse!(args.path_to_itunes, args.library_name)
     end
     
   end # namespace :read

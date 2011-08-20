@@ -31,7 +31,7 @@ class Track
 
   def extract_cover
     begin
-      id3.extract_cover(album.id)
+      id3.extract_cover(album)
     rescue Mp3InfoError => e
       puts "ERROR: couldn't parse #{local_path}: #{e.inspect}"
     end

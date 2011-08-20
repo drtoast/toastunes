@@ -1,5 +1,5 @@
 - if album.cover
-  = render :partial => "album_cover", :locals => {:path => "covers/#{album.cover}"}
+  = render :partial => "album_cover", :locals => {:album => album}
 - if covers.length > 0
   = render :partial => "amazon_covers", :locals => {:album => album, :covers => covers}
 - unless album.cover

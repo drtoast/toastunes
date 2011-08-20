@@ -1,5 +1,5 @@
 .round_box{:id => "comment_#{comment.id}"}
-  .album_thumbnail= link_to image_tag(comment.album && comment.album.thumbnail ? "thumbnails/#{comment.album.thumbnail}" : "no_cover.jpg", :class => 'thumbnail shadow', :title => comment.album && "#{comment.album.artist_name} - #{comment.album.title}"), comment.album
+  .album_thumbnail= thumbnail_tag(comment.album)
   .album_details
     .comment_body= '"' + comment.body.to_s + '"'
     .comment_attribution

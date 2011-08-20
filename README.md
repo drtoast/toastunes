@@ -46,16 +46,11 @@ ToasTunes is meant for private use, so public user registration is disabled.  An
 
 ## load an iTunes library
 
-Create a symlink from your iTunes Music folder to public/music/itunes:
+To load your iTunes library, run the following rake task, providing a path to your iTunes folder, and an optional name for the library (when managing multiple libraries).
 
-    cd toastunes/public/music
-    ln -s ~/Music/iTunes/iTunes\ Media/Music itunes
+    rake toastunes:read:itunes['/path/to/iTunes',itunes]
 
-Edit the path to your iTunes library XML in config/toastunes.yml, then:
-
-    rake toastunes:read:itunes
-
-Process album art, artists, genres
+Then extract/process album art, artists, genres:
 
     rake toastunes:process:albums
 

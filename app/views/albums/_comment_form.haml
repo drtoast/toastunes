@@ -1,4 +1,4 @@
-.album_thumbnail= link_to image_tag(album.thumbnail ? "thumbnails/#{album.thumbnail}" : "no_cover.jpg", :class => "thumbnail shadow"), album
+.album_thumbnail= link_to thumbnail_tag(@album)
 .album_details
   = form_for([@album, @new_comment], :remote => true) do |f|
     .comment_body

@@ -63,14 +63,14 @@ class Album
     full_path = processor.save_cover(id, original, format)
     self.cover = File.basename(full_path)
     if thumb
-      thumbnail_path = processor.write_thumbnail(id, full_path)
+      thumbnail_path = processor.write_thumbnail(self)
       self.thumbnail = File.basename(thumbnail_path)
     end
   end
   
   def download_cover(url)
     format = File.extname(url)[1..-1]
-    destination = File.join(Rails.root, 'public', 'images', 'covers', "#{id}.#{format}")
+    destination = File.join(Rails.root, 'assets', 'images', 'covers', library, "#{id}.#{format}")
     response = download(url, destination)
     if response.kind_of? Net::HTTPOK
       self.cover = File.basename(destination)
@@ -81,7 +81,7 @@ class Album
   
   def download_thumbnail(url)
     format = File.extname(url)[1..-1]
-    destination = File.join(Rails.root, 'public', 'images', 'thumbnails', "#{id}.#{format}")
+    destination = File.join(thumbnail_dir, "#{id}.#{format}")
     response = download(url, destination)
     if response.kind_of? Net::HTTPOK
       self.thumbnail = File.basename(destination)
@@ -91,16 +91,32 @@ class Album
   def save_thumbnail
     processor = Toastunes::ImageProcessor.new
     if cover_path
-      thumb = processor.write_thumbnail(id, cover_path)
+      thumb = processor.write_thumbnail(self)
       if thumb
         self.thumbnail = File.basename(thumb)
       end
     end
   end
   
+  def cover_dir
+    File.join(Rails.root, 'app', 'assets', 'images', 'covers', library)
+  end
+  
+  def thumbnail_dir
+    File.join(Rails.root, 'app', 'assets', 'images', 'thumbnails', library)
+  end
+  
   def cover_path
     if cover
-      File.join(Rails.root, 'public', 'images', 'covers', cover)
+      File.join(cover_dir, cover)
+    else
+      nil
+    end
+  end
+  
+  def thumbnail_path
+    if thumbnail
+      File.join(thumbnail_dir, cover)
     else
       nil
     end
