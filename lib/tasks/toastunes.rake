@@ -52,10 +52,14 @@ namespace :toastunes do
     desc "process all album covers, artists, and genres"
     task :albums => :environment do
       Album.all.each do |a|
-        a.extract_cover(true)
-        a.set_artist
-        a.set_genre
-        a.save
+        begin
+          a.extract_cover(true)
+          a.set_artist
+          a.set_genre
+          a.save
+        rescue => e
+          p "WARNING: Couldn't process album #{a.id}: #{e.inspect}"
+        end
         puts [a.title, a.artist ? a.artist.name : nil].join("\t")
       end
     end # task :albums

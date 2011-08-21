@@ -91,7 +91,6 @@ class Toastunes::DirectoryParser
     raise e
   rescue Exception => e
     puts "WARNING: #{e.inspect}"
-    puts e.backtrace
   end
   
 private

@@ -126,7 +126,6 @@ class Toastunes::TagParser
             full_path = write_image(album, IMAGE_FORMATS[mime_type] || mime_type, data)
           rescue => e
             puts "ERROR parsing tag2.APIC: #{e.inspect}"
-            puts e.backtrace
             return nil
           end
         end
