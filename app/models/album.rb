@@ -70,7 +70,7 @@ class Album
   
   def download_cover(url)
     format = File.extname(url)[1..-1]
-    destination = File.join(Rails.root, 'assets', 'images', 'covers', library, "#{id}.#{format}")
+    destination = File.join(cover_dir, "#{id}.#{format}")
     response = download(url, destination)
     if response.kind_of? Net::HTTPOK
       self.cover = File.basename(destination)
@@ -99,11 +99,11 @@ class Album
   end
   
   def cover_dir
-    File.join(Rails.root, 'app', 'assets', 'images', 'covers', library)
+    File.join(Rails.root, 'public', 'images', 'covers', library)
   end
   
   def thumbnail_dir
-    File.join(Rails.root, 'app', 'assets', 'images', 'thumbnails', library)
+    File.join(Rails.root, 'public', 'images', 'thumbnails', library)
   end
   
   def cover_path

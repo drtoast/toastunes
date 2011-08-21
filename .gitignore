@@ -7,6 +7,8 @@ db/*.sqlite3
 log/*.log
 public/assets
 public/music
+public/images/covers
+public/images/thumbnails
 app/assets/images/covers
 app/assets/images/thumbnails
 tmp/
