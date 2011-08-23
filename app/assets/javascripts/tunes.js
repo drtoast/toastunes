@@ -96,6 +96,7 @@ function playTrack(e) {
     }
     player.current_track = $(this);
     player.current_title = player.current_track.text();
+    document.title = player.current_title + " - " + $('#artist').text() + " - " + $('#album').text() + " [" + (player.now_playing + 1) + "/" + $('#songlist').children().size() + "]";
     player.current_track.addClass('playing');
     player.current_track.blur();
     player.load(player.current_track.attr("href"));
