@@ -7,7 +7,7 @@ class User
   devise :database_authenticatable, :registerable,
          :rememberable, :trackable, :validatable
 
-  attr_accessible :email, :password, :password_confirmation
+  attr_accessible :email, :password, :password_confirmation, :unique => true
 
   field :name, :type => String
   field :admin, :type => Boolean
