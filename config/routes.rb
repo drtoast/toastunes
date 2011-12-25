@@ -7,7 +7,7 @@ Toastunes::Application.routes.draw do
     resources :ratings
   end
 
-  root :to => 'artists#index'
+  root :to => 'albums#index'
   
   resources :artists do
     resources :albums do

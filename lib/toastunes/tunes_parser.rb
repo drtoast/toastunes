@@ -8,17 +8,26 @@ class Toastunes::TunesParser
   attr_reader :parsing_key, :value_type, :key, :value
 
   def self.parse!(path_to_itunes, library_name='itunes')
-    # detect itunes music dir and library file, create symlink
-    itunes_music_dir = Dir.entries(path_to_itunes).detect{|d| d.match(/iTunes [Media|Music]/)}
-    itunes_library   = Dir.entries(path_to_itunes).detect{|d| d.match(/iTunes Music Library.xml/)}
-    FileUtils.ln_s(File.join(path_to_itunes, itunes_music_dir), File.join(Rails.root, 'public', 'music', library_name))
-    FileUtils.mkdir_p(File.join(Rails.root, 'assets', 'images', 'covers', library_name))
-    FileUtils.mkdir_p(File.join(Rails.root, 'assets', 'images', 'thumbnails', library_name))
-    
+
+    # detect itunes music dir and library file
+    itunes_music_dir = File.join path_to_itunes, 'iTunes Media', 'Music'
+    itunes_library   = File.join path_to_itunes, 'iTunes Music Library.xml'
+
+    # link to music dir
+    dest = File.join(Rails.root, 'public', 'music', library_name)
+    FileUtils.rm(dest) if File.exists?(dest)
+    FileUtils.ln_s(itunes_music_dir, dest)
+
+    # link to image dirs
+    %w(covers thumbnails).each do |size|
+      dir = File.join(Rails.root, 'public', 'images', size, library_name)
+      FileUtils.mkdir_p dir
+    end
+
     # parse the library
-    REXML::Document.parse_stream(File.open(File.join(path_to_itunes, itunes_library)), self.new(library_name))
+    REXML::Document.parse_stream(File.open(itunes_library), self.new(library_name))
   end
-  
+
   def initialize(library_name)
     @library_name = library_name
   end
@@ -44,10 +53,10 @@ class Toastunes::TunesParser
       @parsing_key = false
     elsif @key == "Location"
       # skip unless audio
-      return unless @dict["Kind"].match(/audio/i)
-      
+      return unless @dict["Kind"] && @dict["Kind"].match(/audio/i)
+     
       # Location is the last tag, so process the track
-      @dict["Location"] = @value.sub(/^.*iTunes%20Music\//, '')
+      @dict["Location"] = @value.sub(/^.*\/iTunes\/iTunes%20Media\/Music\//, '')
       puts [@dict["Track ID"], @dict['Album'], @dict['Name']].join("\t")
       compilation = @dict.keys.include?('Compilation')
       

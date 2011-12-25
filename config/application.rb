@@ -45,5 +45,12 @@ module Toastunes
 
     # Enable the asset pipeline
     config.assets.enabled = true
+
+    # compile assets to env-specific subdir
+    config.paths['public'] = "#{Rails.root}/public/#{Rails.env}"
+
+    # precompile assets
+    config.assets.precompile = %W(vendor.js application.js bootstrap.css application.css)
+
   end
 end

@@ -13,7 +13,7 @@ module AAWS
     include HTTParty
     
     attr_accessor :error
-    
+
     AMAZON_HOST = 'webservices.amazon.com' #'ecs.amazonaws.com'
     base_uri "http://#{AMAZON_HOST}"
     # can't use httparty's default_params class method because we need to access these in signature_for
@@ -22,9 +22,10 @@ module AAWS
       'Operation' => 'ItemSearch',
       'SearchIndex' => 'Music',
       'ResponseGroup' => 'Images',
-      'AWSAccessKeyId' => Toastunes::Application.config.amazon_access_key_id
+      'AWSAccessKeyId' => Toastunes::Application.config.amazon_access_key_id,
+      'AssociateTag' => Toastunes::Application.config.amazon_associate_tag
     }
-    
+   
     def initialize
     end
     
