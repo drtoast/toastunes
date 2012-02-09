@@ -1,0 +1,12 @@
+%title New Album
+
+#container.container_12
+
+  #left.grid_12
+    .grid_6.alpha
+      .round_box.topmost
+        %span.current_category= 'New Album'
+      .round_box= render 'form'
+
+    .grid_2
+      .round_box.topmost= render :partial => 'shared/right_nav'

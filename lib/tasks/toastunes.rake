@@ -78,6 +78,14 @@ namespace :toastunes do
     task :cleanup_genres => :environment do |t, args|
       Genre.cleanup
     end
+
+    task :reset => :environment do |t, args|
+      Album.destroy_all
+      Artist.destroy_all
+      Comment.destroy_all
+      Genre.destroy_all
+      Rating.destroy_all
+    end
     
   end # namespace :process
   

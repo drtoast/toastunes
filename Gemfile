@@ -1,19 +1,19 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.0.rc5'
+gem 'rails', '3.2.0'
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails', "~> 3.1.0.rc"
-  gem 'coffee-rails', "~> 3.1.0.rc"
+  gem 'sass-rails', "~> 3.2.0"
+  gem 'coffee-rails', "~> 3.2.0"
   gem 'uglifier'
 end
 
 gem 'jquery-rails'
 
 gem 'sqlite3-ruby', :require => 'sqlite3'
-gem 'mongoid', '2.0.2'
+gem 'mongoid', '2.4.3'
 gem 'bson_ext'                                # faster C-based JSON lib
 gem 'ruby-mp3info'                            # for ID3 tag parsing
 gem 'haml'                                    # for view templates

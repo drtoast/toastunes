@@ -12,31 +12,30 @@
   <% end %>
 
   <div class="field">
+    <%= label_tag :download_link %><br />
+    <%= text_field_tag :download_link %>
+  </div>
+
+  <div class="field">
     <%= f.label :title %><br />
     <%= f.text_field :title %>
   </div>
-  
+
   <div class="field">
-    <%= f.label :artist_id %><br />
-    <%= f.collection_select :artist_id, Artist.all, :id, :name %>
+    <%= f.label :artist %><br />
+    <%= f.text_field :artist_name %>
   </div>
-  
+
   <div class="field">
-    <%= f.label :compilation %><br />
+    <%= f.label "compilation?" %><br />
     <%= f.check_box :compilation %>
   </div>
-  <div class="field">
-    <%= f.label :cover %><br />
-    <%= f.text_field :cover %>
-  </div>
-  <div class="field">
-    <%= f.label :rating %><br />
-    <%= f.text_field :rating %>
-  </div>
+
   <div class="field">
     <%= f.label :genre %><br />
-    <%= f.text_field :genre %>
+    <%= f.collection_select :genre_id, Genre.all, :id, :name %>
   </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>

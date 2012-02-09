@@ -78,6 +78,10 @@ delete genres that have no albums
 
     rake toastunes:genres:cleanup
 
+delete everything(!)
+
+    rake toastunes:process:reset
+
 ## Deploy
 
 precompile assets prior to a production release (public/assets currently ignored in .gitignore)

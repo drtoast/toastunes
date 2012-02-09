@@ -9,7 +9,6 @@ class Album
   field :cover, :type => String
   field :thumbnail, :type => String
   field :rating, :type => Integer # 0 to 100
-  field :genre, :type => String
   field :library, :type => String # where does this album's files live?
   field :cover_download_at, :type => Time # when did we add an amazon cover?
   
