@@ -30,16 +30,24 @@ class Toastunes::DirectoryParser
     albums = Dir.entries(artist_dir).reject{|a| a.match /^\./}
     albums.each do |album_title|
       if File.directory?(File.join(artist_dir, album_title))
-        parse_album(File.join(artist_dir, album_title), artist_name, album_title)
+        begin
+          album = parse_album(File.join(artist_dir, album_title), artist_name, album_title)
+          album.extract_cover(@options[:replace_covers]) # don't process if we already have a cover
+          album.save
+        rescue Exception => e
+          puts "WARNING: #{e.inspect}"
+        end
       end
     end
   end
   
-
+  # p = Toastunes::DirectoryParser.new :library => 'w2'
+  # p.parse_album('/path/to/album', 'Artist Name', 'Album Title')
   def parse_album(album_dir, artist_name, album_title)
     puts [Time.now, artist_name, album_title].join("\t")
     album = find_album(artist_name, album_title)
     album.library = @options[:library]
+    album.user = @options[:user] if @options[:user]
     
     # parse tracks
     Dir.entries(album_dir).reject{|a| a.match /^\./}.grep(/\.(mp3|m4a)$/).each do |file|
@@ -51,21 +59,21 @@ class Toastunes::DirectoryParser
       
       begin
         parser    = Toastunes::TagParser.new(File.join(album_dir, file))
-         values = {
-           :title =>       parser.title || filename[:track_title],
-           :location =>    location,
-           :created_at =>  Time.now,
-           :track =>       parser.track_number || filename[:track_number],
-           :genre =>       parser.genre,
-           :artist_name => parser.artist || artist_name,
-           :kind =>        filename[:kind],
-           :year =>        parser.year,
-        #   :size =>        file_size,
-        #   :duration =>    duration,
-        #   :bit_rate =>    bit_rate,
-        #   :sample_rate => sample_rate,
-        #   :itunes_pid =>  pid
-         }
+        values = {
+          :title =>       parser.title || filename[:track_title],
+          :location =>    location,
+          :created_at =>  Time.now,
+          :track =>       parser.track_number || filename[:track_number],
+          :genre =>       parser.genre,
+          :artist_name => parser.artist || artist_name,
+          :kind =>        filename[:kind],
+          :year =>        parser.year,
+          #   :size =>        file_size,
+          #   :duration =>    duration,
+          #   :bit_rate =>    bit_rate,
+          #   :sample_rate => sample_rate,
+          #   :itunes_pid =>  pid
+        }
       rescue => e
         puts "WARNING: #{e.inspect}"
         values = {
@@ -83,14 +91,11 @@ class Toastunes::DirectoryParser
     ## SAVE
     return if album.artist and !@options[:replace_artists]
     album.set_artist(artist_name)
-    album.extract_cover(@options[:replace_covers]) # don't process if we already have a cover
     album.set_genre
-    # album.genre = nil
     album.save
+    album
   rescue SignalException => e
     raise e
-  rescue Exception => e
-    puts "WARNING: #{e.inspect}"
   end
   
 private

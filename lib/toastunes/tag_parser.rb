@@ -101,7 +101,7 @@ class Toastunes::TagParser
     sanitize @info.tag.year
   end
   
-  def extract_cover(album)
+  def extract_cover(cover_dir, thumbnail_dir, album_id)
     if @info.hastag2?
       # GET PICTURE
 
@@ -112,7 +112,7 @@ class Toastunes::TagParser
           raise "image format not recognized: #{image_format}" unless IMAGE_FORMATS[image_format]
           picture_type = pic[4]
           description, data = pic[5..-1].split(/\x00/, 2)
-          full_path = write_image(album, IMAGE_FORMATS[image_format] || image_format, data)
+          full_path = write_image(cover_dir, thumbnail_dir, album_id, IMAGE_FORMATS[image_format] || image_format, data)
         end
       else
         if pic = @info.tag2.APIC
@@ -123,7 +123,7 @@ class Toastunes::TagParser
             picture_type = pic[0]
             description, data = pic[1..-1].split(/\x00/, 2)
             raise "mime type not recognized: #{image_format}" unless IMAGE_FORMATS[mime_type]
-            full_path = write_image(album, IMAGE_FORMATS[mime_type] || mime_type, data)
+            full_path = write_image(cover_dir, thumbnail_dir, album_id, IMAGE_FORMATS[mime_type] || mime_type, data)
           rescue => e
             puts "ERROR parsing tag2.APIC: #{e.inspect}"
             return nil
@@ -146,12 +146,12 @@ class Toastunes::TagParser
     return nil
   end
   
-  def write_image(album, format, data)
+  def write_image(cover_dir, thumbnail_dir, album_id, format, data)
     processor = Toastunes::ImageProcessor.new
     # save cover
-    full_path = processor.write_full_data(album, format, data)
+    full_path = processor.write_full_data(cover_dir, album_id, format, data)
     # save thumbnail
-    processor.write_thumbnail(album, full_path)
+    processor.write_thumbnail(thumbnail_dir, album_id, full_path)
     return full_path
   end
   

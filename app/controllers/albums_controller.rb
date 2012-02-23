@@ -62,47 +62,16 @@ class AlbumsController < ApplicationController
   # POST /albums
   # POST /albums.xml
   def create
-    @album = Album.new(params[:album])
-
-    file_id = 1328749865489 # (Time.now.to_f * 1000.0).to_i
-    zip_file = "/tmp/#{file_id}.zip"
-    extract_to = "/tmp/#{file_id}"
-
-    if download_link = params[:download_link]
-      # TODO: rescue parse errors (URI::InvalidURIError etc)
-      #parsed = URI.parse(download_link)
-      #cmd = "curl '#{download_link}' -o '#{zip_file}'"
-      #logger.info "DOWNLOADING: #{cmd}"
-      #result = `#{cmd} 2>&1`
-      #logger.info result
-      #redirect_to(new_album_path, :notice => "download failed: #{result}") unless $?.success?
+    options = params[:album].merge({ :url => params[:download_link] })
+    downloader = Toastunes::Downloader.new(options)
+    begin
+      results = downloader.run!
+      redirect_to(results.album, :notice => "Album was successfully created")
+    rescue Toastunes::DownloadError => e
+      redirect_to(new_album_path, :notice => "download failed: #{e}")
+    rescue Toastunes::ExtractError => e
+      redirect_to(new_album_path, :notice => "extract failed: #{e}")
     end
-
-    if File.exists? zip_file
-      FileUtils.mkdir extract_to unless File.exists?(extract_to)
-      #cmd = "unzip -j '#{zip_file}' -d '#{extract_to}'"
-      #logger.info "UNZIPPING: #{cmd}"
-      #result = `#{cmd} 2>&1`
-      #logger.info result
-      #redirect_to(new_album_path, :notice => "unzip failed: #{result}") unless $?.success?
-      Dir.entries(extract_to).each do |extracted_file|
-        next unless extracted_file =~ /\.(mp3|m4a)$/
-        full_path = "#{extract_to}/#{extracted_file}"
-        logger.info "UNZIPPED: #{full_path}"
-      end
-    end
-
-    redirect_to(new_album_path, :notice => "downloaded #{params[:download_link]}")
-
-    #respond_to do |format|
-    #  if @album.save
-    #    format.html { redirect_to(@album, :notice => 'Album was successfully created.') }
-    #    format.xml  { render :xml => @album, :status => :created, :location => @album }
-    #  else
-    #    format.html { render :action => "new" }
-    #    format.xml  { render :xml => @album.errors, :status => :unprocessable_entity }
-    #  end
-    #end
   end
 
   # PUT /albums/1
