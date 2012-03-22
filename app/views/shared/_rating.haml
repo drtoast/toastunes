@@ -1,7 +1,0 @@
-.round_box{:id => "rating_#{rating.id}"}
-  .album_thumbnail= thumbnail_tag(rating.album)
-  .album_details
-    = render :partial => 'shared/show_rating', :locals => {:rating => rating.rating}
-    %br
-    .comment_attribution= display_user_name(rating.user) + " on " + rating.created_at.strftime("%m/%d/%Y")
-  .clear

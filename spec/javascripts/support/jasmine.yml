@@ -11,7 +11,13 @@
 #   - dist/**/*.js
 #
 src_files:
-  - public/test/assets/application.js
+  - public/assets/application.js
+  - public/javascripts/prototype.js
+  - public/javascripts/effects.js
+  - public/javascripts/controls.js
+  - public/javascripts/dragdrop.js
+  - public/javascripts/application.js
+  - public/javascripts/**/*.js
 
 # stylesheets
 #

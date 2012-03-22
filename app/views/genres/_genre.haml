@@ -1,7 +1,0 @@
-- album = genre.albums.detect{|a| a.thumbnail} || genre.albums.first
-.album_thumbnail= thumbnail_tag(album)
-.album_details
-  .title= link_to genre.name || '(no genre)', albums_path(:genre => genre.id)
-  - genre.albums.sort{|a,b| a.title.to_s.downcase <=> b.title.to_s.downcase}.each do |album|
-    .artist_album= link_to(album.title, album)
-.clear

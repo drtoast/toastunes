@@ -1,6 +1,6 @@
 describe "Album", ->
   beforeEach ->
-    @album = new tt.Models.Album
+    @album = new Models.Album(artist:"somebody")
 
-  it "has a foo attribute", ->
-    expect(@album.foo).toEqual('bar')
+  it "should have an artist", ->
+    expect(@album.get('artist')).toEqual("somebody")

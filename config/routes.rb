@@ -1,35 +1,6 @@
 Toastunes::Application.routes.draw do
-  
-  devise_for :users
-  
-  resources :users do
-    resources :comments
-    resources :ratings
-  end
 
   root :to => 'albums#index'
-  
-  resources :artists do
-    resources :albums do
-      resources :tracks
-    end
-  end
-
-  resources :albums do
-    member do
-      post :rate, :genre, :comment, :upload_cover, :amazon_cover, :choose_amazon_cover
-    end
-    
-    resources :tracks
-    resources :comments
-  end
-  
-  resources :genres do
-    resources :albums
-  end
-  
-  resources :comments
-  resources :ratings
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -80,7 +51,7 @@ Toastunes::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => "welcome#index"
+  # root :to => 'welcome#index'
 
   # See how all your routes lay out with "rake routes"
 

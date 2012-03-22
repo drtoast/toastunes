@@ -4,10 +4,16 @@
 // It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
 // the compiled file.
 //
-//= require vendor
-//= require tunes
-//= require_tree ./models
+//= require jquery
+//= require jquery_ujs
+//= require twitter/bootstrap
+//= require underscore
+//= require json2
+//= require mustache
+//= require backbone
+//= require toastunes
 //= require_tree ./views
+//= require_tree ./models
+//= require_tree ./collections
 //= require_tree ./routers
 //= require_tree .
-

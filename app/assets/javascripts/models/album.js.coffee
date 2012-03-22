@@ -1,8 +1,4 @@
-tt.Models.Album = Backbone.Model.extend
+class app.Album extends Backbone.Model
   foo: 'bar'
-
-tt.Collections.Albums = Backbone.Collection.extend
-  model: tt.Models.Album
-  url: "/albums"
-
-tt.Collections.Playlist = tt.Collections.Albums.extend
+  url: ->
+    "/api/v1/albums/#{@id}"
