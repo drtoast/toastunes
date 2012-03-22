@@ -62,16 +62,10 @@ class AlbumsController < ApplicationController
   # POST /albums
   # POST /albums.xml
   def create
-    options = params[:album].merge({ :url => params[:download_link] })
+    options = params[:album].merge({ :library => 'w2', :url => params[:download_link] })
     downloader = Toastunes::Downloader.new(options)
-    begin
-      results = downloader.run!
-      redirect_to(results.album, :notice => "Album was successfully created")
-    rescue Toastunes::DownloadError => e
-      redirect_to(new_album_path, :notice => "download failed: #{e}")
-    rescue Toastunes::ExtractError => e
-      redirect_to(new_album_path, :notice => "extract failed: #{e}")
-    end
+    downloader.run!
+    redirect_to(downloader.album, :notice => "Album was successfully created")
   end
 
   # PUT /albums/1

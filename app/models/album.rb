@@ -1,7 +1,10 @@
 class Album
   include Mongoid::Document
   include Mongoid::Timestamps
-  
+
+  validates_presence_of :title
+  validates_presence_of :artist_name
+
   # fields
   field :title, :type => String
   field :artist_name, :type => String # can't use "artist" due to association
@@ -11,7 +14,8 @@ class Album
   field :rating, :type => Integer # 0 to 100
   field :library, :type => String # where does this album's files live?
   field :cover_download_at, :type => Time # when did we add an amazon cover?
-  
+  field :status, :type => String
+
   # indices
   index :created_at
   index :title

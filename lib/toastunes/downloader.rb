@@ -1,15 +1,19 @@
 class Toastunes::Downloader
 
-  attr_accessor :zip_file, :extract_to, :file_id, :parser
+  attr_accessor :zip_file, :extract_to, :file_id, :parser, :album
 
   def initialize(options)
     @options     = options
     @url         = options[:url]
     @artist_name = options[:artist_name]
-    @album_title = options[:album_title]
+    @album_title = options[:title]
     @compilation = options[:compilation]
     @user        = options[:user]
     @library     = options[:library]
+
+    raise "artist_name is required" if @artist_name.blank?
+    raise "url is required" if @url.blank?
+    raise "title is required" if @album_title.blank?
   end
 
   def run!
@@ -41,6 +45,7 @@ class Toastunes::Downloader
 
   # extract the cover and thumbnail from the first track
   def process_cover
+    puts "LIBRARY: #{@options[:library]}"
     tag_parser = Toastunes::TagParser.new(files.first)
     cover_path = tag_parser.extract_cover(@album.cover_dir, @album.thumbnail_dir, @album.id)
     if cover_path
@@ -52,10 +57,12 @@ class Toastunes::Downloader
 
   # move the tracks from the tmp dir to the music archive
   def archive_tracks
-    archive_path = File.join(Rails.root, 'public', 'music', @library, @artist_name, @album_title)
-    FileUtils.mkdir_p File.dirname(archive_path)
+    archive_dir = File.join(Rails.root, 'public', 'music', @library, @artist_name, @album_title)
+    puts archive_dir
+    FileUtils.mkdir_p archive_dir
     files.each do |file|
-      FileUtils.mv(file, archive_path)
+      basename = File.basename(file)
+      FileUtils.mv(file, File.join(archive_dir, basename))
     end
   end
 
@@ -80,16 +87,16 @@ private
     puts cmd
     result = `#{cmd} 2>&1`
     puts result
-    raise Toastunes::DownloadError result unless $?.success?
+    raise result unless $?.success?
   end
 
   def self.test
     d = Toastunes::Downloader.new(
         :library => 'w2',
         :user => User.last,
-        :url => 'http://dl.dropbox.com/u/966739/Companion.zip',
-        :artist_name => 'Ten and Tracer',
-        :album_title => 'Companion'
+        :url => 'http://dl.dropbox.com/u/966739/abbeyroad.zip',
+        :artist_name => 'The Beatles',
+        :title => 'Abbey Road'
     )
     d.run!
     #d.extract_to = '/tmp/1329955403629'
@@ -100,5 +107,3 @@ private
   end
 
 end
-
-class Toastunes::DownloadError < StandardError; end

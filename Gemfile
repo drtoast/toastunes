@@ -10,7 +10,7 @@ group :assets do
   gem 'uglifier'
 end
 
-gem 'jquery-rails'
+gem 'jquery-rails', '>= 1.0.12'
 
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'mongoid', '2.4.3'

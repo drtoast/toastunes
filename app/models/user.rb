@@ -8,6 +8,7 @@ class User
          :rememberable, :trackable, :validatable
 
   attr_accessible :email, :password, :password_confirmation, :unique => true
+  validates_uniqueness_of :email
 
   field :name, :type => String
   field :admin, :type => Boolean

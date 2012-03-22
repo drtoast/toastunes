@@ -2,13 +2,12 @@ class Toastunes::DirectoryParser
   
   # p = Toastunes::DirectoryParser.new(:library => 'w2')
   # p.parse!
-  def initialize(options={})
-    @options = {
-      :replace_artists => true,
-      :replace_tracks => true,
-      :replace_genres => true,
-      :replace_covers => true
-    }.merge(options)
+  def initialize(opts={})
+    @options = opts # HashWithIndifferentAccess
+    @options[:replace_artists] ||= true
+    @options[:replace_tracks] ||= true
+    @options[:replace_genres] ||= true
+    @options[:replace_covers] ||= true
   end
   
   # parse a directory of artist directories,
