@@ -14,7 +14,7 @@ class app.AlbumsView extends Backbone.View
       _.map app.albums.toJSON(), (album) ->
         title: album.title
         artist_name: album.artist_name
-        thumbnail: "/images/thumbnails/#{album.library}/#{album.thumbnail}"
+        thumbnail: app.helpers.thumbnail_path(album)
     console.log "AlbumsView#render: #{app.albums.length} albums"
     $(@el).html Mustache.render(@template, attrs)
     @
