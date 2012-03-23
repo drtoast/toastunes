@@ -4,19 +4,18 @@ class app.TunesRouter extends Backbone.Router
     'albums': 'albums'
     'albums/:id': 'album'
 
-#  initialize: ->
-#    @view = new app.AppView collection: app.Tasks
-#    app.Tasks.bind 'change:date', @changeDate, @
+  initialize: ->
+    @view = new app.AppView collection:app.albums
+    @view.render()
 
   albums: ->
-    model = new app.Album artist:'The Beatles', title:'Abbey Road'
-    view = new app.AlbumView model:model
-    console.log "rendering"
-    $('#stage').append view.render().el
 
   redirectToAlbums: ->
     console.log "redirect"
     Backbone.history.navigate "albums", trigger:true
 
   album: (id) ->
-
+    model = new app.Album artist:'The Beatles', title:'Abbey Road'
+    view = new app.AlbumView model:model
+    console.log "rendering"
+    $('#stage').append view.render().el

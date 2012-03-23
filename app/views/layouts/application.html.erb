@@ -42,11 +42,21 @@
   </div>
 </div>
 
+<!-- ALBUM TEMPLATE -->
 <script type="text/template" id="album-template">
   <div class="title">{{ title }}</div>
-  <div class="tag">{{ artist }}</div>
+  <div class="artist_name">{{ artist }}</div>
 </script>
 
+
+<!-- ALBUMS TEMPLATE -->
+<script type="text/template" id="albums-template">
+  {{#albums}}
+    <img src={{ thumbnail }}>
+    <div class="title">{{ title }}</div>
+    <div class="artist_name">{{ artist_name }}</div>
+  {{/albums}}
+</script>
 
 
 </body>

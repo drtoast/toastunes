@@ -1,6 +1,7 @@
 window.app =
   init: ->
-    app.router = new app.TunesRouter
+    @albums = new app.Albums
+    @router = new app.TunesRouter
     Backbone.history.start() # pushState:true
 
 $ ->
