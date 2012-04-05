@@ -80,6 +80,9 @@ GEM
       rails (>= 3.1.1)
       rake
     hike (1.2.1)
+    httparty (0.8.1)
+      multi_json
+      multi_xml
     i18n (0.6.0)
     jasmine-core (1.2.0.rc1)
     jasmine-headless-webkit (0.8.4)
@@ -111,7 +114,9 @@ GEM
       activemodel (~> 3.1)
       mongo (~> 1.3)
       tzinfo (~> 0.3.22)
+    mp4info (1.7.3)
     multi_json (1.1.0)
+    multi_xml (0.4.2)
     nokogiri (1.5.2)
     polyglot (0.3.3)
     rack (1.4.1)
@@ -141,6 +146,7 @@ GEM
     rb-fsevent (0.9.0)
     rdoc (3.12)
       json (~> 1.4)
+    rmagick (2.13.1)
     rspec (2.9.0)
       rspec-core (~> 2.9.0)
       rspec-expectations (~> 2.9.0)
@@ -154,6 +160,8 @@ GEM
       activesupport (>= 3.0)
       railties (>= 3.0)
       rspec (~> 2.9.0)
+    ruby-hmac (0.4.0)
+    ruby-mp3info (0.7.1)
     rubyzip (0.9.6.1)
     sass (3.1.15)
     sass-rails (3.2.5)
@@ -199,14 +207,19 @@ DEPENDENCIES
   guard
   guard-jasmine-headless-webkit
   guard-rails-assets
+  httparty
   jasmine!
   jasmine-headless-webkit
   jquery-rails
   mongo
   mongoid
+  mp4info
   rails (= 3.2.1)
   rb-fsevent
+  rmagick
   rspec-rails
+  ruby-hmac
+  ruby-mp3info
   sass-rails
   therubyracer
   twitter-bootstrap-rails

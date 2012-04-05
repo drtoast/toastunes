@@ -122,47 +122,6 @@ class Album
     end
   end
 
-  def download(url, destination)
-    uri = URI.parse(url)
-    response = Net::HTTP.start(uri.host) do |http|
-      response = http.get(uri.path)
-      open(destination, "wb") do |file|
-        file.write(response.body)
-      end
-      response
-    end
-  end
-
-  def set_artist(name=nil)
-    if name
-      self.artist_name = name
-    else
-      # detect artist name via tracks
-      artists = tracks.collect{|t| t.artist_name}.uniq
-      if artists.length == 1
-        begin
-          self.artist_name = artists.first.to_s.blank? ? 'No Artist' : artists.first
-        rescue => e
-          self.artist_name = e.class.name
-          puts "WARNING: #{e.inspect}"
-        end
-      else
-        # puts "COMPILATION: #{artists.join(",")}"
-        self.artist_name = 'Compilations'
-      end
-    end
-    self.artist = Artist.where(:name => artist_name).first || Artist.create!(:name => artist_name)
-  end
-
-  def set_genre
-    genres = tracks.collect{|t| t.genre}.uniq
-    if genres.length == 1
-      self.genre = Genre.where(:name => genres.first).first || Genre.create!(:name => genres.first)
-    else
-      self.genre = nil
-    end
-  end
-
   def closest_rating
     # need a rating quantized to 0,20,40,60,80 for form checkboxes
     (rating.to_i / 20) * 20

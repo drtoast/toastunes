@@ -18,7 +18,7 @@ namespace :toastunes do
     desc "load the given directory inside public/music, containing artist subdirectories"
     task :artists, [:library] => [:environment] do |t, args|
       args.with_defaults :library => 'w2'
-      p = Toastunes::DirectoryParser.new(:library => args.library)
+      p = Toastunes::DirectoryProcessor.new(:library => args.library)
       p.parse!
     end
     
@@ -26,7 +26,7 @@ namespace :toastunes do
     desc "load the given artist directory in public/music/[library]/[artist]"
     task :artist, [:dir, :artist] => [:environment] do |t, args|
       args.with_defaults :library => 'w2', :artist => 'Radiohead'
-      p = Toastunes::DirectoryParser.new(:library => args.library)
+      p = Toastunes::DirectoryProcessor.new(:library => args.library)
       dir = File.join(Rails.root, 'public', 'music', args.library)
       p.parse_artist(dir, args.artist)
     end
@@ -79,6 +79,7 @@ namespace :toastunes do
       Genre.cleanup
     end
 
+    # rake toastunes:process:reset
     task :reset => :environment do |t, args|
       Album.destroy_all
       Artist.destroy_all

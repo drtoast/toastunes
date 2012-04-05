@@ -35,7 +35,7 @@ class Toastunes::Library
   end
   
   def load_directory(dir)
-    p = Toastunes::DirectoryParser.new
+    p = Toastunes::DirectoryProcessor.new
     p.parse!(dir)
   end
   

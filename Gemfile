@@ -5,6 +5,13 @@ gem 'jquery-rails'
 gem 'mongo'
 gem 'bson_ext'
 gem 'mongoid'
+gem 'httparty' # for aaws
+gem 'ruby-hmac' # for aaws
+
+# mp3 processing
+gem 'ruby-mp3info'
+gem 'mp4info'#, git: 'git://github.com/arbarlow/ruby-mp4info.git'
+gem 'rmagick',      :require => "RMagick"
 
 # Gems used only for assets and not required in production environments by default.
 group :assets do

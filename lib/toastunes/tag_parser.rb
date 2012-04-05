@@ -53,11 +53,16 @@ class Toastunes::TagParser
   end
   
   def parse(path)
-    @info = Mp3Info.new(path)
-    # if @info.hastag2?
-    #   puts "parse_tag: #{@info.tag2.version}"
+    @file_type = File.extname(path).downcase
+    if @file_type == '.m4a'
+      @mp4info = MP4Info.open path
+    elsif @file_type == '.mp3'
+      @mp3info = Mp3Info.new path
+    end
+    # if @mp3info.hastag2?
+    #   puts "parse_tag: #{@mp3info.tag2.version}"
     # end
-    # if @info.tag
+    # if @mp3info.tag
     #   title = i.tag.title
     #   artist = i.tag.artist
     #   album = i.tag.album
@@ -65,7 +70,8 @@ class Toastunes::TagParser
     #   genre = i.tag.genre_s
     # end
   end
-  
+
+
   def sanitize(str)
     # or: str.encode("ISO-8859-1", "UTF-8", {:invalid => :replace, :undef => :replace, :replace => "?"})
     return nil unless str
@@ -78,35 +84,38 @@ class Toastunes::TagParser
   end
   
   def title
-    sanitize @info.tag.title
+    sanitize @mp3info ? @mp3info.tag.title : @mp4info.NAM
   end
   
   def artist
-    sanitize @info.tag.artist
+    sanitize @mp3info ? @mp3info.tag.artist : @mp4info.ART
   end
   
   def album
-    sanitize @info.tag.artist
+    sanitize @mp3info ? @mp3info.tag.artist : @mp4info.ALB
   end
   
   def track_number
-    sanitize @info.tag.tracknum
+    sanitize @mp3info ? @mp3info.tag.tracknum : Array(@mp4info.TRKN)[0]
   end
   
   def genre
-    sanitize @info.tag.genre_s
+    sanitize @mp3info ? @mp3info.tag.genre_s : @mp4info.TRKN
   end
   
   def year
-    sanitize @info.tag.year
+    sanitize @mp3info ? @mp3info.tag.year : @mp4info.DAY
   end
   
   def extract_cover(cover_dir, thumbnail_dir, album_id)
-    if @info.hastag2?
+    if @mp4info
+      data = @mp4info.COVR
+      image_format = 'image/jpeg'
+      full_path = write_image(cover_dir, thumbnail_dir, album_id, IMAGE_FORMATS[image_format] || image_format, data)
+    elsif @mp3info.hastag2?
       # GET PICTURE
-
-      if @info.tag2.version.match(/^2\.2\./)
-        if pic = @info.tag2.PIC
+      if @mp3info.tag2.version.match(/^2\.2\./)
+        if pic = @mp3info.tag2.PIC
           text_encoding = pic[0]
           image_format = pic[1,3]
           raise "image format not recognized: #{image_format}" unless IMAGE_FORMATS[image_format]
@@ -115,7 +124,7 @@ class Toastunes::TagParser
           full_path = write_image(cover_dir, thumbnail_dir, album_id, IMAGE_FORMATS[image_format] || image_format, data)
         end
       else
-        if pic = @info.tag2.APIC
+        if pic = @mp3info.tag2.APIC
           pic = Array(pic).first # grab the first if there are multiple images
           begin
             text_encoding = pic[0]
@@ -153,10 +162,6 @@ class Toastunes::TagParser
     # save thumbnail
     processor.write_thumbnail(thumbnail_dir, album_id, full_path)
     return full_path
-  end
-  
-  def get_tag(path)
-    Mp3Info.open(path)
   end
   
 end

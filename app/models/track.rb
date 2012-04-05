@@ -18,7 +18,8 @@ class Track
   field :itunes_pid, :type => String
   field :bit_rate, :type => Integer
   field :sample_rate, :type => Integer
-  
+  field :genre, :type => String
+
   embedded_in :album, :inverse_of => :tracks
   
   def local_path
