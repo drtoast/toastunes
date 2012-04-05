@@ -19,12 +19,12 @@
       <a class="brand" href="#">ToasTunes</a>
       <div class="nav-collapse">
         <ul class="nav">
-          <li><a href="artists">Artists</a></li>
-          <li><a href="albums">Albums</a></li>
-          <li><a href="genres">Genres</a></li>
-          <li><a href="comments">Comments</a></li>
-          <li><a href="ratings">Ratings</a></li>
-          <li><a href="users">Users</a></li>
+          <li><a href="#artists">Artists</a></li>
+          <li><a href="#albums">Albums</a></li>
+          <li><a href="#genres">Genres</a></li>
+          <li><a href="#comments">Comments</a></li>
+          <li><a href="#ratings">Ratings</a></li>
+          <li><a href="#users">Users</a></li>
         </ul>
       </div>
     </div>
@@ -33,30 +33,72 @@
 
 <div class="container">
   <div class="row">
-    <div class="span9">
-      <div id="stage">
+    <div class="span3">
+      <div id="list">
         <%= yield %>
       </div>
     </div>
-    <div class="span3"><h2>Playlist</h2></div>
+    <div class="span6">
+      <div id="album-detail">
+        <h2>Album</h2>
+      </div>
+    </div>
+    <div class="span3">
+      <div id="playlist">
+        <h2>Playlist</h2>
+      </div>
+    </div>
   </div>
 </div>
 
 
-<!-- ALBUM TEMPLATE -->
-<script type="text/template" id="album-template">
-  <div class="title">{{ title }}</div>
-  <div class="artist_name">{{ artist }}</div>
+<!-- ALBUM SUMMARY TEMPLATE -->
+<script type="text/template" id="album-summary-template">
+  <div class="album-thumbnail">
+    <img src={{ thumbnail }}>
+  </div>
+  <div class="info">
+    <div class="artist-name">{{ artist_name }}</div>
+    <div class="title">{{ title }}</div>
+  </div>
+</script>
+
+<!-- ALBUM PLAYLIST TEMPLATE -->
+<script type="text/template" id="album-playlist-template">
+  <div class="row">
+    <div class="album-thumbnail">
+      <img src={{ thumbnail }}>
+    </div>
+    <div class="info">
+      <div class="artist-name">{{ artist_name }}</div>
+      <div class="title">{{ title }}</div>
+      <div class="remove"><a href="#remove">(remove)</a></div>
+    </div>
+  </div>
+  <div class="tracklist row">
+    {{#tracks}}
+      <div class="track">
+        {{title}}
+      </div>
+    {{/tracks}}
+  </div>
 </script>
 
 
-<!-- ALBUMS TEMPLATE -->
-<script type="text/template" id="albums-template">
-  {{#albums}}
-    <img src={{ thumbnail }}>
+<!-- ALBUM DETAIL TEMPLATE -->
+<script type="text/template" id="album-detail-template">
+  <div class="album-detail">
+    <div class="artist-name">{{ artist_name }}</div>
     <div class="title">{{ title }}</div>
-    <div class="artist_name">{{ artist_name }}</div>
-  {{/albums}}
+  </div>
+  <div class="album-cover">
+    <img src={{ cover }}>
+  </div>
+  <div class="tracklist">
+    {{#tracks}}
+      <div class="track">{{title}}</div>
+    {{/tracks}}
+  </div>
 </script>
 
 

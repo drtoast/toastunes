@@ -5,10 +5,18 @@ class app.TunesRouter extends Backbone.Router
     'albums/:id': 'album'
 
   initialize: ->
-    @view = new app.AppView collection:app.albums
-    @view.render()
+#    @view = new app.AppView collection:app.albums
+#    @view.render()
+    console.log 'TunesRouter#initialize'
+    console.log app.playlist
+    @albums_view = new app.AlbumsView collection:app.albums
+    @playlist_view = new app.PlaylistView collection:app.playlist
+    $('#list').empty().append @albums_view.render().el
+    $('#playlist').empty().append @playlist_view.render().el
 
   albums: ->
+    console.log 'TunesRouter#albums'
+    app.albums.fetch()
 
   redirectToAlbums: ->
     console.log "redirect"

@@ -1,5 +1,5 @@
-class app.AlbumsView extends Backbone.View
-  className: 'albums'
+class app.PlaylistView extends Backbone.View
+  className: 'playlist'
 
   initialize: ->
     super
@@ -9,9 +9,9 @@ class app.AlbumsView extends Backbone.View
     @collection.bind 'reset',  @render, @
 
   render: (e) ->
-    console.log "AlbumsView#render: #{@collection.length} albums"
+    console.log "PlaylistView#render: #{@collection.length} albums"
     @$el.empty()
     @collection.each (album) =>
-      album_view = new app.AlbumSummaryView model:album
+      album_view = new app.AlbumPlaylistView model:album
       @$el.append album_view.render().el
     @

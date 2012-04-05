@@ -12,6 +12,7 @@
 //= require mustache
 //= require backbone
 //= require toastunes
+//= require ./views/base_view
 //= require_tree ./views
 //= require_tree ./models
 //= require_tree ./collections
