@@ -3,6 +3,7 @@ class app.AlbumsView extends Backbone.View
 
   initialize: ->
     super
+    @collection = app.albums
     @collection.bind 'change', @render, @
     @collection.bind 'add',    @render, @
     @collection.bind 'remove', @render, @

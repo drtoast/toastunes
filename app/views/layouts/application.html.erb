@@ -8,6 +8,7 @@
 </head>
 <body>
 
+<audio autobuffer="autobuffer" id="player"></audio>
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
@@ -63,24 +64,38 @@
   </div>
 </script>
 
+<!-- CONTROLS TEMPLATE -->
+<script type="text/template" id="controls-template">
+  <div class="controls">
+    <ul class="button">
+      <li class="button">
+        <a class="button prev" href="#">
+          <span>&lt;&lt;</span>
+        </a>
+      </li>
+      <li class="button">
+        <a class="button play" href="#">
+          <span>play</span>
+        </a>
+      </li>
+      <li class="button">
+        <a class="button next" href="#">
+          <span>&gt;&gt;</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</script>
+
 <!-- ALBUM PLAYLIST TEMPLATE -->
 <script type="text/template" id="album-playlist-template">
-  <div class="row">
-    <div class="album-thumbnail">
-      <img src={{ thumbnail }}>
-    </div>
-    <div class="info">
-      <div class="artist-name">{{ artist_name }}</div>
-      <div class="title">{{ title }}</div>
-      <div class="remove"><a href="#remove">(remove)</a></div>
-    </div>
+  <div class="album-thumbnail">
+    <img src={{ thumbnail }}>
   </div>
-  <div class="tracklist row">
-    {{#tracks}}
-      <div class="track">
-        {{title}}
-      </div>
-    {{/tracks}}
+  <div class="info">
+    <div class="artist-name">{{ artist_name }}</div>
+    <div class="title">{{ title }}</div>
+    <div class="remove"><a href="#remove">(remove)</a></div>
   </div>
 </script>
 

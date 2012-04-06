@@ -166,10 +166,13 @@ class Toastunes::AlbumProcessor
   def archive_tracks
     archive_dir = File.join(Rails.root, 'public', 'music', @library, @artist_name, @album_title)
     FileUtils.mkdir_p archive_dir
-    files.each do |src|
-      basename = File.basename(src)
+    @album.tracks.each do |track|
+      basename = File.basename(track.location)
       dest = File.join(archive_dir, basename)
-      FileUtils.mv(src, dest) unless src == dest
+      unless track.location == dest
+        FileUtils.mv(track.location, dest)
+        track.location = dest
+      end
     end
   end
 
@@ -177,11 +180,10 @@ class Toastunes::AlbumProcessor
   # what info can we glean from the filename?
   def parse_filename(file)
     filename = {}
-    if file.match(/^(\d{1,2}\s+)?(.*)\.(mp3|m4a)$/i)
-      filename[:track_number] = $1.strip if $1
-      filename[:track_title] = $2
-      filename[:kind] = $3
-    end
+    File.basename(file).match(/^(\d{1,2}\s+)?(.*)\.(.{3,4})$/i)
+    filename[:track_number] = $1.strip if $1
+    filename[:track_title] = $2
+    filename[:kind] = $3.downcase
     filename
   end
 
@@ -212,7 +214,7 @@ private
   end
 
   def unclassified
-    @unclassified ||= (Genre.where(:name => 'Unclassified') || Genre.create!(:name => 'Unclassified'))
+    @unclassified ||= (Genre.where(:name => 'Unclassified').first || Genre.create!(:name => 'Unclassified'))
   end
 
   class DirectoryEmptyError < StandardError; end;
