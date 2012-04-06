@@ -8,13 +8,10 @@ class app.PlaylistView extends Backbone.View
 
   initialize: ->
     super
-    _.bindAll @, 'render', 'autoplay', 'toggle', 'prev', 'next', 'refresh_play_button'
+    _.bindAll @, 'render', 'autoplay', 'toggle', 'prev', 'next', 'refresh_play_button', 'add_album'
     @collection = app.playlist
-    @collection.bind 'change', @render,     @
-    @collection.bind 'add',    @render,     @
-    @collection.bind 'add',    @autoplay,   @
-    @collection.bind 'remove', @render,     @
-    @collection.bind 'reset',  @render,     @
+    @collection.bind 'add',    @add_album,    @
+#    @collection.bind 'reset',  @render,       @
     @player = new app.Player
     @player.bind 'change:state', @refresh_play_button
 
@@ -46,6 +43,11 @@ class app.PlaylistView extends Backbone.View
     console.log 'next'
     e.preventDefault() if e?
     @player.next()
+
+  add_album: (album) ->
+    album_view = new app.AlbumPlaylistView model:album
+    @$el.append album_view.render().el
+    @autoplay()
 
   render: ->
     console.log "PlaylistView#render: #{@collection.length} albums"
