@@ -1,8 +1,8 @@
 class app.BaseView extends Backbone.View
 
   initialize: ->
-    @template = $("##{@template_id}").html()
+    @template = Handlebars.compile $("##{@template_id}").html()
 
   render: ->
-    $(@el).html Mustache.render(@template, @model.toJSON())
+    $(@el).html @template(@model.toJSON())
     @

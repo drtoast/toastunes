@@ -10,6 +10,7 @@
 //= require underscore
 //= require json2
 //= require mustache
+//= require handlebars
 //= require backbone
 //= require toastunes
 //= require ./views/base_view

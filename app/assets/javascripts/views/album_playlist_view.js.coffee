@@ -12,5 +12,5 @@ class app.AlbumPlaylistView extends app.BaseView
 
   remove_album: (e) ->
     e.preventDefault()
-    app.playlist.remove @model
+    @collection.remove @model
     @remove()

@@ -2,11 +2,13 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.2.1'
 gem 'jquery-rails'
+gem 'haml-rails'
 gem 'mongo'
 gem 'bson_ext'
 gem 'mongoid'
 gem 'httparty' # for aaws
 gem 'ruby-hmac' # for aaws
+gem 'coffee-filter'
 
 # mp3 processing
 gem 'ruby-mp3info'

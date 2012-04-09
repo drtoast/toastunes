@@ -1,0 +1,98 @@
+- content_for :head do
+  :javascript
+    $(function () {
+      var init_data = {
+        albums: #{@albums.to_json},
+        artists: #{@artists.to_json}
+      }
+      app.init(init_data);
+    });
+
+.navbar.navbar-fixed-top
+  .navbar-inner
+    .container
+      %a.btn.btn-navbar{'data-toggle'=>'collapse', 'data-target'=>'.nav-collapse'}
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a.brand{:href => "#"} ToasTunes
+      .nav-collapse
+        %ul.nav
+          %li
+            %a{:href => "#artists"} Artists
+          %li
+            %a{:href => "#albums"} Albums
+          %li
+            %a{:href => "#genres"} Genres
+          %li
+            %a{:href => "#comments"} Comments
+          %li
+            %a{:href => "#ratings"} Ratings
+          %li
+            %a{:href => "#users"} Users
+.container
+  .row
+    .span3
+      #list List
+    .span6
+      #detail Detail
+    .span3
+      #playlist Playlist
+
+
+/ ALBUM SUMMARY TEMPLATE
+%script#album-summary-template{:type => 'text/template'}
+  .album-thumbnail
+    %a{:href => "#albums/{{ _id }}"}
+      %img{:src => '{{ thumbnail }}', :width => '75', :height => '75'}
+  .info
+    .artist-name
+      %a{:href => "#artists/{{ artist_id }}"} {{ artist_name }}
+    .title
+      %a{:href => "#albums/{{ _id }}"} {{ title }}
+
+
+/ CONTROLS TEMPLATE
+%script#controls-template{:type => 'text/template'}
+  .controls.btn-group
+    %button.btn.prev &lt;&lt;
+    %button.btn.play &#x25B6;
+    %button.btn.next &gt;&gt;
+
+
+/ ALBUM PLAYLIST TEMPLATE
+%script#album-playlist-template{:type => 'text/template'}
+  .album-thumbnail
+    %a{:href => "#albums/{{ _id }}"}
+      %img{:src => '{{ thumbnail }}', :width => '75', :height => '75'}
+  .info
+    .artist-name
+      %a{:href => "#artists/{{ artist_id }}"} {{ artist_name }}
+    .title
+      %a{:href => "#albums/{{ _id }}"} {{ title }}
+    .remove
+      %a{:href => "#remove"} (remove)
+
+
+/ ALBUM DETAIL TEMPLATE
+%script#album-detail-template{:type => 'text/template'}
+  .album-detail
+    %a{:href => "#artists/{{ artist_id }}"}
+      .artist-name {{ artist_name }}
+    .title {{ title }}
+  .album-cover
+    %img{:src => '{{ cover }}'}
+  .tracklist
+    {{#tracks}}
+    .track{'data-track-id' => '{{ _id }}'}
+      %a{:href => "#albums/{{ ../_id }}/tracks/{{ _id }}"} {{title}}
+    {{/tracks}}
+
+/ ARTIST SUMMARY TEMPLATE
+%script#artist-summary-template{:type => 'text/template'}
+  .artist-name
+    %a{:href => "#artists/{{ _id }}"} {{ name }}
+
+/ ARTIST DETAIL TEMPLATE
+%script#artist-detail-template{:type => 'text/template'}
+  .albums

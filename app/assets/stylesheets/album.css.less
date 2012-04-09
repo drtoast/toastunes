@@ -1,11 +1,32 @@
-.album-detail {
-  .artist-name {
-    font-size: 28px;
+a {
+  color: black;
+}
+
+.artist-name {
+  font-weight: bold;
+}
+
+#detail {
+  .album-cover {
+    margin-bottom: 10px;
   }
-  .title {
-    font-size: 18px;
-    padding-top: 5px;
-    padding-bottom: 10px;
+  .album-detail {
+    .artist-name {
+      font-size: 28px;
+    }
+    .title {
+      font-size: 18px;
+      padding-top: 5px;
+      padding-bottom: 10px;
+    }
+  }
+  .tracklist {
+    .playing {
+      font-weight: bold;
+    }
+    .playing:before {
+      content: "\25B8  ";
+    }
   }
 }
 
@@ -20,6 +41,7 @@
 }
 
 .album-thumbnail {
+  cursor: pointer;
   float: left;
   margin-right: 5px;
 }
