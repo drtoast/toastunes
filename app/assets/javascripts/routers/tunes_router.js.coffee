@@ -23,6 +23,11 @@ class app.TunesRouter extends Backbone.Router
   albums: ->
     console.log 'TunesRouter#albums'
     @render_albums_list()
+    model = @albums.first()
+    @detail_view = new app.AlbumDetailView
+      model: model
+      player: @player
+    $('#detail').html @detail_view.render().el
 
   album: (album_id, track_id) ->
     model = @albums.get album_id

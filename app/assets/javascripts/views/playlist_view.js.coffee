@@ -8,18 +8,13 @@ class app.PlaylistView extends Backbone.View
 
   initialize: ->
     super
-    _.bindAll @, 'render', 'autoplay', 'toggle', 'prev', 'next', 'refresh_play_button', 'add_album', 'remove_album'
+    _.bindAll @, 'render', 'toggle', 'prev', 'next', 'refresh_play_button', 'add_album', 'remove_album'
     @collection.bind 'add',    @add_album,    @
     @collection.bind 'remove', @remove_album, @
     @player = @options.player
     @player.bind 'change:state', @refresh_play_button, @
     @player.bind 'change:current_track', @display_current_track, @
     @player.bind 'change:remaining_time', @display_remaining_time, @
-
-  autoplay: ->
-    console.log 'autoplay', @player.get('state')
-    if @collection.length == 1 && @player.get('state') != 'play'
-      @player.skip 0
 
   refresh_play_button: ->
     player_state = @player.get('state')
@@ -62,7 +57,7 @@ class app.PlaylistView extends Backbone.View
       model: album
       collection: @collection
     @$el.append album_view.render().el
-    @autoplay()
+    @player.play() if @player.playlist.length == 1
 
   remove_album: (album) ->
     @player.set
