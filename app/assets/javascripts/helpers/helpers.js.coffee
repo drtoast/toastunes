@@ -1,5 +1,14 @@
-app.helpers =
-  thumbnail_path: (album) ->
-    "/images/thumbnails/#{album.library}/#{album.thumbnail}"
-  cover_path: (album) ->
-    "/images/covers/#{album.library}/#{album.cover}"
+# Handlebars Helpers
+
+Handlebars.registerHelper 'length', (object) ->
+  object.length
+
+Handlebars.registerHelper 'thumbnail_path', (library, thumbnail) ->
+    if thumbnail
+      "/images/thumbnails/#{library}/#{thumbnail}"
+    else
+      "/images/thumbnail.png"
+
+Handlebars.registerHelper 'cover_path', (library, cover) ->
+    if cover
+      "/images/covers/#{library}/#{cover}"

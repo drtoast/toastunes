@@ -6,6 +6,7 @@ class app.TunesRouter extends Backbone.Router
     'albums/:album_id/tracks/:track_id': 'album'
     'artists': 'artists'
     'artists/:id': 'artist'
+    'comments': 'comments'
 
   initialize: (options) ->
     console.log 'TunesRouter#initialize'
@@ -15,6 +16,7 @@ class app.TunesRouter extends Backbone.Router
     @player =     @options.player
     @artists =    @options.artists
     @albums =     @options.albums
+    @comments =   @options.comments
     @playlist_view = new app.PlaylistView
       collection:  @playlist
       player:      @player
@@ -44,6 +46,10 @@ class app.TunesRouter extends Backbone.Router
     console.log 'TunesRouter#artists'
     @render_artists_list()
 
+  comments: ->
+    console.log 'TunesRouter#comments'
+    @render_comments_list()
+
   artist: (id) ->
     model = @artists.get id
     console.log 'TunesRouter#artist', model
@@ -55,6 +61,11 @@ class app.TunesRouter extends Backbone.Router
   render_artists_list: ->
     @list_view = new app.ArtistsView
       collection: @artists
+    $('#list').empty().append @list_view.render().el
+
+  render_comments_list: ->
+    @list_view = new app.CommentsView
+      collection: @comments
     $('#list').empty().append @list_view.render().el
 
   render_albums_list: ->

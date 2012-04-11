@@ -3,7 +3,9 @@
     $(function () {
       var init_data = {
         albums: #{@albums.to_json},
-        artists: #{@artists.to_json}
+        artists: #{@artists.to_json},
+        comments: #{@comments.to_json},
+        users: #{@users.to_json}
       }
       app.init(init_data);
     });
@@ -49,7 +51,7 @@
 %script#album-summary-template{:type => 'text/template'}
   .album-thumbnail
     %a{:href => "#albums/{{ _id }}"}
-      %img{:src => '{{ thumbnail }}', :width => '75', :height => '75'}
+      %img{:src => '{{ thumbnail_path library thumbnail }}', :width => '75', :height => '75'}
   .info
     .artist-name
       %a{:href => "#artists/{{ artist_id }}"} {{ artist_name }}
@@ -69,7 +71,7 @@
 %script#album-playlist-template{:type => 'text/template'}
   .album-thumbnail
     %a{:href => "#albums/{{ _id }}"}
-      %img{:src => '{{ thumbnail }}', :width => '75', :height => '75'}
+      %img{:src => '{{ thumbnail_path library thumbnail }}', :width => '75', :height => '75'}
   .info
     .artist-name
       %a{:href => "#artists/{{ artist_id }}"} {{ artist_name }}
@@ -86,12 +88,12 @@
       .artist-name {{ artist_name }}
     .title {{ title }}
   .album-cover
-    %img{:src => '{{ cover }}'}
+    %img{:src => '{{ cover_path library cover }}'}
   %ul.nav.nav-tabs
     %li.active
       %a{:href=>'#tracks'}
         Tracks
-        %span.badge 12
+        %span.badge {{ length tracks }}
     %li
       %a{:href=>'#comments'}
         Comments
@@ -111,6 +113,17 @@
 %script#artist-summary-template{:type => 'text/template'}
   .artist-name
     %a{:href => "#artists/{{ _id }}"} {{ name }}
+
+/ COMMENT SUMMARY TEMPLATE
+%script#comment-summary-template{:type => 'text/template'}
+  .album-thumbnail
+    %a{:href => "#albums/{{ album_id }}"}
+      %img{:src => '{{ thumbnail_path album_library album_thumbnail }}', :width => '75', :height => '75'}
+  .info
+    .title
+      %a{:href => "#albums/{{ album_id }}"} {{ album_title }}
+    .body {{ body }}
+
 
 / ARTIST DETAIL TEMPLATE
 %script#artist-detail-template{:type => 'text/template'}

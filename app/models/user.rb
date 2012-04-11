@@ -33,5 +33,12 @@ class User
       super # Use whatever other message 
     end 
   end
-  
+
+  def as_json(options={})
+    attrs = super(options)
+    attrs.delete 'encrypted_password'
+    attrs.delete 'sign_in_count'
+    attrs
+  end
+
 end
