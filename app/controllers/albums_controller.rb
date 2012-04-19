@@ -14,7 +14,7 @@ class AlbumsController < ApplicationController
 
       format.json do
         # lazily load: select via params
-        respond_with(@albums = Album.all)
+        respond_with(@albums = Album.where(:artist_id => params[:artist_id]))
       end
     end
   end

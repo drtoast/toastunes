@@ -127,6 +127,13 @@ class Album
     (rating.to_i / 20) * 20
   end
 
+  #def as_json(options={})
+  #  attrs = super(options)
+  #  attrs['comments'] = comments.as_json
+  #  attrs['ratings'] = ratings.as_json
+  #  attrs
+  #end
+
 private
 
   def delete_files

@@ -7,6 +7,8 @@ class app.AlbumDetailView extends app.BaseView
     @player = @options.player
     @player.bind 'change:current_track', @highlight_current_track, @
     @player.bind 'change:remaining_time', @update_time_remaining, @
+    @comments_view = new app.AlbumCommentsView
+      model: @model
 
   events: ->
     'click .album-cover': 'add_to_playlist'
@@ -29,7 +31,11 @@ class app.AlbumDetailView extends app.BaseView
         .siblings()
         .removeClass('playing')
 
+  render_comments: ->
+    @$('#album-comments').html @comments_view.render().el
+
   render: ->
     super
+    @render_comments()
     @highlight_current_track()
     @

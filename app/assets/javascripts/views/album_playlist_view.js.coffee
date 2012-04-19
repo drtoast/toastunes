@@ -1,6 +1,6 @@
 class app.AlbumPlaylistView extends app.BaseView
-  className: 'album-playlist'
-  template_id: 'album-playlist-template'
+  className: 'album-summary'
+  template_id: 'album-summary-template'
 
   events: ->
     'click .album-thumbnail': 'select_album'
@@ -14,3 +14,9 @@ class app.AlbumPlaylistView extends app.BaseView
     e.preventDefault()
     @collection.remove @model
     @remove()
+
+  render: ->
+    $(@el).html @template
+      album: @model.toJSON()
+      remove: true
+    @

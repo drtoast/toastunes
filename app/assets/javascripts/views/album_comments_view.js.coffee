@@ -1,0 +1,32 @@
+class app.AlbumCommentsView extends app.BaseView
+  className: 'album-comments'
+  template_id: 'album-comments-template'
+
+  initialize: ->
+    super
+    comments = app.comments.filter (comment) =>
+      comment.get('album_id') == @model.get('_id')
+    @collection = new app.Comments(comments)
+    @collection.bind 'add', @render, @
+    @collection.bind 'reset', @render, @
+    @collection.fetch
+      add: true
+      data:
+        album_id: @model.get('_id')
+
+  update_badge: ->
+    console.log 'update_badge'
+    $('a[href="#album-comments"]').html "Comments <span class=badge>#{@collection.length}</span>"
+
+  cache_comments: ->
+    # cache any new comments
+    @collection.each (comment) =>
+      app.comments.add comment
+
+  render: ->
+    console.log 'render'
+    @update_badge()
+    @cache_comments()
+    $(@el).html @template
+      comments: @collection.toJSON()
+    @

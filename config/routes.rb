@@ -4,8 +4,8 @@ Toastunes::Application.routes.draw do
 
   match 'api/v1/albums' => 'albums#index'
   match 'api/v1/albums/:id' => 'albums#view'
-
   match 'api/v1/artists' => 'artists#index'
+  match 'api/v1/comments' => 'comments#index'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

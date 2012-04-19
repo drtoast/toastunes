@@ -50,14 +50,20 @@
 / ALBUM SUMMARY TEMPLATE
 %script#album-summary-template{:type => 'text/template'}
   .album-thumbnail
-    %a{:href => "#albums/{{ _id }}"}
-      %img{:src => '{{ thumbnail_path library thumbnail }}', :width => '75', :height => '75'}
+    %a{:href => "#albums/{{ album._id }}"}
+      %img{:src => '{{ thumbnail_path album.library album.thumbnail }}', :width => '75', :height => '75'}
   .info
     .artist-name
-      %a{:href => "#artists/{{ artist_id }}"} {{ artist_name }}
+      %a{:href => "#artists/{{ album.artist_id }}"} {{ album.artist_name }}
     .title
-      %a{:href => "#albums/{{ _id }}"} {{ title }}
-
+      %a{:href => "#albums/{{ album._id }}"} {{ album.title }}
+    {{#if comment }}
+    .body "{{ comment.body }}"
+    {{/if}}
+    {{#if remove}}
+    .remove
+      %a{:href => "#remove"} (remove)
+    {{/if}}
 
 / CONTROLS TEMPLATE
 %script#controls-template{:type => 'text/template'}
@@ -65,21 +71,6 @@
     %button.btn.prev &lt;&lt;
     %button.btn.play &#x25B6;
     %button.btn.next &gt;&gt;
-
-
-/ ALBUM PLAYLIST TEMPLATE
-%script#album-playlist-template{:type => 'text/template'}
-  .album-thumbnail
-    %a{:href => "#albums/{{ _id }}"}
-      %img{:src => '{{ thumbnail_path library thumbnail }}', :width => '75', :height => '75'}
-  .info
-    .artist-name
-      %a{:href => "#artists/{{ artist_id }}"} {{ artist_name }}
-    .title
-      %a{:href => "#albums/{{ _id }}"} {{ title }}
-    .remove
-      %a{:href => "#remove"} (remove)
-
 
 / ALBUM DETAIL TEMPLATE
 %script#album-detail-template{:type => 'text/template'}
@@ -91,38 +82,38 @@
     %img{:src => '{{ cover_path library cover }}'}
   %ul.nav.nav-tabs
     %li.active
-      %a{:href=>'#tracks'}
+      %a{:href=>'#album-tracks', 'data-toggle'=>'tab'}
         Tracks
         %span.badge {{ length tracks }}
     %li
-      %a{:href=>'#comments'}
+      %a{:href=>'#album-comments', 'data-toggle'=>'tab'}
         Comments
-        %span.badge 8
     %li
-      %a{:href=>'#ratings'}
+      %a{:href=>'#album-ratings', 'data-toggle'=>'tab'}
         Ratings
-        %span.badge 8
 
-  .tracklist
-    {{#tracks}}
-    .track{'data-track-id' => '{{ _id }}'}
-      %a{:href => "#albums/{{ ../_id }}/tracks/{{ _id }}"} {{title}}
-    {{/tracks}}
+  .tab-content
+    #album-tracks.tab-pane.active
+      {{#tracks}}
+      .track{'data-track-id' => '{{ _id }}'}
+        %a{:href => "#albums/{{ ../_id }}/tracks/{{ _id }}"} {{title}}
+      {{/tracks}}
+
+    #album-comments.tab-pane
+    #album-ratings.tab-pane
+
+
+/ ALBUM COMMENTS TEMPLATE
+%script#album-comments-template{:type => 'text/template'}
+  {{#comments}}
+  .comment{'data-comment-id' => '{{ _id }}'}
+    {{body}}
+  {{/comments}}
 
 / ARTIST SUMMARY TEMPLATE
 %script#artist-summary-template{:type => 'text/template'}
   .artist-name
     %a{:href => "#artists/{{ _id }}"} {{ name }}
-
-/ COMMENT SUMMARY TEMPLATE
-%script#comment-summary-template{:type => 'text/template'}
-  .album-thumbnail
-    %a{:href => "#albums/{{ album_id }}"}
-      %img{:src => '{{ thumbnail_path album_library album_thumbnail }}', :width => '75', :height => '75'}
-  .info
-    .title
-      %a{:href => "#albums/{{ album_id }}"} {{ album_title }}
-    .body {{ body }}
 
 
 / ARTIST DETAIL TEMPLATE

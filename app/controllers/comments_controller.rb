@@ -5,8 +5,7 @@ class CommentsController < ApplicationController
   def index
     respond_to do |format|
       format.json do
-        # lazily load: select via params
-        respond_with(@albums = Album.all)
+        respond_with(@comments = Comment.where(:album_id => params[:album_id]))
       end
     end
   end

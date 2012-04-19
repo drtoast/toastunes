@@ -9,16 +9,20 @@ class app.ArtistDetailView extends app.BaseView
       album.get('artist_id') == @model.get('_id')
     @collection = new app.Albums(albums)
     @collection.bind 'add', @render, @
+    @collection.bind 'reset', @render, @
+    @collection.fetch
+      add: true
+      data:
+        artist_id: @model.get('_id')
 
   render: ->
-    if @model?
-      json = @model.toJSON()
-      json.albums = @collection.toJSON()
-      $(@el).html @template(json)
-      @collection.each (album) =>
-        view = new app.AlbumSummaryView
-          model: album
-          collection: app.playlist
-        @$('.albums').append view.render().el
-#          @$('.albums').append('see artist_detail_view.js.coffee')
+    json = @model.toJSON()
+    json.albums = @collection.toJSON()
+    $(@el).html @template(json)
+    @collection.each (album) =>
+      app.albums.add album
+      view = new app.AlbumSummaryView
+        model: album
+        collection: app.playlist
+      @$('.albums').append view.render().el
     @
