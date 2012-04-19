@@ -25,7 +25,6 @@ class app.PlaylistView extends Backbone.View
       when 'error' then '◽'
       else '----'
     return unless button_state
-    console.log ".btn.play: #{button_state}"
     @$('.btn.play').text button_state
 
   display_remaining_time: ->

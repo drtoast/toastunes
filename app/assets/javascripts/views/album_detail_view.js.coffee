@@ -4,14 +4,22 @@ class app.AlbumDetailView extends app.BaseView
 
   initialize: ->
     super
+    _.bindAll(@, 'update_comments_badge')
     @player = @options.player
     @player.bind 'change:current_track', @highlight_current_track, @
     @player.bind 'change:remaining_time', @update_time_remaining, @
     @comments_view = new app.AlbumCommentsView
       model: @model
+    @comments_view.collection.bind 'add', @update_comments_badge, @
+    @comments_view.collection.bind 'reset', @update_comments_badge, @
 
   events: ->
     'click .album-cover': 'add_to_playlist'
+
+  update_comments_badge: ->
+    count = @comments_view.collection.length
+    text = if count == 0 then "Comments" else "Comments <span class=badge>#{count}</span>"
+    @$('a[href="#album-comments"]').html text
 
   add_to_playlist: ->
     app.playlist.push @model
@@ -37,5 +45,6 @@ class app.AlbumDetailView extends app.BaseView
   render: ->
     super
     @render_comments()
+    @update_comments_badge()
     @highlight_current_track()
     @

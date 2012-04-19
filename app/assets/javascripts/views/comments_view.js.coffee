@@ -11,7 +11,6 @@ class app.CommentsView extends Backbone.View
   render: (e) ->
     console.log "CommentsView#render: #{@collection.length} comments"
     @$el.empty()
-    debugger
     @collection.each (comment) =>
       comment_view = new app.CommentSummaryView model:comment
       @$el.append comment_view.render().el
