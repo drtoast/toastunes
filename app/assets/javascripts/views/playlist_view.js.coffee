@@ -21,11 +21,11 @@ class app.PlaylistView extends Backbone.View
     button_state = switch player_state
       when 'buffering' then null
 #      when 'play' then '■'
-      when 'pause' then '▶'
-      when 'error' then '◽'
+      when 'pause' then '<i class="icon-play"></i>'
+      when 'error' then '<i class="icon-exclamation-sign"></i>'
       else '----'
     return unless button_state
-    @$('.btn.play').text button_state
+    @$('.btn.play').html button_state
 
   display_remaining_time: ->
     if @player.get('state') == 'play'

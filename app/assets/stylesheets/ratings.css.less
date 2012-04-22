@@ -1,0 +1,28 @@
+// hide radio buttons, "submit" button, and label text
+form {
+  &.rating {
+    input.rating_button, label.rating {
+      display: none;
+    }
+  }
+  .rating-submit {
+    clear: both;
+    margin-top: 25px;
+  }
+}
+
+.star {
+  background: image-url('star-matrix.gif') no-repeat 0 0;
+  display: block;
+  height: 16px; width: 16px;
+  float: left;
+  background-position:0 0px; /* gray star */
+
+  &.bright {
+    background-position:0 -96px
+  } // gold
+
+  &.glow {
+    background-position:0 -16px
+  } // green
+}

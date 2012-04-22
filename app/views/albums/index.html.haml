@@ -5,6 +5,7 @@
         albums: #{@albums.to_json},
         artists: #{@artists.to_json},
         comments: #{@comments.to_json},
+        ratings: #{@ratings.to_json},
         users: #{@users.to_json}
       }
       app.init(init_data);
@@ -60,6 +61,9 @@
     {{#if comment }}
     .body "{{ comment.body }}"
     {{/if}}
+    {{#if rating }}
+    .rating {{ rating.rating }}
+    {{/if}}
     {{#if remove}}
     .remove
       %a{:href => "#remove"} (remove)
@@ -68,16 +72,19 @@
 / CONTROLS TEMPLATE
 %script#controls-template{:type => 'text/template'}
   .controls.btn-group
-    %button.btn.prev &lt;&lt;
-    %button.btn.play &#x25B6;
-    %button.btn.next &gt;&gt;
+    %button.btn.prev
+      %i.icon-backward
+    %button.btn.play
+      %i.icon-play
+    %button.btn.next
+      %i.icon-forward
 
 / ALBUM DETAIL TEMPLATE
 %script#album-detail-template{:type => 'text/template'}
   .album-detail
-    %a{:href => "#artists/{{ artist_id }}"}
-      .artist-name {{ artist_name }}
-    .title {{ title }}
+    %h2.artist-name
+      %a{:href => "#artists/{{ artist_id }}"} {{ artist_name }}
+      %small.title {{ title }}
   .album-cover
     %img{:src => '{{ cover_path library cover }}'}
   %ul.nav.nav-tabs
@@ -94,10 +101,11 @@
 
   .tab-content
     #album-tracks.tab-pane.active
-      {{#tracks}}
-      .track{'data-track-id' => '{{ _id }}'}
-        %a{:href => "#albums/{{ ../_id }}/tracks/{{ _id }}"} {{title}}
-      {{/tracks}}
+      %ol
+        {{#tracks}}
+        %li.track{'data-track-id' => '{{ _id }}'}
+          %a{:href => "#albums/{{ ../_id }}/tracks/{{ _id }}"} {{title}}
+        {{/tracks}}
 
     #album-comments.tab-pane
     #album-ratings.tab-pane
@@ -107,8 +115,38 @@
 %script#album-comments-template{:type => 'text/template'}
   {{#comments}}
   .comment{'data-comment-id' => '{{ _id }}'}
-    {{body}}
+    %blockquote
+      %p {{body}}
+      %small {{user.name}}
   {{/comments}}
+  .comment-form
+
+/ ALBUM RATINGS TEMPLATE
+%script#album-ratings-template{:type => 'text/template'}
+  {{#ratings}}
+  .rating{'data-rating-id' => '{{ _id }}'}
+    %blockquote
+      %p {{{render_stars rating}}}
+      %small {{user.name}}
+  {{/ratings}}
+  .rating-form
+
+/ COMMENT FORM TEMPLATE
+%script#comment-form-template{:type => 'text/template'}
+  %form.well
+    .comment-text
+      %textarea.input-xlarge{:rows=>3, :name => 'body', :placeholder=>"Add Comment..."}
+    .comment-submit
+      %button.btn{:type=>"submit"} Submit
+
+/ RATING FORM TEMPLATE
+%script#rating-form-template{:type => 'text/template'}
+  %form.well
+    .rating-choice
+      - [20, 40, 60, 80, 100].each do |rating|
+        .star
+    .rating-submit
+      %button.btn{:type=>"submit"} Rate
 
 / ARTIST SUMMARY TEMPLATE
 %script#artist-summary-template{:type => 'text/template'}

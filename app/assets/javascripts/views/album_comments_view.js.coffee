@@ -11,6 +11,10 @@ class app.AlbumCommentsView extends app.BaseView
       add: true
       data:
         album_id: @model.get('_id')
+    @form_view = new app.CommentFormView
+      collection: @collection
+      model: new app.Comment
+        album_id: @model.id
 
   cache_comments: ->
     @collection.each (comment) =>
@@ -21,4 +25,5 @@ class app.AlbumCommentsView extends app.BaseView
     @cache_comments()
     $(@el).html @template
       comments: @collection.toJSON()
+    $(@el).find('.comment-form').html @form_view.render().el
     @

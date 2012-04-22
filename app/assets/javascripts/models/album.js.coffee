@@ -4,5 +4,11 @@ class app.Album extends Backbone.Model
     "/api/v1/albums/#{@get('_id')}"
 
   comments: ->
-    app.comments.filter (comment) =>
-      comment.get('album_id') == @get('_id')
+    @association 'comments'
+
+  ratings: ->
+    @association 'ratings'
+
+  association: (name) ->
+    app[name].filter (model) =>
+      model.get('album_id') == @get('_id')

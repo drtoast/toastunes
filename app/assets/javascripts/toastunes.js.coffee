@@ -5,6 +5,7 @@ window.app =
     @albums =     new app.Albums init_data.albums
     @artists =    new app.Artists init_data.artists
     @comments =   new app.Comments init_data.comments
+    @ratings =    new app.Ratings init_data.ratings
     @users =      new app.Users init_data.users
     @playlist =   new app.Albums
     @player =     new app.Player
@@ -16,4 +17,5 @@ window.app =
       albums:     @albums
       artists:    @artists
       comments:   @comments
+      ratings:    @ratings
     Backbone.history.start() # pushState:true

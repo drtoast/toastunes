@@ -2,10 +2,14 @@ Toastunes::Application.routes.draw do
 
   root :to => 'albums#index'
 
-  match 'api/v1/albums' => 'albums#index'
-  match 'api/v1/albums/:id' => 'albums#view'
-  match 'api/v1/artists' => 'artists#index'
-  match 'api/v1/comments' => 'comments#index'
+  namespace :api do
+    namespace :v1 do
+      resources :albums
+      resources :artists
+      resources :comments
+      resources :ratings
+    end
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
