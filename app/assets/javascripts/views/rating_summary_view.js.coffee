@@ -1,5 +1,5 @@
 class app.RatingSummaryView extends app.BaseView
-  className: 'rating-summary'
+  className: 'album-summary'
   template_id: 'album-summary-template'
 
   render: ->

@@ -15,10 +15,10 @@ class AlbumsController < ApplicationController
     respond_to do |format|
       format.html do
         # bootstrap: most recent albums
-        @albums = Album.order_by([:created_at, :desc]).limit(100)
+        @albums = Album.order_by([:created_at, :desc]).limit(20)
         @artists = Artist.order_by([:name, :asc])
-        @comments = Comment.order_by([:created_at, :desc]).limit(100)
-        @ratings = Rating.order_by([:created_at, :desc]).limit(100)
+        @comments = Comment.order_by([:created_at, :desc]).limit(50)
+        @ratings = Rating.order_by([:created_at, :desc]).limit(50)
         @users = User.order_by([:name, :asc]).limit(100)
       end
 
