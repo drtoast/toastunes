@@ -2,12 +2,18 @@
   :javascript
     $(function () {
       var init_data = {
-        albums: #{@albums.to_json},
-        artists: #{@artists.to_json},
-        comments: #{@comments.to_json},
-        ratings: #{@ratings.to_json},
-        users: #{@users.to_json}
+        albums: #{ render(template: "albums/index.json.rabl") },
+        artists: #{ render(template: "artists/index.json.rabl") },
+        comments: #{ render(template: "comments/index.json.rabl") },
+        ratings: #{ render(template: "ratings/index.json.rabl") },
+        users: #{ render(template: "users/index.json.rabl") }
       }
+      //var init_data = {
+      //  albums: {}
+      //  artists: {}
+      //  comments: {}
+      //  ratings: {}
+      //}
       app.init(init_data);
     });
 

@@ -1,0 +1,15 @@
+.container
+  .row
+    .span1 &nbsp;
+    .span9
+      - [:notice, :error, :success, :alert].each do |key|
+        - unless flash[key].blank?
+          %p{ :class => "flash #{key}" }= flash[key]
+      = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html =>{:class =>'well form-inline'}) do |f|
+        = f.email_field :email, :class=>'input-medium', :placeholder=>'Email'
+        = f.password_field :password, :class=>'input-medium', :placeholder=>'Password'
+        - if devise_mapping.rememberable?
+          = f.label :remember_me, :class=>'checkbox'
+          = f.check_box :remember_me
+        = f.submit "Sign in", :class=>'btn'
+    .span1 &nbsp;

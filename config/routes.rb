@@ -1,6 +1,11 @@
 Toastunes::Application.routes.draw do
 
+  devise_for :users
+
   root :to => 'albums#index'
+
+  # DEBUG:
+  resources :albums
 
   namespace :api do
     namespace :v1 do

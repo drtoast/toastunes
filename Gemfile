@@ -9,6 +9,8 @@ gem 'mongoid'
 gem 'httparty' # for aaws
 gem 'ruby-hmac' # for aaws
 gem 'coffee-filter'
+gem 'devise'
+gem 'rabl'
 
 # mp3 processing
 gem 'ruby-mp3info'
