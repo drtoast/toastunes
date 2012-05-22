@@ -12,7 +12,6 @@ end
 
 gem 'jquery-rails'
 
-gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'mongoid', '2.0.2'
 gem 'bson_ext'                                # faster C-based JSON lib
 gem 'ruby-mp3info'                            # for ID3 tag parsing
