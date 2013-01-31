@@ -1,2 +1,4 @@
-rvm --create ruby-1.9.2-p180@toastunes
+rvm use ruby-1.9.3-p194@toastunes --create
+
+# rvm --create ruby-1.9.2-p180@toastunes
 # rvm ruby-1.9.3-rc1@toastunes --create

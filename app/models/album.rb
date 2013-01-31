@@ -1,40 +1,40 @@
 class Album
-  include Mongoid::Document
-  include Mongoid::Timestamps
+  # include Mongoid::Document
+  # include Mongoid::Timestamps
 
   # fields
-  field :title, :type => String
-  field :artist_name, :type => String # can't use "artist" due to association
-  field :compilation, :type => Boolean
-  field :cover, :type => String
-  field :thumbnail, :type => String
-  field :rating, :type => Integer # 0 to 100
-  field :genre, :type => String
-  field :library, :type => String # where does this album's files live?
-  field :cover_download_at, :type => Time # when did we add an amazon cover?
+  # field :title, :type => String
+  # field :artist_name, :type => String # can't use "artist" due to association
+  # field :compilation, :type => Boolean
+  # field :cover, :type => String
+  # field :thumbnail, :type => String
+  # field :rating, :type => Integer # 0 to 100
+  # field :genre, :type => String
+  # field :library, :type => String # where does this album's files live?
+  # field :cover_download_at, :type => Time # when did we add an amazon cover?
 
-  # indices
-  index :created_at
-  index :title
-  index :rating
+  # # indices
+  # index :created_at
+  # index :title
+  # index :rating
 
-  # associations
-  embeds_many :tracks
-  references_many :comments
-  references_many :ratings
-  referenced_in :artist
-  referenced_in :genre
-  referenced_in :user
+  # # associations
+  # embeds_many :tracks
+  # references_many :comments
+  # references_many :ratings
+  # referenced_in :artist
+  # referenced_in :genre
+  # referenced_in :user
 
-  # kind
-  scope :compilation, :where => {:compilation => true}
-  scope :aac, :where => {:kind => "AAC audio file"}
-  scope :mp3, :where => {:kind => "MPEG audio file"}
+  # # kind
+  # scope :compilation, :where => {:compilation => true}
+  # scope :aac, :where => {:kind => "AAC audio file"}
+  # scope :mp3, :where => {:kind => "MPEG audio file"}
 
-  # sweetness
-  scope :sweet, :where => {:rating.gt => 60}
-  scope :okay, :where => {:rating => 60}
-  scope :ugh, :where => {:rating.lte => 40}
+  # # sweetness
+  # scope :sweet, :where => {:rating.gt => 60}
+  # scope :okay, :where => {:rating => 60}
+  # scope :ugh, :where => {:rating.lte => 40}
 
   def process_album
     extract_cover

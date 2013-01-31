@@ -1,12 +1,14 @@
 GIT
-  remote: git://github.com/pivotal/jasmine-gem.git
-  revision: c72e8d248d49a1ebe53f31a09ac511194ad4edf1
+  remote: git://github.com/jnicklas/capybara.git
+  revision: c65a61c6a5f91c92c474056e03c69b74e6654cd1
   specs:
-    jasmine (1.2.0.rc3)
-      jasmine-core (>= 1.2.0.rc3)
-      rack (~> 1.0)
-      rspec (>= 1.3.1)
-      selenium-webdriver (>= 0.1.3)
+    capybara (2.0.1)
+      mime-types (>= 1.16)
+      nokogiri (>= 1.3.3)
+      rack (>= 1.0.0)
+      rack-test (>= 0.5.4)
+      selenium-webdriver (~> 2.0)
+      xpath (~> 1.0.0)
 
 GEM
   remote: http://rubygems.org/
@@ -38,25 +40,12 @@ GEM
     activesupport (3.2.1)
       i18n (~> 0.6)
       multi_json (~> 1.0)
-    addressable (2.2.7)
     arel (3.0.2)
     bcrypt-ruby (3.0.1)
-    bson (1.6.2)
-    bson_ext (1.6.2)
-      bson (~> 1.6.2)
     builder (3.0.0)
-    capybara (1.1.2)
-      mime-types (>= 1.16)
-      nokogiri (>= 1.3.3)
-      rack (>= 1.0.0)
-      rack-test (>= 0.5.4)
-      selenium-webdriver (~> 2.0)
-      xpath (~> 0.1.4)
-    capybara-webkit (0.11.0)
-      capybara (>= 1.0.0, < 1.2)
-      json
-    childprocess (0.3.2)
-      ffi (~> 1.0.6)
+    cancan (1.6.8)
+    childprocess (0.3.6)
+      ffi (~> 1.0, >= 1.0.6)
     coffee-filter (0.1.1)
       coffee-script (>= 2.2.0)
       haml (>= 3.0.18)
@@ -68,6 +57,7 @@ GEM
       execjs
     coffee-script-source (1.3.1)
     commonjs (0.2.5)
+    daemons (1.1.9)
     devise (2.0.4)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.0.3)
@@ -75,20 +65,17 @@ GEM
       warden (~> 1.1.1)
     diff-lcs (1.1.3)
     erubis (2.7.0)
+    eventmachine (1.0.0)
     execjs (1.3.0)
       multi_json (~> 1.0)
-    ffi (1.0.11)
-    growl (1.0.3)
-    guard (1.0.1)
-      ffi (>= 0.5.0)
-      thor (~> 0.14.6)
-    guard-jasmine-headless-webkit (0.3.2)
-      guard (>= 0.4.0)
-      jasmine-headless-webkit (>= 0.7.0)
-    guard-rails-assets (0.1.3)
-      guard
-      rails (>= 3.1.1)
-      rake
+    factory_girl (4.1.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.1.0)
+      factory_girl (~> 4.1.0)
+      railties (>= 3.0.0)
+    faraday (0.8.4)
+      multipart-post (~> 1.1)
+    ffi (1.2.0)
     haml (3.1.4)
     haml-rails (0.3.4)
       actionpack (~> 3.0)
@@ -99,6 +86,7 @@ GEM
     httparty (0.8.3)
       multi_json (~> 1.0)
       multi_xml
+    httpauth (0.2.0)
     i18n (0.6.0)
     jasmine-core (1.2.0.rc3)
     jasmine-headless-webkit (0.8.4)
@@ -107,6 +95,9 @@ GEM
       multi_json
       rainbow
       sprockets (~> 2)
+    jasminerice (0.0.10)
+      coffee-rails
+      haml
     journey (1.0.3)
     jquery-rails (2.0.2)
       railties (>= 3.2.0, < 5.0)
@@ -118,24 +109,26 @@ GEM
     less-rails (2.2.1)
       actionpack (>= 3.1)
       less (~> 2.1.0)
+    less-rails-bootstrap (2.2.0)
+      less-rails (~> 2.2.0)
     libv8 (3.3.10.4)
-    libwebsocket (0.1.3)
-      addressable
+    libwebsocket (0.1.6.1)
+      websocket
     mail (2.4.4)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.18)
-    mongo (1.6.2)
-      bson (~> 1.6.2)
-    mongoid (2.4.8)
-      activemodel (~> 3.1)
-      mongo (~> 1.3)
-      tzinfo (~> 0.3.22)
     mp4info (1.7.3)
     multi_json (1.3.2)
     multi_xml (0.4.4)
-    nokogiri (1.5.2)
+    multipart-post (1.1.5)
+    nokogiri (1.5.5)
+    oauth (0.4.7)
+    oauth2 (0.6.1)
+      faraday (~> 0.7)
+      httpauth (~> 0.1)
+      multi_json (~> 1.3)
     orm_adapter (0.0.7)
     polyglot (0.3.3)
     rabl (0.6.10)
@@ -184,24 +177,40 @@ GEM
       rspec (~> 2.9.0)
     ruby-hmac (0.4.0)
     ruby-mp3info (0.7.1)
-    rubyzip (0.9.7)
+    rubyzip (0.9.9)
     sass (3.1.16)
     sass-rails (3.2.5)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
-    selenium-webdriver (2.21.2)
+    selenium-webdriver (2.26.0)
       childprocess (>= 0.2.5)
-      ffi (~> 1.0)
       libwebsocket (~> 0.1.3)
       multi_json (~> 1.0)
       rubyzip
+    slim (1.3.4)
+      temple (~> 0.5.5)
+      tilt (~> 1.3.3)
+    slim-rails (1.0.3)
+      actionpack (~> 3.0)
+      activesupport (~> 3.0)
+      railties (~> 3.0)
+      slim (~> 1.0)
+    sorcery (0.7.13)
+      bcrypt-ruby (~> 3.0.0)
+      oauth (~> 0.4.4)
+      oauth2 (~> 0.6.0)
     sprockets (2.1.2)
       hike (~> 1.2)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
+    temple (0.5.5)
     therubyracer (0.10.1)
       libv8 (~> 3.3.10)
+    thin (1.5.0)
+      daemons (>= 1.0.9)
+      eventmachine (>= 0.12.6)
+      rack (>= 1.0.0)
     thor (0.14.6)
     tilt (1.3.3)
     treetop (1.4.10)
@@ -217,39 +226,39 @@ GEM
       multi_json (>= 1.0.2)
     warden (1.1.1)
       rack (>= 1.0)
-    xpath (0.1.4)
+    websocket (1.0.4)
+    xpath (1.0.0)
       nokogiri (~> 1.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  bson_ext
-  capybara
-  capybara-webkit
+  cancan
+  capybara!
   coffee-filter
   coffee-rails
   devise
-  growl
-  guard
-  guard-jasmine-headless-webkit
-  guard-rails-assets
+  factory_girl_rails
   haml-rails
   httparty
-  jasmine!
   jasmine-headless-webkit
+  jasminerice
   jquery-rails
-  mongo
-  mongoid
+  less-rails
+  less-rails-bootstrap
   mp4info
   rabl
-  rails (= 3.2.1)
+  rails
   rb-fsevent
   rmagick
   rspec-rails
   ruby-hmac
   ruby-mp3info
   sass-rails
+  slim-rails
+  sorcery
   therubyracer
+  thin
   twitter-bootstrap-rails
   uglifier

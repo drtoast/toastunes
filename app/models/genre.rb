@@ -1,8 +1,8 @@
 class Genre
-  include Mongoid::Document
-  field :name, :type => String
-  references_many :albums
-  
+  # include Mongoid::Document
+  # field :name, :type => String
+  # references_many :albums
+
   # Replace an old genre with a new one
   #
   # Genre.swap("Rock", "Rock & Roll")
@@ -17,7 +17,7 @@ class Genre
     end
     true
   end
-  
+
   # Delete all genres that have no albums
   def self.cleanup
     Genre.all.each do |genre|
@@ -28,5 +28,5 @@ class Genre
     end
     true
   end
-  
+
 end
