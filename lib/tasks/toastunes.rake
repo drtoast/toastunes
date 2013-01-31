@@ -1,5 +1,5 @@
 namespace :toastunes do
-  
+
   # rake RAILS_ENV=production toastunes:create:admin[name@example.com,somepass]
   namespace :create do
     task :admin, [:email, :password] => :environment do |t, args|
@@ -11,9 +11,9 @@ namespace :toastunes do
       p "created admin #{args.email} [#{u.id}]"
     end
   end
-  
+
   namespace :read do
-    
+
     # rake RAILS_ENV=production toastunes:read:artists[w2] --trace
     desc "load the given directory inside public/music, containing artist subdirectories"
     task :artists, [:library] => [:environment] do |t, args|
@@ -21,7 +21,7 @@ namespace :toastunes do
       p = Toastunes::DirectoryProcessor.new(:library => args.library)
       p.parse!
     end
-    
+
     # rake RAILS_ENV=production toastunes:read:artist[w2,Radiohead] --trace
     desc "load the given artist directory in public/music/[library]/[artist]"
     task :artist, [:dir, :artist] => [:environment] do |t, args|
@@ -30,17 +30,17 @@ namespace :toastunes do
       dir = File.join(Rails.root, 'public', 'music', args.library)
       p.parse_artist(dir, args.artist)
     end
-    
+
     # rake RAILS_ENV=production toastunes:read:itunes["/Volumes/toastport/iTunes", toastport] --trace
     desc "load the iTunes XML library"
     task :itunes, [:path_to_itunes, :library_name] => :environment do |t, args|
       Toastunes::TunesParser.parse!(args.path_to_itunes, args.library_name)
     end
-    
+
   end # namespace :read
-  
+
   namespace :process do
-    
+
     task :randomize => :environment do
       Album.all.each do |a|
         a.random_number = rand
@@ -48,7 +48,7 @@ namespace :toastunes do
         a.save
       end
     end
-    
+
     desc "process all album covers, artists, and genres"
     task :albums => :environment do
       Album.all.each do |a|
@@ -63,7 +63,7 @@ namespace :toastunes do
         puts [a.title, a.artist ? a.artist.name : nil].join("\t")
       end
     end # task :albums
-    
+
     desc "replace old genres with new ones loaded from an import file"
     task :replace_genres, [:file] => [:environment] do |t, args|
       File.open(args.file) do |f|
@@ -73,7 +73,7 @@ namespace :toastunes do
         end
       end
     end
-    
+
     desc "delete genres that have no albums"
     task :cleanup_genres => :environment do |t, args|
       Genre.cleanup
@@ -87,7 +87,7 @@ namespace :toastunes do
       Genre.destroy_all
       Rating.destroy_all
     end
-    
+
   end # namespace :process
-  
+
 end

@@ -1,0 +1,44 @@
+<!-- ### TODO: file deleted in 'backbone' branch, modified in 'file-uploads' -->
+
+<%= form_for(@album) do |f| %>
+  <% if @album.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@album.errors.count, "error") %> prohibited this album from being saved:</h2>
+
+      <ul>
+      <% @album.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= label_tag :download_link %><br />
+    <%= text_field_tag :download_link %>
+  </div>
+
+  <div class="field">
+    <%= f.label :artist %><br />
+    <%= f.text_field :artist_name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= f.label "compilation?" %><br />
+    <%= f.check_box :compilation %>
+  </div>
+
+  <div class="field">
+    <%= f.label :genre %><br />
+    <%= f.collection_select :genre_id, Genre.all, :id, :name %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -21,7 +21,7 @@ id3v2.2:
 id3v2.3:
   http://www.id3.org/id3v2.3.0
   4-char tags, e.g. i.tag2.keys => ["TALB", "COMM", "TIT2", "TPE1", "TYER", "TRCK", "APIC"]
-  <Header for 'Attached picture', ID: "APIC"> 
+  <Header for 'Attached picture', ID: "APIC">
   Text encoding   $xx
   MIME type       <text string> $00
   Picture type    $xx
@@ -33,25 +33,25 @@ id3v2.3:
 =end
 
 class Toastunes::TagParser
-  
+
   IMAGE_FORMATS = {
-    
+
     # >= id3v2.3
     'image/jpeg' => 'jpg',
     'image/jpg' => 'jpg',
     'image/png' => 'png',
-    
+
     # id3v2.2
     'PNG' => 'png',
     'JPG' => 'jpg'
   }
-  
+
   attr_reader :info
-  
+
   def initialize(path)
     parse path
   end
-  
+
   def parse(path)
     @file_type = File.extname(path).downcase
     if @file_type == '.m4a'
@@ -82,31 +82,31 @@ class Toastunes::TagParser
     end
     str.encode("UTF-8", {:invalid => :replace, :undef => :replace, :replace => "?"})
   end
-  
+
   def title
     sanitize @mp3info ? @mp3info.tag.title : @mp4info.NAM
   end
-  
+
   def artist
     sanitize @mp3info ? @mp3info.tag.artist : @mp4info.ART
   end
-  
+
   def album
     sanitize @mp3info ? @mp3info.tag.artist : @mp4info.ALB
   end
-  
+
   def track_number
     sanitize @mp3info ? @mp3info.tag.tracknum : Array(@mp4info.TRKN)[0]
   end
-  
+
   def genre
     sanitize @mp3info ? @mp3info.tag.genre_s : @mp4info.TRKN
   end
-  
+
   def year
     sanitize @mp3info ? @mp3info.tag.year : @mp4info.DAY
   end
-  
+
   def extract_cover(cover_dir, thumbnail_dir, album_id)
     if @mp4info
       data = @mp4info.COVR
@@ -154,7 +154,7 @@ class Toastunes::TagParser
     puts "WARNING: can't extract cover: '#{e.inspect}"
     return nil
   end
-  
+
   def write_image(cover_dir, thumbnail_dir, album_id, format, data)
     processor = Toastunes::ImageProcessor.new
     # save cover
@@ -163,5 +163,5 @@ class Toastunes::TagParser
     processor.write_thumbnail(thumbnail_dir, album_id, full_path)
     return full_path
   end
-  
+
 end
