@@ -8,8 +8,8 @@ class User
          :recoverable, :rememberable, :trackable, :validatable
 
   ## Database authenticatable
-  field :email,              :type => String, :null => false, :default => "", :unique => true
-  field :encrypted_password, :type => String, :null => false, :default => ""
+  field :email,              :type => String, :default => ""
+  field :encrypted_password, :type => String, :default => ""
 
   ## Recoverable
   field :reset_password_token,   :type => String
@@ -52,9 +52,9 @@ class User
   field :admin, :type => Boolean
   field :approved, :type => Boolean
 
-  references_many :comments
-  references_many :ratings
-  references_many :albums
+  has_many :comments
+  has_many :ratings
+  has_many :albums
 
   def gravatar
     hash = Digest::MD5.hexdigest(email.downcase)

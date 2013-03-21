@@ -64,6 +64,7 @@ class AlbumsController < ApplicationController
   # ajax genre
   def genre
     @album = Album.find(params[:id])
+  end
 
   def index
     respond_to do |format|

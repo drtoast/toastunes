@@ -17,27 +17,27 @@ class Album
   field :status, :type => String
 
   # indices
-  index :created_at
-  index :title
-  index :rating
+  index created_at: 1
+  index title: 1
+  index rating: 1
 
   # associations
   embeds_many :tracks
-  references_many :comments
-  references_many :ratings
-  referenced_in :artist
-  referenced_in :genre
-  referenced_in :user
+  has_many :comments
+  has_many :ratings
+  belongs_to :artist
+  belongs_to :genre
+  belongs_to :user
 
   # kind
-  scope :compilation, :where => {:compilation => true}
-  scope :aac, :where => {:kind => "AAC audio file"}
-  scope :mp3, :where => {:kind => "MPEG audio file"}
+  scope :compilation, where(compilation: true)
+  scope :aac, where(kind: "AAC audio file")
+  scope :mp3, where(kind: "MPEG audio file")
 
   # sweetness
-  scope :sweet, :where => {:rating.gt => 60}
-  scope :okay, :where => {:rating => 60}
-  scope :ugh, :where => {:rating.lte => 40}
+  # scope :sweet, :where => {:rating.gt => 60}
+  # scope :okay, :where => {:rating => 60}
+  # scope :ugh, :where => {:rating.lte => 40}
 
   def process_album
     extract_cover

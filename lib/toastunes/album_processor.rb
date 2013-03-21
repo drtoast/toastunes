@@ -1,6 +1,6 @@
 class Toastunes::AlbumProcessor
 
-  attr_accessor :zip_file, :extract_to, :file_id, :parser, :album
+  attr_accessor :zip_file, :album_path, :extract_to, :file_id, :parser, :album
 
   def initialize(options)
     @options     = options
@@ -67,6 +67,7 @@ class Toastunes::AlbumProcessor
     @album.compilation = compilation
     @album.library = @options[:library]
     @album.user = @options[:user] if @options[:user]
+    @album.save!
   end
 
 

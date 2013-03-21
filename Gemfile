@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails'
+gem 'rails', '3.2.12'
 gem 'jquery-rails'
 gem 'haml-rails'
 gem 'mongo'
@@ -8,7 +8,7 @@ gem 'bson_ext'
 gem 'mongoid'
 gem 'httparty' # for aaws
 gem 'ruby-hmac' # for aaws
-gem 'coffee-filter'
+# gem 'coffee-filter'
 gem 'devise'
 gem 'rabl'
 
@@ -29,6 +29,10 @@ end
 
 group :test, :development do
   gem 'jasmine', git: 'git://github.com/pivotal/jasmine-gem.git'
-  gem 'rspec-rails'
   gem 'capybara'
+  gem 'rspec'
+  gem 'rspec-rails'
+  gem 'database_cleaner'
+  gem 'pry'
+  gem 'pry-debugger'
 end
