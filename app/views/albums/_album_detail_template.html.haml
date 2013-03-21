@@ -1,0 +1,30 @@
+/ ALBUM DETAIL TEMPLATE
+%script#album-detail-template{:type => 'text/template'}
+  .album-detail
+    %h2.artist-name
+      %a{:href => "#artists/{{ artist_id }}"} {{ artist_name }}
+      %small.title {{ title }}
+  .album-cover
+    %img.shadow{:src => '{{ cover_path library cover }}'}
+  %ul.nav.nav-tabs
+    %li.active
+      %a{:href=>'#album-tracks', 'data-toggle'=>'tab'}
+        Tracks
+        %span.badge {{ length tracks }}
+    %li
+      %a{:href=>'#album-comments', 'data-toggle'=>'tab'}
+        Comments
+    %li
+      %a{:href=>'#album-ratings', 'data-toggle'=>'tab'}
+        Ratings
+
+  .tab-content
+    #album-tracks.tab-pane.active
+      %ol
+        {{#tracks}}
+        %li.track{'data-track-id' => '{{ _id }}'}
+          %a{:href => "#albums/{{ ../_id }}/tracks/{{ _id }}"} {{title}}
+        {{/tracks}}
+
+    #album-comments.tab-pane
+    #album-ratings.tab-pane

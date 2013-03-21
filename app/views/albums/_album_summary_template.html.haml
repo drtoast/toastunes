@@ -1,0 +1,20 @@
+/ ALBUM SUMMARY TEMPLATE
+%script#album-summary-template{:type => 'text/template'}
+  .album-thumbnail
+    %a{:href => "#albums/{{ album._id }}"}
+      %img.shadow{:src => '{{ thumbnail_path album.library album.thumbnail }}', :width => '75', :height => '75'}
+  .info
+    .artist-name
+      %a{:href => "#artists/{{ album.artist_id }}"} {{ album.artist_name }}
+    .title
+      %a{:href => "#albums/{{ album._id }}"} {{ album.title }}
+    {{#if comment }}
+    .body "{{ comment.body }}"
+    {{/if}}
+    {{#if rating }}
+    .rating {{{render_stars rating.rating}}} - <small>{{user.name}}</small>
+    {{/if}}
+    {{#if remove}}
+    .remove
+      %a{:href => "#remove"} (remove)
+    {{/if}}

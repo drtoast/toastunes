@@ -10,7 +10,7 @@ class app.ArtistsView extends Backbone.View
 
   render: (e) ->
     console.log "ArtistsView#render: #{@collection.length} artists"
-    @$el.empty()
+    @$el.html '<h3>Artists</h3>'
     @collection.each (artist) =>
       artist_view = new app.ArtistSummaryView model:artist
       @$el.append artist_view.render().el

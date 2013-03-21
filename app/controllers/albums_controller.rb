@@ -74,6 +74,7 @@ class AlbumsController < ApplicationController
         @comments = Comment.order_by([:created_at, :desc]).limit(50)
         @ratings = Rating.order_by([:created_at, :desc]).limit(50)
         @users = User.order_by([:name, :asc]).limit(100)
+        @user = current_user
       end
 
       format.json do

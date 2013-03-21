@@ -7,6 +7,7 @@ window.app =
     @comments =   new app.Comments init_data.comments
     @ratings =    new app.Ratings init_data.ratings
     @users =      new app.Users init_data.users
+    @user =       new app.User init_data.current_user
     @playlist =   new app.Albums
     @player =     new app.Player
       playlist:   @playlist

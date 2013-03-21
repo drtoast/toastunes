@@ -6,5 +6,6 @@
  *= require bootstrap_and_overrides
  *= require album
  *= require player
+ *= require toastunes
  *= require_tree . 
 */

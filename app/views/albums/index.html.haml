@@ -6,7 +6,8 @@
         artists: #{ render(template: "artists/index.json.rabl") },
         comments: #{ render(template: "comments/index.json.rabl") },
         ratings: #{ render(template: "ratings/index.json.rabl") },
-        users: #{ render(template: "users/index.json.rabl") }
+        users: #{ render(template: "users/index.json.rabl") },
+        user: #{ render(template: "users/show.json.rabl") }
       }
       app.init(init_data);
     });
@@ -38,122 +39,21 @@
             %a{:href => "#ratings"} Ratings
           %li
             %a{:href => "#users"} Users
-.container
-  .row
-    .span3
+.container.max-height.no-overflow
+  .row.max-height
+    .span3.scrollable
       #list List
-    .span6
+    .span6.scrollable
       #detail Detail
-    .span3
+    .span3.scrollable
       #playlist Playlist
 
-
-/ ALBUM SUMMARY TEMPLATE
-%script#album-summary-template{:type => 'text/template'}
-  .album-thumbnail
-    %a{:href => "#albums/{{ album._id }}"}
-      %img{:src => '{{ thumbnail_path album.library album.thumbnail }}', :width => '75', :height => '75'}
-  .info
-    .artist-name
-      %a{:href => "#artists/{{ album.artist_id }}"} {{ album.artist_name }}
-    .title
-      %a{:href => "#albums/{{ album._id }}"} {{ album.title }}
-    {{#if comment }}
-    .body "{{ comment.body }}"
-    {{/if}}
-    {{#if rating }}
-    .rating {{ rating.rating }}
-    {{/if}}
-    {{#if remove}}
-    .remove
-      %a{:href => "#remove"} (remove)
-    {{/if}}
-
-/ CONTROLS TEMPLATE
-%script#controls-template{:type => 'text/template'}
-  .controls.btn-group
-    %button.btn.prev
-      %i.icon-backward
-    %button.btn.play
-      %i.icon-play
-    %button.btn.next
-      %i.icon-forward
-
-/ ALBUM DETAIL TEMPLATE
-%script#album-detail-template{:type => 'text/template'}
-  .album-detail
-    %h2.artist-name
-      %a{:href => "#artists/{{ artist_id }}"} {{ artist_name }}
-      %small.title {{ title }}
-  .album-cover
-    %img{:src => '{{ cover_path library cover }}'}
-  %ul.nav.nav-tabs
-    %li.active
-      %a{:href=>'#album-tracks', 'data-toggle'=>'tab'}
-        Tracks
-        %span.badge {{ length tracks }}
-    %li
-      %a{:href=>'#album-comments', 'data-toggle'=>'tab'}
-        Comments
-    %li
-      %a{:href=>'#album-ratings', 'data-toggle'=>'tab'}
-        Ratings
-
-  .tab-content
-    #album-tracks.tab-pane.active
-      %ol
-        {{#tracks}}
-        %li.track{'data-track-id' => '{{ _id }}'}
-          %a{:href => "#albums/{{ ../_id }}/tracks/{{ _id }}"} {{title}}
-        {{/tracks}}
-
-    #album-comments.tab-pane
-    #album-ratings.tab-pane
-
-
-/ ALBUM COMMENTS TEMPLATE
-%script#album-comments-template{:type => 'text/template'}
-  {{#comments}}
-  .comment{'data-comment-id' => '{{ _id }}'}
-    %blockquote
-      %p {{body}}
-      %small {{user.name}}
-  {{/comments}}
-  .comment-form
-
-/ ALBUM RATINGS TEMPLATE
-%script#album-ratings-template{:type => 'text/template'}
-  {{#ratings}}
-  .rating{'data-rating-id' => '{{ _id }}'}
-    %blockquote
-      %p {{{render_stars rating}}}
-      %small {{user.name}}
-  {{/ratings}}
-  .rating-form
-
-/ COMMENT FORM TEMPLATE
-%script#comment-form-template{:type => 'text/template'}
-  %form.well
-    .comment-text
-      %textarea.input-xlarge{:rows=>3, :name => 'body', :placeholder=>"Add Comment..."}
-    .comment-submit
-      %button.btn{:type=>"submit"} Submit
-
-/ RATING FORM TEMPLATE
-%script#rating-form-template{:type => 'text/template'}
-  %form.well
-    .rating-choice
-      - [20, 40, 60, 80, 100].each do |rating|
-        .star
-    .rating-submit
-      %button.btn{:type=>"submit"} Rate
-
-/ ARTIST SUMMARY TEMPLATE
-%script#artist-summary-template{:type => 'text/template'}
-  .artist-name
-    %a{:href => "#artists/{{ _id }}"} {{ name }}
-
-
-/ ARTIST DETAIL TEMPLATE
-%script#artist-detail-template{:type => 'text/template'}
-  .albums
+= render partial: 'albums/album_summary_template'
+= render partial: 'albums/controls_template'
+= render partial: 'albums/album_detail_template'
+= render partial: 'comments/album_comments_template'
+= render partial: 'comments/comment_form_template'
+= render partial: 'ratings/album_ratings_template'
+= render partial: 'ratings/rating_form_template'
+= render partial: 'artists/artist_summary_template'
+= render partial: 'artists/artist_detail_template'

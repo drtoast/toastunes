@@ -12,7 +12,6 @@ class app.CommentFormView extends app.BaseView
       body: @$('.comment-text textarea[name="body"]').val()
     ,
       success: (model, response) =>
-        @model.save(model)
         @collection.add @model
         console.log 'success', response
       error: (model, response) =>

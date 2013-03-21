@@ -44,7 +44,7 @@ class app.Player extends Backbone.Model
     track_index = tracks.indexOf track
 
     regex = /\/public\/(.*)$/
-    [matched, url] = regex.exec track.location
+    [matched, url] = regex.exec(track.location) || [null, "/music/#{album.get('library')}/#{track.location}"]
     console.log 'Player#play_album_track', url
     @audio.src = url
     @set

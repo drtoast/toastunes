@@ -1,3 +1,3 @@
 collection @ratings
 
-extends "comments/show"
+extends "ratings/show"

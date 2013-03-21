@@ -9,7 +9,7 @@ class Api::V1::CommentsController < ApplicationController
 
   def create
     @comment = Comment.new(params[:comment])
-    @comment.user = User.first # current_user
+    @comment.user = current_user
 
     if @comment.save
       respond_with @comment, :location => api_v1_comments_url

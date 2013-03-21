@@ -1,0 +1,7 @@
+/ COMMENT FORM TEMPLATE
+%script#comment-form-template{:type => 'text/template'}
+  %form.well
+    .comment-text
+      %textarea.input-xlarge{:rows=>3, :name => 'body', :placeholder=>"Add Comment..."}
+    .comment-submit
+      %button.btn{:type=>"submit"} Submit

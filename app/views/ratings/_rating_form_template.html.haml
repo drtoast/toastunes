@@ -1,0 +1,8 @@
+/ RATING FORM TEMPLATE
+%script#rating-form-template{:type => 'text/template'}
+  %form.well
+    .rating-choice
+      - [20, 40, 60, 80, 100].each do |rating|
+        .star
+    .rating-submit
+      %button.btn{:type=>"submit"} Rate

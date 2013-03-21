@@ -15,8 +15,8 @@ class Rating
 
   def as_json(options={})
     attrs = super(options)
-    attrs['album'] = album.as_json
-    attrs['user'] = user.as_json
+    #attrs['album'] = album.as_json
+    #attrs['user'] = user.as_json
     attrs
   end
 

@@ -1,0 +1,9 @@
+/ ALBUM COMMENTS TEMPLATE
+%script#album-comments-template{:type => 'text/template'}
+  {{#comments}}
+  .comment{'data-comment-id' => '{{ _id }}'}
+    %blockquote
+      %p {{body}}
+      %small {{user.name}}
+  {{/comments}}
+  .comment-form

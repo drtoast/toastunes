@@ -19,12 +19,13 @@ class app.RatingFormView extends app.BaseView
     $(e.target).prevAll().andSelf().addClass("bright");
 
   submit: (e) ->
+    rating = $('.rating-choice .star.bright').length * 20
     e.preventDefault()
     @model.save
-      rating: @$('something').val()
+      rating: rating
     ,
       success: (model, response) =>
-        @model.save(model)
+        console.log @model, model
         @collection.add @model
         console.log 'success', response
       error: (model, response) =>

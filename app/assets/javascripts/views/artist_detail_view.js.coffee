@@ -19,10 +19,12 @@ class app.ArtistDetailView extends app.BaseView
     json = @model.toJSON()
     json.albums = @collection.toJSON()
     $(@el).html @template(json)
-    @collection.each (album) =>
-      app.albums.add album
-      view = new app.AlbumSummaryView
-        model: album
-        collection: app.playlist
-      @$('.albums').append view.render().el
+    unless @collection.length == 0
+      @$('.albums').empty()
+      @collection.each (album) =>
+        app.albums.add album
+        view = new app.AlbumSummaryView
+          model: album
+          collection: app.playlist
+        @$('.albums').append view.render().el
     @

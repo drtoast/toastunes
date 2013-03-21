@@ -1,0 +1,9 @@
+/ ALBUM RATINGS TEMPLATE
+%script#album-ratings-template{:type => 'text/template'}
+  {{#ratings}}
+  .rating{'data-rating-id' => '{{ _id }}'}
+    %blockquote
+      %p {{{render_stars rating}}}
+      %small {{user.name}}
+  {{/ratings}}
+  .rating-form
